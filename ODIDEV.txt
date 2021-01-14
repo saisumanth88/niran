@@ -1,0 +1,28 @@
+
+Endpoint : obieeodidev.ceyhnx2ss1fw.eu-west-1.rds.amazonaws.com
+Master user : admin/DH86HmknkozPGXI
+DB Name : ODIDEV	
+Port : 1521
+
+
+select username,default_tablespace,temporary_tablespace,profile from dba_users where username in ('C##AWSOBIEE','DEVODI_IAU','DEVODI_IAU_APPEND','DEVODI_IAU_VIEWER','DEVODI_OPSS','DEVODI_REPO','DEVODI_STB','DEVODI_WLS','DEVODI_WLS_RUNTIME');
+
+
+C##AWSOBIEE
+DEVODI_IAU
+DEVODI_IAU_APPEND
+DEVODI_IAU_VIEWER
+DEVODI_OPSS
+DEVODI_REPO
+DEVODI_STB
+DEVODI_WLS
+DEVODI_WLS_RUNTIME
+
+
+
+
+
+
+
+
+

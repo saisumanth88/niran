@@ -1,0 +1,47 @@
+Username/Password : DBSNMP/AWSwelcome_123
+
+2020-12-17 12:37:12.201 UTC [INFO ] Oracle Enterprise Manager Cloud Control 13c Release 2  
+Copyright (c) 1996, 2016 Oracle Corporation.  All rights reserved.
+[biqa.ceyhnx2ss1fw.eu-west-1.rds.amazonaws.com, host]
+[biqa.ceyhnx2ss1fw.eu-west-1.rds.amazonaws.com:3872, oracle_emd]
+[agent13c1_1_biqa.ceyhnx2ss1fw.eu-west-1.rds.amazonaws.com_4575, oracle_home]
+[biqa.ceyhnx2ss1fw.eu-west-1.rds.amazonaws.com/server_os, oracle_si_server_os]
+
+2020-12-17 12:37:12.202 UTC [INFO ] The task finished successfully.
+
+2020-12-17 12:38:00.137 UTC [INFO ] Oracle Enterprise Manager Cloud Control 13c Release 2  
+Copyright (c) 1996, 2016 Oracle Corporation.  All rights reserved.
+---------------------------------------------------------------
+Agent Version          : 13.2.0.0.0
+OMS Version            : 13.2.0.0.0
+Protocol Version       : 12.1.0.1.0
+Agent Home             : /home/rdsdb/agent/app/agent_inst
+Agent Log Directory    : /home/rdsdb/agent/app/agent_inst/sysman/log
+Agent Binaries         : /home/rdsdb/agent/app/agent_13.2.0.0.0
+Core JAR Location      : /home/rdsdb/agent/app/agent_13.2.0.0.0/jlib
+Agent Process ID       : 1848
+Parent Process ID      : 1816
+Agent URL              : https://biqa.ceyhnx2ss1fw.eu-west-1.rds.amazonaws.com:3872/emd/main/
+Local Agent URL in NAT : https://biqa.ceyhnx2ss1fw.eu-west-1.rds.amazonaws.com:3872/emd/main/
+Repository URL         : https://toem12cc.vodacom.corp:4900/empbs/upload
+Started at             : 2020-12-17 12:31:13
+Started by user        : rdsdb
+Operating System       : Linux version 4.1.12-124.28.6.el7uek.x86_64 (amd64)
+Number of Targets      : 4
+Last Reload            : (none)
+Last successful upload                       : 2020-12-17 12:36:14
+Last attempted upload                        : 2020-12-17 12:36:14
+Total Megabytes of XML files uploaded so far : 0.39
+Number of XML files pending upload           : 0
+Size of XML files pending upload(MB)         : 0
+Available disk space on upload filesystem    : 47.57%
+Collection Status                            : Collections enabled
+Heartbeat Status                             : Ok
+Last attempted heartbeat to OMS              : 2020-12-17 12:37:23
+Last successful heartbeat to OMS             : 2020-12-17 12:37:23
+Next scheduled heartbeat to OMS              : 2020-12-17 12:38:24
+
+---------------------------------------------------------------
+Agent is Running and Ready
+
+2020-12-17 12:38:00.137 UTC [INFO ] The task finished successfully.

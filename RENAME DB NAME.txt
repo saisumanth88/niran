@@ -1,0 +1,22 @@
+To set a database to single-user mode -SQL server Management Studio
+=============================
+
+1)In Object Explorer, connect to an instance of the SQL Server Database Engine, and then expand that instance.
+
+2)Right-click the database to change, and then click Properties.
+
+3)In the Database Properties dialog box, click the Options page.
+
+4)From the Restrict Access option, select Single.
+
+5)If other users are connected to the database, an Open Connections message will appear. To change the property and close all other connections, click Yes.
+
+Another Query you can try 
+=====================
+
+USE [master]; 
+GO 
+ALTER DATABASE GISPP02 SET SINGLE_USER WITH ROLLBACK IMMEDIATE; 
+GO 
+EXEC rdsadmin.dbo.rds_modify_db_name N'GISPP02', N'GISID60'
+

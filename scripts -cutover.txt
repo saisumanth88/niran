@@ -1,0 +1,48 @@
+Clearman:
+-----------
+To drop existing database:
+
+EXECUTE msdb.dbo.rds_drop_database  N'CLEARMANPRD'
+----
+To Restore db :
+
+exec msdb.dbo.rds_restore_database 
+@restore_db_name='CLEARMANPRD',
+@s3_arn_to_restore_from='arn:aws:s3:::s3-dbbackup-prj-prod-001/Dbbackups/SGN_RWMS_PRE_db_REQ0769981.BAK';
+------
+S3 Bucket path:
+s3://s3-dbbackup-prj-prod-001/Dbbackups/SGN_RWMS_PRE_db_REQ0769981.BAK
+
+s3://s3-dbbackup-prj-prod-001/Dbbackups/SGN_RWMS_PRD_FULL_20190610.bak
+-----
+
+To check Restore Progress:
+exec msdb.dbo.rds_task_status @db_name='CLEARMANPRD';
+
+---------------
+To Check db Compatiability:
+USE CLEARMANPRD;  
+GO  
+SELECT compatibility_level  
+FROM sys.databases WHERE name = 'CLEARMANPRD';
+
+--------
+To change db Compatiability:
+  
+ALTER DATABASE CLEARMANPRD  
+SET COMPATIBILITY_LEVEL = 110;  
+------------------
+to Modify db name:
+
+EXEC rdsadmin.dbo.rds_modify_db_name N’Old-db’, N’New-db’
+GO
+-----------
+To Check Orphan users:
+
+Exec sp_change_users_login Report
+
+---------
+To Fix orphan users:
+Exec sp_change_users_login 'update_one' , 'User-name','Login-Name'
+
+-----------------

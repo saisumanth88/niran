@@ -1,0 +1,43 @@
+
+
+
+impdp admin/Er24HmknkozPGXI@biqa.ceyhnx2ss1fw.eu-west-1.rds.amazonaws.com:1521/biqa DIRECTORY=DATA_PUMP_DIR dumpfile=obibiqa_%U.dmp parallel=4 logfile=OBIQA_IMPDP_FULL.log metrics=y transform=disable_archive_logging:Y schemas=AWSOBIEE,BIQA_IAU,BIQA_IAU_APPEND,BIQA_IAU_VIEWER,BIQA_MDS,BIQA_OPSS,BIQA_STB,BIQA_WLS,BIQA_WLS_RUNTIME,C##GGADMIN,C##SUILICCH
+
+obibiqa_01.dmp
+AWSOBIEE,BIQA_BIPLATFORM,BIQA_IAU,BIQA_IAU_APPEND,BIQA_IAU_VIEWER,BIQA_MDS,BIQA_OPSS,BIQA_STB,BIQA_WLS,BIQA_WLS_RUNTIME,C##GGADMIN,C##SUILICCH
+
+BIDATA
+BIMSPI
+C##AWSOBIEE
+INFORMREPDR
+INFORMREPPR
+OBIAW
+SBLEBU
+
+
+begin
+    rdsadmin.rdsadmin_password_verify.create_verify_function(
+        p_verify_function_name            => 'VODACOM_VERIFY_2019_SYSTEM', 
+        p_min_length                      => 8,
+		p_min_letters                     => 1,
+		p_min_different_chars             => 3,
+		p_min_lowercase					  => 1,
+		p_min_uppercase					  => 1,
+		p_min_special					  => 1,
+		p_disallow_username               => True,
+		p_disallow_reverse                => True,
+		p_disallow_db_name                => True,
+		p_disallow_simple_strings         => True,
+        p_min_digits                      => 1);
+end;
+/
+
+
+    
+
+
+tvbs04 - Vobil
+qifn001zafsax - Infinity
+dcrm001zacmax - OBI &ODI
+
+

@@ -1,0 +1,329 @@
+Endpoint : esol-qtdms-nonprd.c8gpfloe5wgu.eu-west-1.rds.amazonaws.com
+Master user : admin/Qf76HmknkozPGXI
+DB Name : QTDMS	
+Port : 1521
+
+
+
+select username,default_tablespace,temporary_tablespace,profile from dba_users where username in ('SIEBELEBU','DBA_AUTO','VRP_ADMIN','OEM_USER','TDMQA_DBA','TDMQA_ADMIN','VRP_LEGAL_USER');
+
+
+DMP_DATA
+LEGAL_DATA_TDE
+TDM_DATA
+USERS
+
+CREATE TABLESPACE LEGAL_DATA_TDE DATAFILE SIZE 5G AUTOEXTEND ON NEXT 10G maxsize unlimited; 
+CREATE BIGFILE TABLESPACE DMP_DATA DATAFILE SIZE 5G AUTOEXTEND ON NEXT 10G maxmize unlimited;
+CREATE BIGFILE TABLESPACE TDM_DATA DATAFILE SIZE 20G AUTOEXTEND ON NEXT 10G maxmize unlimited;
+ALTER TABLESPACE USERS AUTOEXTEND ON NEXT 100G MAXSIZE unlimited;
+
+
+
+GRANT UNLIMITED TABLESPACE TO TDMQA_ADMIN;
+ALTER USER "TDMQA_ADMIN" QUOTA UNLIMITED ON TDM_DATA;
+ALTER USER "TDMQA_ADMIN" QUOTA UNLIMITED ON USERS;
+ALTER USER "TDMQA_ADMIN" QUOTA UNLIMITED ON DMP_DATA;
+ALTER USER "TDMQA_ADMIN" QUOTA UNLIMITED ON USERS;
+
+
+
+GRANT UNLIMITED TABLESPACE TO VRP_LEGAL_USER;
+ALTER USER "VRP_LEGAL_USER" QUOTA UNLIMITED ON TDM_DATA;
+ALTER USER "VRP_LEGAL_USER" QUOTA UNLIMITED ON USERS;
+ALTER USER "VRP_LEGAL_USER" QUOTA UNLIMITED ON DMP_DATA;
+ALTER USER "VRP_LEGAL_USER" QUOTA UNLIMITED ON USERS;
+
+GRANT UNLIMITED TABLESPACE TO VRP_ADMIN;
+ALTER USER "VRP_ADMIN" QUOTA UNLIMITED ON TDM_DATA;
+ALTER USER "VRP_ADMIN" QUOTA UNLIMITED ON USERS;
+ALTER USER "VRP_ADMIN" QUOTA UNLIMITED ON DMP_DATA;
+ALTER USER "VRP_ADMIN" QUOTA UNLIMITED ON USERS;
+
+
+GRANT UNLIMITED TABLESPACE TO TDMQA_DBA;
+ALTER USER "TDMQA_DBA" QUOTA UNLIMITED ON TDM_DATA;
+ALTER USER "TDMQA_DBA" QUOTA UNLIMITED ON USERS;
+ALTER USER "TDMQA_DBA" QUOTA UNLIMITED ON DMP_DATA;
+ALTER USER "TDMQA_DBA" QUOTA UNLIMITED ON USERS;
+
+
+
+select USERNAME,PROFILE from dba_users where USERNAME in ('SIEBELEBU','DBA_AUTO','VRP_ADMIN','OEM_USER','TDMQA_DBA','TDMQA_ADMIN','VRP_LEGAL_USER');
+
+
+SELECT dbms_metadata.get_ddl('FUNCTION','VODACOM_PVF_2019_SYSTEM') "DDL" FROM dual;
+
+begin
+    rdsadmin.rdsadmin_password_verify.create_verify_function(
+        p_verify_function_name            => 'VODACOM_VERIFY_2019_SYSTEM', 
+        p_min_length                      => 16,
+		p_min_letters                     => 1,
+		p_min_different_chars             => 4,
+		p_min_lowercase					  => 1,
+		p_min_uppercase					  => 1,
+		p_min_special					  => 1,
+		p_disallow_username               => True,
+		p_disallow_reverse                => True,
+		p_disallow_db_name                => True,
+		p_disallow_simple_strings         => True,
+        p_min_digits                      => 1);
+end;
+/
+
+   CREATE PROFILE "VODA_NONEXPIRY"
+    LIMIT
+         COMPOSITE_LIMIT UNLIMITED
+         SESSIONS_PER_USER UNLIMITED
+         CPU_PER_SESSION UNLIMITED
+         CPU_PER_CALL UNLIMITED
+         LOGICAL_READS_PER_SESSION UNLIMITED
+         LOGICAL_READS_PER_CALL UNLIMITED
+         IDLE_TIME UNLIMITED
+         CONNECT_TIME UNLIMITED
+         PRIVATE_SGA UNLIMITED
+         FAILED_LOGIN_ATTEMPTS 5
+         PASSWORD_LIFE_TIME 31536000/86400
+         PASSWORD_REUSE_TIME 31536000/86400
+         PASSWORD_REUSE_MAX 6
+         PASSWORD_VERIFY_FUNCTION "VODACOM_VERIFY_2019_SYSTEM"
+         PASSWORD_LOCK_TIME UNLIMITED
+         PASSWORD_GRACE_TIME UNLIMITED
+         INACTIVE_ACCOUNT_TIME DEFAULT;
+
+
+create public DATABASE LINK QTDMS connect to admin identified by Qf76HmknkozPGXI using 
+'(DESCRIPTION = (ADDRESS = (PROTOCOL = TCP)(HOST = esol-qtdms-nonprd.c8gpfloe5wgu.eu-west-1.rds.amazonaws.com)(PORT = 1521)) (CONNECT_DATA = (SID = QTDMS)))'; 
+
+
+Export command:
+expdp \"/ as sysdba\"  dumpfile=rds_mig:TDMQA_EXPDP_META_191120_%U.dmp logfile=rds_mig:TDMQA_EXPDP_META_191120.log parallel=12 schemas=SIEBELEBU,DBA_AUTO,VRP_ADMIN,OEM_USER,TDMQA_DBA,TDMQA_ADMIN,VRP_LEGAL_USER metrics=y  content=metadata_only compression=all cluster=n
+
+
+
+expdp \"/ as sysdba\"  dumpfile=rds_mig:TDMQA_EXPDP_FULLD_201120_%U.dmp logfile=rds_mig:TDMQA_EXPDP_FULLD_201120.log parallel=12 schemas=SIEBELEBU,DBA_AUTO,VRP_ADMIN,OEM_USER,TDMQA_DBA,TDMQA_ADMIN,VRP_LEGAL_USER metrics=y EXCLUDE=STATISTICS compression=all cluster=n
+
+BEGIN
+DBMS_FILE_TRANSFER.PUT_FILE(
+source_directory_object       => 'rds_mig',
+source_file_name              => 'TDMQA_EXPDP_FULLD_191120_04.dmp',
+destination_directory_object  => 'DATA_PUMP_DIR',
+destination_file_name         => 'TDMQA_EXPDP_FULLD_191120_04.dmp',
+destination_database          => 'QTDMS' 
+);
+END;
+/ 
+
+Transfer files:
+using script:
+
+
+scr_file_prefix="TDMQA_EXPDP_FULLD_201120_copy_"
+op_file_prefix="output_copy_TDMQA_EXPDP_FULLD_201120_"
+dp_file_prefix="TDMQA_EXPDP_FULLD_201120_"
+for i in {01..18};
+do
+echo -e "BEGIN
+DBMS_FILE_TRANSFER.PUT_FILE(
+source_directory_object       => 'rds_mig',
+source_file_name              => '${dp_file_prefix}${i}.dmp',
+destination_directory_object  => 'DATA_PUMP_DIR',
+destination_file_name         => '${dp_file_prefix}${i}.dmp',
+destination_database          => 'QTDMS'
+);
+END;
+/ " > ${scr_file_prefix}${i}.sql
+echo $(date) > ${op_file_prefix}"${i}".out
+sqlplus -s "/ as sysdba" @${scr_file_prefix}"${i}".sql >> ${op_file_prefix}"${i}".out &
+sleep 2;
+done;
+
+
+
+
+
+
+DECLARE
+hdnl NUMBER;
+BEGIN
+hdnl := DBMS_DATAPUMP.OPEN( operation => 'IMPORT', job_mode => 'SCHEMA', job_name=>null);
+DBMS_DATAPUMP.ADD_FILE( handle => hdnl, filename => 'TDMQA_EXPDP_FULL_201120_%U.dmp', directory => 'DATA_PUMP_DIR', filetype => dbms_datapump.ku$_file_type_dump_file);
+DBMS_DATAPUMP.ADD_FILE( handle => hdnl, filename => 'TDMQA_IMPDP_FULL_201120.log', directory => 'DATA_PUMP_DIR', filetype => dbms_datapump.ku$_file_type_log_file);
+DBMS_DATAPUMP.SET_PARALLEL(handle => hdnl,degree => 60 );
+dbms_datapump.Metadata_filter(handle => hdnl, name => 'SCHEMA_EXPR', value => 'IN (''TDMQA_ADMIN'')');
+dbms_datapump.Set_parameter(handle => hdnl, name => 'INCLUDE_METADATA', value => 1);
+dbms_datapump.metadata_transform (handle => hdnl, name => 'DISABLE_ARCHIVE_LOGGING',value => 1 ,object_type => 'TABLE');
+dbms_datapump.set_parameter(handle => hdnl, name => 'METRICS', VALUE => 1);
+DBMS_DATAPUMP.START_JOB(hdnl);
+END;
+/
+
+DECLARE
+hdnl NUMBER;
+BEGIN
+hdnl := DBMS_DATAPUMP.OPEN( operation => 'IMPORT', job_mode => 'SCHEMA', job_name=>null);
+DBMS_DATAPUMP.ADD_FILE( handle => hdnl, filename => 'TDMQA_EXPDP_FULL_191120_%U.dmp', directory => 'DATA_PUMP_DIR', filetype => dbms_datapump.ku$_file_type_dump_file);
+DBMS_DATAPUMP.ADD_FILE( handle => hdnl, filename => 'TDMQA_IMPDP_FULL_191120_A.log', directory => 'DATA_PUMP_DIR', filetype => dbms_datapump.ku$_file_type_log_file);
+DBMS_DATAPUMP.SET_PARALLEL(handle => hdnl,degree => 60 );
+dbms_datapump.Metadata_filter(handle => hdnl, name => 'SCHEMA_EXPR', value => 'IN (''VRP_LEGAL_USER'')');
+dbms_datapump.Set_parameter(handle => hdnl, name => 'INCLUDE_METADATA', value => 1);
+dbms_datapump.metadata_transform (handle => hdnl, name => 'DISABLE_ARCHIVE_LOGGING',value => 1 ,object_type => 'TABLE');
+dbms_datapump.set_parameter(handle => hdnl, name => 'METRICS', VALUE => 1);
+DBMS_DATAPUMP.START_JOB(hdnl);
+END;
+/
+
+DECLARE
+hdnl NUMBER;
+BEGIN
+hdnl := DBMS_DATAPUMP.OPEN( operation => 'IMPORT', job_mode => 'SCHEMA', job_name=>null);
+DBMS_DATAPUMP.ADD_FILE( handle => hdnl, filename => 'TDMQA_EXPDP_FULL_191120_%U.dmp', directory => 'DATA_PUMP_DIR', filetype => dbms_datapump.ku$_file_type_dump_file);
+DBMS_DATAPUMP.ADD_FILE( handle => hdnl, filename => 'TDMQA_IMPDP_FULL_191120_A.log', directory => 'DATA_PUMP_DIR', filetype => dbms_datapump.ku$_file_type_log_file);
+DBMS_DATAPUMP.SET_PARALLEL(handle => hdnl,degree => 60 );
+dbms_datapump.Metadata_filter(handle => hdnl, name => 'SCHEMA_EXPR', value => 'IN (''VRP_ADMIN'')');
+dbms_datapump.Set_parameter(handle => hdnl, name => 'INCLUDE_METADATA', value => 1);
+dbms_datapump.metadata_transform (handle => hdnl, name => 'DISABLE_ARCHIVE_LOGGING',value => 1 ,object_type => 'TABLE');
+dbms_datapump.set_parameter(handle => hdnl, name => 'METRICS', VALUE => 1);
+DBMS_DATAPUMP.START_JOB(hdnl);
+END;
+/
+
+
+impdp admin/Qf76HmknkozPGXI@esol-qtdms-nonprd.c8gpfloe5wgu.eu-west-1.rds.amazonaws.com:1521/QTDMS DIRECTORY=DATA_PUMP_DIR dumpfile=TDMQA_EXPDP_FULLD_201120_%U.dmp parallel=10 logfile=TDMQA_IMPDP_FULL.log metrics=y transform=disable_archive_logging:Y
+
+
+select owner, object_type,status, count(*) from dba_objects where owner in ('SIEBELEBU','DBA_AUTO','VRP_ADMIN','OEM_USER','TDMQA_DBA','TDMQA_ADMIN','VRP_LEGAL_USER') group by owner,object_type,status order by 3 desc;
+
+grants:
+
+
+
+SELECT 'GRANT '  ||privilege || ' TO ' ||  grantee || ';'   FROM DBA_SYS_PRIVS  WHERE GRANTEE  in ('SIEBELEBU','DBA_AUTO','VRP_ADMIN','OEM_USER','TDMQA_DBA','TDMQA_ADMIN','VRP_LEGAL_USER')
+
+union all
+
+SELECT 'GRANT '  ||GRANTED_ROLE || ' TO ' ||  grantee || ';'  FROM DBA_ROLE_PRIVS   WHERE GRANTEE  in ('SIEBELEBU','DBA_AUTO','VRP_ADMIN','OEM_USER','TDMQA_DBA','TDMQA_ADMIN','VRP_LEGAL_USER')
+
+union all
+
+select 'grant '||privilege||' on '||owner||'.'||table_name||' to '||grantee  ||case when grantable = 'YES' then ' with grant option' else null end  ||';' from dba_tab_privs where owner  in ('SIEBELEBU','DBA_AUTO','VRP_ADMIN','OEM_USER','TDMQA_DBA','TDMQA_ADMIN','VRP_LEGAL_USER')and grantee in ( select role from dba_roles ) and table_name not in ( select directory_name from dba_directories )
+
+union all
+
+select 'grant '||privilege||' on directory '||table_name||' to '||grantee    ||case when grantable = 'YES' then ' with grant option' else null end  ||';' from dba_tab_privs where owner  in ('SIEBELEBU','DBA_AUTO','VRP_ADMIN','OEM_USER','TDMQA_DBA','TDMQA_ADMIN','VRP_LEGAL_USER') and grantee in ( select role from dba_roles ) and table_name  in ( select directory_name from dba_directories )
+
+union all
+
+select 'grant '||privilege||' on '||owner||'.'||table_name||' to '||grantee  ||case when grantable = 'YES' then ' with grant option' else null end  ||';' from dba_tab_privs where owner  in ('SIEBELEBU','DBA_AUTO','VRP_ADMIN','OEM_USER','TDMQA_DBA','TDMQA_ADMIN','VRP_LEGAL_USER') and grantee in ( select username from dba_users );
+
+
+
+
+GRANT ADMINISTER ANY SQL TUNING SET TO VRP_LEGAL_USER;
+GRANT ADMINISTER SQL MANAGEMENT OBJECT TO VRP_LEGAL_USER;
+GRANT ADVISOR TO VRP_LEGAL_USER;
+GRANT ALTER ANY ASSEMBLY TO VRP_LEGAL_USER;
+GRANT ALTER ANY CUBE TO VRP_LEGAL_USER;
+GRANT ALTER ANY EDITION TO VRP_LEGAL_USER;
+GRANT ALTER ANY INDEX TO VRP_LEGAL_USER;
+GRANT ALTER ANY INDEXTYPE TO VRP_LEGAL_USER;
+GRANT ALTER ANY LIBRARY TO VRP_LEGAL_USER;
+GRANT ALTER ANY MINING MODEL TO VRP_LEGAL_USER;
+GRANT ALTER ANY SEQUENCE TO VRP_LEGAL_USER;
+GRANT ALTER ANY TABLE TO VRP_LEGAL_USER;
+GRANT ALTER ANY TRIGGER TO VRP_LEGAL_USER;
+GRANT ALTER DATABASE TO VRP_LEGAL_USER;
+GRANT ALTER PROFILE TO VRP_LEGAL_USER;
+GRANT ALTER PUBLIC DATABASE LINK TO VRP_LEGAL_USER;
+GRANT ALTER ROLLBACK SEGMENT TO VRP_LEGAL_USER;
+GRANT ALTER TABLESPACE TO VRP_LEGAL_USER;
+GRANT ANALYZE ANY DICTIONARY TO VRP_LEGAL_USER;
+GRANT BECOME USER TO VRP_LEGAL_USER;
+GRANT CHANGE NOTIFICATION TO VRP_LEGAL_USER;
+GRANT CREATE ANY CUBE BUILD PROCESS TO VRP_LEGAL_USER;
+GRANT CREATE ANY CUBE TO VRP_LEGAL_USER;
+GRANT CREATE ANY DIMENSION TO VRP_LEGAL_USER;
+GRANT CREATE ANY DIRECTORY TO VRP_LEGAL_USER;
+GRANT CREATE ANY INDEX TO VRP_LEGAL_USER;
+GRANT CREATE ANY LIBRARY TO VRP_LEGAL_USER;
+GRANT CREATE ANY MATERIALIZED VIEW TO VRP_LEGAL_USER;
+GRANT CREATE ANY OPERATOR TO VRP_LEGAL_USER;
+GRANT CREATE ANY OUTLINE TO VRP_LEGAL_USER;
+GRANT CREATE ANY PROCEDURE TO VRP_LEGAL_USER;
+GRANT CREATE ANY SEQUENCE TO VRP_LEGAL_USER;
+GRANT CREATE ANY SQL PROFILE TO VRP_LEGAL_USER;
+GRANT CREATE ANY TABLE TO VRP_LEGAL_USER;
+GRANT CREATE ANY TRIGGER TO VRP_LEGAL_USER;
+GRANT CREATE ANY VIEW TO VRP_LEGAL_USER;
+GRANT CREATE ASSEMBLY TO VRP_LEGAL_USER;
+GRANT CREATE CLUSTER TO VRP_LEGAL_USER;
+GRANT CREATE CREDENTIAL TO VRP_LEGAL_USER;
+GRANT CREATE DATABASE LINK TO VRP_LEGAL_USER;
+GRANT CREATE EXTERNAL JOB TO VRP_LEGAL_USER;
+GRANT CREATE JOB TO VRP_LEGAL_USER;
+GRANT CREATE LIBRARY TO VRP_LEGAL_USER;
+GRANT CREATE MINING MODEL TO VRP_LEGAL_USER;
+GRANT CREATE OPERATOR TO VRP_LEGAL_USER;
+GRANT CREATE PROCEDURE TO TDMQA_ADMIN;
+GRANT CREATE PROCEDURE TO VRP_ADMIN;
+GRANT CREATE PROCEDURE TO VRP_LEGAL_USER;
+GRANT CREATE SEQUENCE TO TDMQA_ADMIN;
+GRANT CREATE SEQUENCE TO VRP_ADMIN;
+GRANT CREATE SEQUENCE TO VRP_LEGAL_USER;
+GRANT CREATE SESSION TO TDMQA_ADMIN;
+GRANT CREATE SESSION TO VRP_ADMIN;
+GRANT CREATE SESSION TO VRP_LEGAL_USER;
+GRANT CREATE SYNONYM TO TDMQA_ADMIN;
+GRANT CREATE SYNONYM TO VRP_ADMIN;
+GRANT CREATE TABLE TO TDMQA_ADMIN;
+GRANT CREATE TABLE TO VRP_ADMIN;
+GRANT CREATE TABLE TO VRP_LEGAL_USER;
+GRANT CREATE TABLESPACE TO VRP_LEGAL_USER;
+GRANT CREATE TRIGGER TO TDMQA_ADMIN;
+GRANT CREATE TRIGGER TO VRP_ADMIN;
+GRANT CREATE TRIGGER TO VRP_LEGAL_USER;
+GRANT CREATE USER TO VRP_LEGAL_USER;
+GRANT CREATE VIEW TO TDMQA_ADMIN;
+GRANT CREATE VIEW TO VRP_ADMIN;
+GRANT CREATE VIEW TO VRP_LEGAL_USER;
+GRANT DBA TO TDMQA_DBA;
+GRANT DEBUG CONNECT SESSION TO VRP_LEGAL_USER;
+GRANT DROP ANY DIMENSION TO VRP_LEGAL_USER;
+GRANT DROP ANY DIRECTORY TO VRP_LEGAL_USER;
+GRANT DROP ANY INDEXTYPE TO VRP_LEGAL_USER;
+GRANT DROP ANY MINING MODEL TO VRP_LEGAL_USER;
+GRANT DROP ANY OPERATOR TO VRP_LEGAL_USER;
+GRANT DROP ANY SQL PROFILE TO VRP_LEGAL_USER;
+GRANT DROP ANY TRIGGER TO VRP_LEGAL_USER;
+GRANT DROP ANY TYPE TO VRP_LEGAL_USER;
+GRANT DROP PROFILE TO VRP_LEGAL_USER;
+GRANT DROP PUBLIC SYNONYM TO VRP_LEGAL_USER;
+GRANT DROP ROLLBACK SEGMENT TO VRP_LEGAL_USER;
+GRANT DROP TABLESPACE TO VRP_LEGAL_USER;
+GRANT DROP USER TO VRP_LEGAL_USER;
+GRANT EXECUTE ANY CLASS TO VRP_LEGAL_USER;
+GRANT EXECUTE ANY INDEXTYPE TO VRP_LEGAL_USER;
+GRANT EXECUTE ANY OPERATOR TO VRP_LEGAL_USER;
+GRANT EXECUTE ANY TYPE TO VRP_LEGAL_USER;
+GRANT EXECUTE ASSEMBLY TO VRP_LEGAL_USER;
+GRANT EXEMPT IDENTITY POLICY TO VRP_LEGAL_USER;
+GRANT FLASHBACK ANY TABLE TO VRP_LEGAL_USER;
+GRANT FORCE ANY TRANSACTION TO VRP_LEGAL_USER;
+GRANT GRANT ANY OBJECT PRIVILEGE TO VRP_LEGAL_USER;
+GRANT INSERT ANY TABLE TO VRP_LEGAL_USER;
+GRANT LOCK ANY TABLE TO VRP_LEGAL_USER;
+GRANT LOGMINING TO VRP_LEGAL_USER;
+GRANT MANAGE TABLESPACE TO VRP_LEGAL_USER;
+GRANT ON COMMIT REFRESH TO VRP_LEGAL_USER;
+GRANT SELECT ANY CUBE TO VRP_LEGAL_USER;
+GRANT SELECT ANY DICTIONARY TO TDMQA_ADMIN;
+GRANT SELECT ANY DICTIONARY TO VRP_ADMIN;
+GRANT SELECT ANY MINING MODEL TO VRP_LEGAL_USER;
+GRANT SELECT ANY SEQUENCE TO VRP_LEGAL_USER;
+GRANT SELECT ANY TABLE TO VRP_LEGAL_USER;
+GRANT SELECT ANY TRANSACTION TO VRP_LEGAL_USER;
+GRANT UNLIMITED TABLESPACE TO TDMQA_ADMIN;
+GRANT UNLIMITED TABLESPACE TO TDMQA_DBA;
+GRANT UPDATE ANY CUBE DIMENSION TO VRP_LEGAL_USER;
+GRANT UPDATE ANY CUBE TO VRP_LEGAL_USER;
+GRANT UPDATE ANY TABLE TO VRP_LEGAL_USER;

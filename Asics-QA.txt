@@ -1,0 +1,163 @@
+Endpoint : asic-qa-nonprod.ckpd0trkkrb0.eu-west-1.rds.amazonaws.com
+Master user : admin/DH86HmknkozPGXI
+DB Name : ASICQA	
+Port : 1521
+
+
+select username,default_tablespace,temporary_tablespace,profile from dba_users where username in ('ARC');
+
+USERS
+
+ALTER TABLESPACE USERS AUTOEXTEND ON NEXT 30G MAXSIZE unlimited;
+alter TABLESPACE USERS resize 20G;
+###ALTER TABLESPACE USERS ADD DATAFILE SIZE 10G AUTOEXTEND ON NEXT 10G MAXSIZE UNLIMITED;
+ALTER USER "ARC" QUOTA UNLIMITED ON USERS;
+
+
+
+
+
+SELECT dbms_metadata.get_ddl('FUNCTION','VODACOM_PVF_2019_SYSTEM') "DDL" FROM dual;
+
+begin
+    rdsadmin.rdsadmin_password_verify.create_verify_function(
+        p_verify_function_name            => 'VODACOM_VERIFY_2019_SYSTEM', 
+        p_min_length                      => 16,
+		p_min_letters                     => 1,
+		p_min_different_chars             => 4,
+		p_min_lowercase					  => 1,
+		p_min_uppercase					  => 1,
+		p_min_special					  => 1,
+		p_disallow_username               => True,
+		p_disallow_reverse                => True,
+		p_disallow_db_name                => True,
+		p_disallow_simple_strings         => True,
+        p_min_digits                      => 1);
+end;
+/	
+
+
+
+
+   CREATE PROFILE "VODA_NONEXPIRY"
+    LIMIT 
+         COMPOSITE_LIMIT UNLIMITED 
+         SESSIONS_PER_USER UNLIMITED 
+         CPU_PER_SESSION UNLIMITED 
+         CPU_PER_CALL UNLIMITED 
+         LOGICAL_READS_PER_SESSION UNLIMITED 
+         LOGICAL_READS_PER_CALL UNLIMITED 
+         IDLE_TIME UNLIMITED 
+         CONNECT_TIME UNLIMITED 
+         PRIVATE_SGA UNLIMITED 
+         FAILED_LOGIN_ATTEMPTS 5 
+         PASSWORD_LIFE_TIME 31536000/86400 
+         PASSWORD_REUSE_TIME 31536000/86400 
+         PASSWORD_REUSE_MAX 6 
+         PASSWORD_VERIFY_FUNCTION "VODACOM_VERIFY_2019_SYSTEM" 
+         PASSWORD_LOCK_TIME UNLIMITED 
+         PASSWORD_GRACE_TIME UNLIMITED 
+         INACTIVE_ACCOUNT_TIME DEFAULT ;
+		 
+		
+create public DATABASE LINK ASICQA connect to admin identified by DH86HmknkozPGXI using 
+'(DESCRIPTION = (ADDRESS = (PROTOCOL = TCP)(HOST = asic-qa-nonprod.ckpd0trkkrb0.eu-west-1.rds.amazonaws.com)(PORT = 1521)) (CONNECT_DATA = (SID = ASICQA)))'; 
+
+		
+expdp \"/ as sysdba\"  dumpfile=rds_mig:QARC_EXPDP_FULL_121120_%U.dmp logfile=rds_mig:QARC_EXPDP_FULL_121120.log parallel=2 schemas=ARC metrics=y EXCLUDE=STATISTICS compression=all cluster=n
+
+BEGIN
+DBMS_FILE_TRANSFER.PUT_FILE(
+source_directory_object       => 'rds_mig',
+source_file_name              => 'QARC_EXPDP_FULL_121120_02.dmp',
+destination_directory_object  => 'DATA_PUMP_DIR',
+destination_file_name         => 'QARC_EXPDP_FULL_121120_02.dmp',
+destination_database          => 'ASICQA' 
+);
+END;
+/ 
+
+
+create role READ_ONLY;
+
+
+DECLARE
+hdnl NUMBER;
+BEGIN
+hdnl := DBMS_DATAPUMP.OPEN( operation => 'IMPORT', job_mode => 'SCHEMA', job_name=>null);
+DBMS_DATAPUMP.ADD_FILE( handle => hdnl, filename => 'QARC_EXPDP_FULL_121120_%U.dmp', directory => 'DATA_PUMP_DIR', filetype => dbms_datapump.ku$_file_type_dump_file);
+DBMS_DATAPUMP.ADD_FILE( handle => hdnl, filename => 'QARC_EXPDP_FULL_131120.log', directory => 'DATA_PUMP_DIR', filetype => dbms_datapump.ku$_file_type_log_file);
+DBMS_DATAPUMP.SET_PARALLEL(handle => hdnl,degree => 50 );
+dbms_datapump.Metadata_filter(handle => hdnl, name => 'SCHEMA_EXPR', value => 'IN (''ARC'')');
+dbms_datapump.Set_parameter(handle => hdnl, name => 'INCLUDE_METADATA', value => 1);
+dbms_datapump.metadata_transform (handle => hdnl, name => 'DISABLE_ARCHIVE_LOGGING',value => 1 ,object_type => 'TABLE');
+dbms_datapump.set_parameter(handle => hdnl, name => 'METRICS', VALUE => 1);
+DBMS_DATAPUMP.START_JOB(hdnl);
+END;
+/
+
+
+
+
+
+SELECT 'GRANT '  ||privilege || ' TO ' ||  grantee || ';'   FROM DBA_SYS_PRIVS  WHERE GRANTEE  in ('ARC')
+
+union all
+
+SELECT 'GRANT '  ||GRANTED_ROLE || ' TO ' ||  grantee || ';'  FROM DBA_ROLE_PRIVS   WHERE GRANTEE  in ('ARC')
+
+union all
+
+select 'grant '||privilege||' on '||owner||'.'||table_name||' to '||grantee  ||case when grantable = 'YES' then ' with grant option' else null end  ||';' from dba_tab_privs where owner  in ('ARC') and grantee in ( select role from dba_roles ) and table_name not  in ( select directory_name from dba_directories )
+
+union all
+
+select 'grant '||privilege||' on directory '||table_name||' to '||grantee    ||case when grantable = 'YES' then ' with grant option' else null end  ||';' from dba_tab_privs where owner  in ('ARC') and grantee in ( select role from dba_roles ) and table_name  in ( select directory_name from dba_directories )
+
+union all
+
+select 'grant '||privilege||' on '||owner||'.'||table_name||' to '||grantee  ||case when grantable = 'YES' then ' with grant option' else null end  ||';' from dba_tab_privs where owner  in ('ARC') and grantee in ( select username from dba_users )
+
+
+SELECT * FROM dba_role_privs WHERE GRANTEE in ('READ_ONLY';);
+select 'GRANT '  || PRIVILEGE || ' ON ' || owner||'.'||TABLE_name|| ' TO ' ||role||';' from role_tab_privs where ROLE in ('READ_ONLY';);
+select 'GRANT ' || GRANTED_ROLE||' TO ' ||GRANTEE||';' from dba_role_privs where GRANTED_ROLE in ('READ_ONLY';);
+select 'GRANT ' || GRANTED_ROLE||' TO ' ||GRANTEE||';' from dba_role_privs where GRANTEE in ('READ_ONLY';);
+select 'GRANT '  || PRIVILEGE || ' ON ' || owner||'.'||TABLE_name|| ' TO ' ||grantee||';' from DBA_TAB_PRIVS where grantee in ('READ_ONLY';);
+
+
+
+qarc.__data_transfer_cache_size=0
+qarc.__db_cache_size=1375731712
+qarc.__inmemory_ext_roarea=0
+qarc.__inmemory_ext_rwarea=0
+qarc.__java_pool_size=16777216
+qarc.__large_pool_size=33554432
+qarc.__oracle_base='/opt/apps/oracle'#ORACLE_BASE set from environment
+qarc.__pga_aggregate_target=2147483648
+qarc.__sga_target=2466250752
+qarc.__shared_io_pool_size=134217728
+qarc.__shared_pool_size=855638016
+qarc.__streams_pool_size=33554432
+*._enable_ptime_update_for_sys=TRUE
+*.audit_file_dest='/opt/apps/oracle/admin/qarc/adump'
+*.audit_trail='DB'
+*.compatible='12.1.0.2.0'
+*.control_files='+DATA/QARC/CONTROLFILE/current.261.907833261','+REDO/QARC/CONTROLFILE/current.256.907833261'
+*.db_block_size=8192
+*.db_create_file_dest='+DATA'
+*.db_domain=''
+*.db_name='qarc'
+*.db_recovery_file_dest_size=4781506560
+*.db_recovery_file_dest='+REDO'
+*.db_unique_name='qarc'
+*.diagnostic_dest='/opt/apps/oracle'
+*.dispatchers='(PROTOCOL=TCP) (SERVICE=qarcXDB)'
+*.local_listener='LISTENER_QARC'
+*.open_cursors=300
+*.pga_aggregate_limit=4294967296
+*.pga_aggregate_target=2147483648
+*.processes=300
+*.remote_login_passwordfile='EXCLUSIVE'
+*.sga_target=2466250752
+		 
