@@ -1,0 +1,111 @@
+ENDPOINT: spatial-development.cvm1tn8qmkgn.af-south-1.rds.amazonaws.com
+PORT: 1521
+DBNAME: DSPXMAP
+username: admin
+password: spaexch_2020
+Schema Name : SPXSYS
+
+
+dblogin userid ggadmin@spatialdevonprem
+Temple$1
+
+dblogin userid ggadmin@spatialdevrds
+Ggadmin_rds_Pr0
+
+SELECT owner, object_name FROM DBA_GOLDENGATE_SUPPORT_MODE WHERE support_mode NOT IN ('FULL','ID_KEY')
+select distinct owner FROM DBA_GOLDENGATE_SUPPORT_MODE WHERE support_mode NOT IN ('FULL','ID_KEY');
+
+SET GLOBALS - ignore if already exists
+=======================================
+
+loging to ggsci from locating at $GGHOME
+---------------------------------------
+*******************************************
+CREATE SUBDIRS 
+vi GLOBALS
+CheckpointTable ggadmin.spatial_dev_ckpt
+*******************************************
+
+Configure Manager Process
+=========================
+edit params mgr for manager process
+-----------------------------------
+*******************************************
+edit params mgr
+PORT 7809
+PurgeOldExtracts /home/oracle/app/product/gg/dirdat/*, UseCheckpoints, MINKEEPDAYS 30
+
+start mgr (should be login as ggsci located at $GGHOME)
+*******************************************
+
+CHANGE SYNC
+=============
+
+edit params d2cse for extract change sync
+------------------------------------------
+*******************************************
+edit params d2cse
+EXTRACT d2cse
+SETENV (ORACLE_SID=spatialdevonprem)
+SETENV (NLSLANG=WE8MSWIN1252)
+USERID ggadmin@spatialdevonprem, PASSWORD Temple$1
+EXTTRAIL /home/oracle/app/product/gg/dirdat/d2
+IGNOREREPLICATES
+GETAPPLOPS
+TRANLOGOPTIONS EXCLUDEUSER ggadmin INTEGRATEDPARAMS (PARALLELISM 6)
+DDL INCLUDE MAPPED
+DDLOPTIONS ADDTRANDATA
+TABLE SPXSYS.*;
+
+*******************************************
+
+connect to source db from hub using ggsci
+------------------------------------------
+*******************************************
+dblogin userid ggadmin@spatialdevonprem password Temple$1
+add checkpointtable ggadmin.spatial_dev_ckpt
+add trandata SPXSYS.*
+
+add extract d2cse tranlog, INTEGRATED tranlog, SCN 14772558317893
+add exttrail /home/oracle/app/product/gg/dirdat/d2 extract d2cse
+
+register EXTRACT d2cse, DATABASE  
+
+start extract d2cse ATCSN 14772558317893
+*******************************************
+
+OUTPUT post register extract process
+-----------------------------------
+2020-11-06 06:22:46  INFO    OGG-02003  Extract D2CSE successfully registered with database at SCN 14772558412349.
+
+
+
+edit params d2csr for replicat change sync
+-------------------------------------------
+*******************************************
+edit params d2csr
+REPLICAT d2csr
+SETENV (ORACLE_SID=dspxmap)
+SETENV (NLSLANG=WE8MSWIN1252)
+USERID ggadmin@spatialdevrds, password Ggadmin_rds_Pr0
+ASSUMETARGETDEFS
+REPERROR (DEFAULT, ABEND)
+REPERROR (-1, IGNORE)
+DDLERROR DEFAULT IGNORE
+MAP_PARALLELISM 2
+APPLY_PARALLELISM 2
+MAPEXCLUDE SPXSYS.RAN_2G_CELL_CHG_MV
+MAPEXCLUDE SPXSYS.RAN_3G_CELL_CHG_MV
+MAPEXCLUDE SPXSYS.RAN_4G_CELL_CHG_MV
+MAP SPXSYS.*, TARGET SPXSYS.*;
+
+*******************************************
+
+connect to target db from hub using ggsci
+------------------------------------------
+*******************************************
+dblogin userid ggadmin@spatialdevrds password Ggadmin_rds_Pr0
+add checkpointtable ggadmin.spatial_dev_ckpt
+add replicat d2csr, integrated, parallel, exttrail /home/oracle/app/product/gg/dirdat/d2
+start d2csr (dont start until inial load) start if inital load finished)
+*******************************************
