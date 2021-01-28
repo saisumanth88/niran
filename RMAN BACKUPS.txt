@@ -1,0 +1,92 @@
+FULL BACK :
+
+[oracle@odfhmtrimdc5mdl scripts]$ cat fullbackup.rcv
+run {
+allocate channel dev1 DEVICE TYPE 'SBT_TAPE' PARMS 'ENV=(OSB_WS_PFILE=/u01/app/oracle/product/12.2.0.1/dbhome_1/dbs/osbwsMRPSPRD.ora),SBT_LIBRARY=/u01/app/oracle/product/12.2.0.1/dbhome_1/lib/libosbws.so';
+allocate channel dev2 DEVICE TYPE 'SBT_TAPE' PARMS 'ENV=(OSB_WS_PFILE=/u01/app/oracle/product/12.2.0.1/dbhome_1/dbs/osbwsMRPSPRD.ora),SBT_LIBRARY=/u01/app/oracle/product/12.2.0.1/dbhome_1/lib/libosbws.so';
+allocate channel dev3 DEVICE TYPE 'SBT_TAPE' PARMS 'ENV=(OSB_WS_PFILE=/u01/app/oracle/product/12.2.0.1/dbhome_1/dbs/osbwsMRPSPRD.ora),SBT_LIBRARY=/u01/app/oracle/product/12.2.0.1/dbhome_1/lib/libosbws.so';
+sql 'alter system switch logfile';
+sql 'alter system switch logfile';
+sql 'alter system switch logfile';
+backup as compressed backupset database;
+sql 'alter system archive log current';
+backup as compressed backupset archivelog all not backed up;
+backup current controlfile;
+}
+allocate channel for maintenance device type disk;
+delete archivelog all completed before 'sysdate-10';
+
+ARCHIVE BACKUP:
+
+[oracle@odfhmtrimdc5mdl scripts]$ cat archivebackup.rcv
+run {
+allocate channel ch1 DEVICE TYPE 'SBT_TAPE' PARMS 'ENV=(OSB_WS_PFILE=/u01/app/oracle/product/12.2.0.1/dbhome_1/dbs/osbwsMRPSPRD.ora),SBT_LIBRARY=/u01/app/oracle/product/12.2.0.1/dbhome_1/lib/libosbws.so';
+allocate channel ch2 DEVICE TYPE 'SBT_TAPE' PARMS 'ENV=(OSB_WS_PFILE=/u01/app/oracle/product/12.2.0.1/dbhome_1/dbs/osbwsMRPSPRD.ora),SBT_LIBRARY=/u01/app/oracle/product/12.2.0.1/dbhome_1/lib/libosbws.so';
+allocate channel ch3 DEVICE TYPE 'SBT_TAPE' PARMS 'ENV=(OSB_WS_PFILE=/u01/app/oracle/product/12.2.0.1/dbhome_1/dbs/osbwsMRPSPRD.ora),SBT_LIBRARY=/u01/app/oracle/product/12.2.0.1/dbhome_1/lib/libosbws.so';
+sql 'alter system switch logfile';
+sql 'alter system switch logfile';
+sql 'alter system switch logfile';
+backup as compressed backupset archivelog all not backed up;
+sql 'alter system archive log current';
+backup current controlfile;
+backup spfile;
+}
+
+
+TO RUN THE RMAN FULL JOB:
+
+[oracle@odfhmtrimdc5mdl scripts]$ cat rman_full.sh
+#!/bin/bash
+. /u01/Backup/scripts/MRPSPRD.env
+logdate=`date '+%Y-%m-%d_%H:%M:%S'`
+
+CHECKDB=$(sqlplus -s / as sysdba <<EOF
+set head off  feed off pages 0 embedded off
+select open_mode from v\$database;
+exit;
+EOF
+)
+if [[ $CHECKDB == *WRITE* ]]; then
+echo "DB In Write Mode"
+rman target / @/u01/Backup/scripts/fullbackup.rcv log=/u01/Backup/scripts/logs/fullbackup_$logdate.log
+find /u01/Backup/scripts/logs/ -type f -name '*.log' -mtime +7 -exec rm {} \;
+else
+echo "DB Standby Server"
+fi
+exit
+[oracle@odfhmtrimdc5mdl scripts]$
+
+
+TO RUN THE ARCHIVE JOB:
+
+[oracle@odfhmtrimdc5mdl scripts]$ cat rman_archive.sh
+#!/bin/bash
+. /u01/Backup/scripts/MRPSPRD.env
+logdate=`date '+%Y-%m-%d_%H:%M:%S'`
+
+CHECKDB=$(sqlplus -s / as sysdba <<EOF
+set head off  feed off pages 0 embedded off
+select open_mode from v\$database;
+exit;
+EOF
+)
+if [[ $CHECKDB == *WRITE* ]]; then
+echo "DB In Write Mode"
+rman target / @/u01/Backup/scripts/archivebackup.rcv log=/u01/Backup/scripts/logs/archivebackup_$logdate.log
+else
+echo "DB Standby Server"
+fi
+exit
+
+
+Create the directories in the below structure where the logs fall in logs folder:
+
+[oracle@odfhmtrimdc5mdl scripts]$ ls -ltr
+total 112
+-rw-r--r--. 1 oracle oinstall   872 Feb 15 12:05 archivebackup.rcv
+-rwxrwxrwx. 1 oracle oinstall   157 Feb 15 12:19 MRPSPRD.env
+-rwxrwxrwx. 1 oracle oinstall   491 Feb 27 16:33 rman_full.sh
+-rwxrwxrwx. 1 oracle oinstall   420 Feb 27 16:34 rman_archive.sh
+-rw-r--r--. 1 oracle oinstall 11396 Mar 14 09:46 osbws_readme.txt
+-rw-r--r--. 1 oracle oinstall  1005 Mar 27 10:20 fullbackup.rcv
+drwxr-xr-x. 2 oracle oinstall 81920 May 12 21:46 logs
