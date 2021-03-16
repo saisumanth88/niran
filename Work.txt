@@ -1,0 +1,415 @@
+exec utl_file.fremove('DATA_PUMP_DIR','/rdsdbdata/datapump/maximo_%U.dmp');
+SELECT text FROM table(rdsadmin.rds_file_util.read_text_file('DATA_PUMP_DIR','spxmapags_impdp_7321.log'));
+select * from table(RDSADMIN.RDS_FILE_UTIL.LISTDIR('DATA_PUMP_DIR')) order by mtime;
+select table_name,to_number(extractvalue(xmltype(dbms_xmlgen.getxml('select count(*) c from GQMMGR.'||table_name)) ,'/ROWSET/ROW/C')) count from dba_tables where owner='GQMMGR';
+
+select * from nls_database_parameters where parameter='NLS_CHARACTERSET';
+select NLS_CHARACTERSET from nls_database_parameters;
+
+select object_type,count(*) from dba_objects where owner in ('MAXRPD') group by object_type;
+select owner, object_type,status, count(*) from dba_objects where owner='MAXIMO' group by owner,object_type,status order by 3 desc;
+
+select distinct tablespace_name from dba_tablespaces;
+select tablespace_name,bigfile from dba_tablespaces;
+select * from dba_profiles;
+select distinct profile from dba_profiles;
+ select 'alter  user "'||USERNAME||'" QUOTA UNLIMITED on "'||TABLESPACE_NAME||'" ;' from dba_ts_quotas where username in ('INFOWEB','RDSCONF','RDSEIS','RDSINTF','RDSREPGEN','RDSREPO','RDSTAGE','RDS_EIS','RDS_HPS','ARCHIVING_MANAGER','CDW_RO','ICAP','ICAP_INT','RDSREGENP','RDSTEMP','RDSTORE','RDSUPPORT','RDS_CDM','RDS_CPS','RDS_VVW','RDS_ZEE','SPS','TANDEM','UCMDB','CMC');
+
+select RESOURCE_NAME,LIMIT from dba_profiles where profile='VODA_NONEXPIRY';
+select username,default_tablespace,temporary_tablespace,profile from dba_users where username in ('SIEBELEBU','DBA_AUTO','VRP_ADMIN','OEM_USER','TDMQA_DBA','TDMQA_ADMIN','VRP_LEGAL_USER');
+
+select owner, sum(bytes/1024/1024/1024) from dba_segments  group by owner;
+select sum(bytes/1024/1024/1024) as GB from dba_segments;
+select segment_name,segment_type,bytes/1024/1024 MB,owner from dba_segments where segment_type='TABLE' and owner='TDMPRD_ADMIN';
+
+select segment_name,segment_type,bytes/1024/1024 MB,owner from dba_segments where owner='TDMPRD_ADMIN';
+select owner,tablespace_name,sum(bytes)/1024/1024/1024 "IN GB" from dba_segments group by owner,tablespace_name; 
+DG_AWS/
+
+select * from dba_tablespaces;
+
+select df.tablespace_name "Tablespace",
+totalusedspace "Used MB",
+(df.totalspace - tu.totalusedspace) "Free MB",
+df.totalspace "Total MB",
+round(100 * ( (df.totalspace - tu.totalusedspace)/ df.totalspace))
+"Pct. Free"
+from
+(select tablespace_name,
+round(sum(bytes) / 1048576) TotalSpace
+from dba_data_files 
+group by tablespace_name) df,
+(select round(sum(bytes)/(1024*1024)) totalusedspace, tablespace_name
+from dba_segments 
+group by tablespace_name) tu
+where df.tablespace_name = tu.tablespace_name ;
+
+select d.tablespace_name "TS",
+   (select round(sum(s.bytes/(1024*1024)),2)
+      from dba_segments s
+      where (s.tablespace_name = d.tablespace_name)
+      group by s.tablespace_name) "Used",
+round(d.bytes/(1024*1024)) "FSize",
+round((select sum(s.bytes/(1024*1024))
+  from dba_segments s
+  where s.tablespace_name = d.tablespace_name
+  group by s.tablespace_name)*100/(d.bytes/(1024*1024)),2) "% Used",
+round(maxbytes/(1024*1024)) "MAX FSize",
+round((select sum(s.bytes/(1024*1024))
+  from dba_segments s
+  where (s.tablespace_name = d.tablespace_name) AND (d.AUTOEXTENSIBLE = 'YES')
+  group by s.tablespace_name)*100/(maxbytes/(1024*1024)),2) "% Used of MAX"  from dba_data_files d;
+
+SELECT TABLESPACE_NAME,TO_CHAR(SUM(NVL(BYTES,0))/1024/1024/1024, '99,999,990.99') AS "FREE SPACE(IN GB)" FROM DBA_FREE_SPACE GROUP BY TABLESPACE_NAME;
+
+select table_name,to_number(extractvalue(xmltype(dbms_xmlgen.getxml('select count(*) c from TDMPRD_ADMIN.'||table_name)) ,'/ROWSET/ROW/C')) count from dba_tables where owner='TDMPRD_ADMIN';
+
+
+SELECT OWNER,SEGMENT_NAME,ROUND(SUM(BYTES)/1024/1024/1024) "LOB size (GB)" 
+FROM DBA_SEGMENTS
+WHERE SEGMENT_NAME IN 
+    (
+    SELECT SEGMENT_NAME 
+    FROM DBA_LOBS WHERE TABLE_NAME='FMS_CONTENTS'
+    AND OWNER IN ('SPXFMS')
+    )
+GROUP BY OWNER,SEGMENT_NAME 
+; 
+pspx001zatcrh - 900 - 7200 , size 120 GB
+pspx003zatcrh
+
+   select * from dba_directories;   
+  select * from dba_external_locations;   
+  select * from dba_external_tables;
+select * from dba_external_locations where table_name='SYS.OPATCH_XML_INV'; 
+select * from dba_tab_privs where table_name in (select directory_name from dba_directories);
+EXEC sys.utl_recomp.RECOMP_SERIAL();
+EXEC sys.utl_recomp.RECOMP_SERIAL();
+
+select a.data_size+b.temp_size+c.redo_size "total_size"
+	from ( select sum(bytes)/1024/1024/1024 data_size
+	         from dba_data_files ) a,
+	     ( select nvl(sum(bytes)/1024/1024/1024,0) temp_size
+	         from dba_temp_files ) b,
+	     ( select sum(bytes)/1024/1024/1024 redo_size
+	         from sys.v_$log ) c;
+
+
+select owner, table_name, column_name ,data_type from dba_tab_columns where data_type = 'BLOB' and owner = 'MAXIMO';
+
+select 'drop sequence '||sequence_owner||'.'||sequence_name||' ;' from dba_sequences where sequence_owner in ('','') ;
+
+select regexp_replace(
+dbms_metadata.get_ddl('SEQUENCE',sequence_name,sequence_owner),
+'^.*(CREATE SEQUENCE.*CYCLE).*$',
+'DROP SEQUENCE "'||sequence_owner||'"."'||sequence_name
+||'";'||chr(10)||'\1;') SEQDDL
+from dba_sequences
+where sequence_owner not in
+(select name
+from system.logstdby$skip_support
+where action=0)
+;
+
+select owner,sum(bytes)/1024/1024/1024 as "SIZE in GB" from dba_segments where owner='KMIS' and segment_type='INDEX' group by owner;
+
+
+SELECT 'SELECT DBMS_METADATA.GET_DDL(''TABLESPACE'','''||  TABLESPACE_NAME || ''') FROM DUAL;' FROM DBA_TABLESPACES;
+SELECT DBMS_METADATA.GET_DDL('TABLESPACE','ADMIN_TBS')  FROM DUAL;
+SELECT 'SELECT DBMS_METADATA.GET_DDL(''USER'','''||  USERNAME || ''') FROM DUAL;' FROM DBA_USERS;
+select dbms_metadata.get_ddl('USER','OPS$MDBPREB') from dual;
+SELECT DBMS_METADATA.GET_GRANTED_DDL('ROLE_GRANT','ADMIN') FROM DUAL;
+SELECT DBMS_METADATA.GET_GRANTED_DDL('SYSTEM_GRANT','ADMIN') FROM DUAL;
+SELECT DBMS_METADATA.GET_GRANTED_DDL('OBJECT_GRANT','ADMIN') FROM DUAL;
+SELECT DBMS_METADATA.GET_GRANTED_DDL('SYSTEM_GRANT','ADMIN') FROM DUAL;
+SELECT DBMS_METADATA.GET_GRANTED_DDL('OBJECT_GRANT','ADMIN') FROM DUAL;
+SELECT 'SELECT DBMS_METADATA.GET_DDL(''TABLE'','''||  TABLE_NAME|| ''') FROM DUAL;' FROM DBA_TABLES;
+SELECT DBMS_METADATA.GET_DDL('DB_LINK',a.db_link,a.owner) FROM all_db_links a;
+select 'create DATABASE LINK '||NAME|| ' connect to '|| userid || ' identified by '|| password || ' using '||''''|| host ||''''||'; ' FROM sys.link$;
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+select tablespace_name,bigfile from dba_tablespaces;
+SELECT 'SELECT DBMS_METADATA.GET_DDL(''TABLESPACE'','''||  TABLESPACE_NAME || ''') FROM DUAL;' FROM DBA_TABLESPACES;
+select username,default_tablespace,temporary_tablespace,profile from dba_users where username in ('DBA_AUTO','DMP_ADMIN','GDPR_RO','TDMPRD_ADMIN','VRP_ADMIN','VRP_LEGAL_USER');
+select USERNAME,PROFILE from dba_users where USERNAME IN('DBA_AUTO','DMP_ADMIN','GDPR_RO','TDMPRD_ADMIN','VRP_ADMIN','VRP_LEGAL_USER');
+
+
+SELECT DBMS_METADATA.get_ddl ('SYNONYM', synonym_name, owner) FROM   dba_synonyms WHERE  table_owner in ('SPS','RDSTEMP','RDSTORE','RDSUPPORT','ICAP','RDSTAGE','INFOWEB_REPORT','RDSCONF','RDSINTF','RDSREGENP');
+SELECT DBMS_METADATA.get_ddl ('SYNONYM', synonym_name, owner) FROM   dba_synonyms WHERE  table_owner in ('STG_ERARCH');
+SQL> set long 5000;
+SQL> select dbms_metadata.get_ddl('PROFILE','VODA_NONEXPIRY') from dual;
+
+
+set long 90000
+SELECT DBMS_METADATA.GET_DDL('FUNCTION','VODACOM_PVF_2019') FROM dual;
+
+
+select owner, object_type,status, count(*) from dba_objects where owner='MAXRPD' group by owner,object_type,status order by 3 desc;
+
+To check the NACL
+=================
+
+ 
+
+SELECT * FROM DBA_NETWORK_ACLS;
+SELECT * FROM DBA_NETWORK_ACL_PRIVILEGES;
+
+ 
+
+To extract the NACL DDL
+=======================
+
+ 
+
+Consider the drop statement in the query before executing
+
+ 
+
+select * from dba_network_acls;
+
+ 
+
+SET SERVEROUTPUT ON FORMAT WRAPPED LINESIZE 300
+DECLARE
+  l_last_acl       dba_network_acls.acl%TYPE                 := '~';
+  l_last_principal dba_network_acl_privileges.principal%TYPE := '~';
+  l_last_privilege dba_network_acl_privileges.privilege%TYPE := '~';
+  l_last_host      dba_network_acls.host%TYPE                := '~';
+
+ 
+
+  FUNCTION get_timestamp (p_timestamp IN TIMESTAMP WITH TIME ZONE)
+    RETURN VARCHAR2
+  AS
+    l_return  VARCHAR2(32767);
+  BEGIN
+    IF p_timestamp IS NULL THEN
+      RETURN 'NULL';
+    END IF;
+    RETURN 'TO_TIMESTAMP_TZ(''' || TO_CHAR(p_timestamp, 'DD-MON-YYYY HH24:MI:SS.FF TZH:TZM') || ''',''DD-MON-YYYY HH24:MI:SS.FF TZH:TZM'')';
+  END;
+BEGIN
+  FOR i IN (SELECT a.acl,
+                   a.host,
+                   a.lower_port,
+                   a.upper_port,
+                   b.principal,
+                   b.privilege,
+                   b.is_grant,
+                   b.start_date,
+                   b.end_date
+            FROM   dba_network_acls a
+                   JOIN dba_network_acl_privileges b ON a.acl = b.acl
+            ORDER BY a.acl, a.host, a.lower_port, a.upper_port)
+  LOOP
+    IF l_last_acl <> i.acl THEN
+      -- First time we've seen this ACL, so create a new one.
+      l_last_host := '~';
+
+ 
+
+      DBMS_OUTPUT.put_line('-- -------------------------------------------------');
+      DBMS_OUTPUT.put_line('-- ' || i.acl);
+      DBMS_OUTPUT.put_line('-- -------------------------------------------------');
+      DBMS_OUTPUT.put_line('BEGIN');
+      DBMS_OUTPUT.put_line('  DBMS_NETWORK_ACL_ADMIN.drop_acl (');
+      DBMS_OUTPUT.put_line('    acl          => ''' || i.acl || ''');');
+      DBMS_OUTPUT.put_line('  COMMIT;');
+      DBMS_OUTPUT.put_line('END;');
+      DBMS_OUTPUT.put_line('/');
+      DBMS_OUTPUT.put_line(' ');
+      DBMS_OUTPUT.put_line('BEGIN');
+      DBMS_OUTPUT.put_line('  DBMS_NETWORK_ACL_ADMIN.create_acl (');
+      DBMS_OUTPUT.put_line('    acl          => ''' || i.acl || ''',');
+      DBMS_OUTPUT.put_line('    description  => ''' || i.acl || ''',');
+      DBMS_OUTPUT.put_line('    principal    => ''' || i.principal || ''',');
+      DBMS_OUTPUT.put_line('    is_grant     => ' || i.is_grant || ',');
+      DBMS_OUTPUT.put_line('    privilege    => ''' || i.privilege || ''',');
+      DBMS_OUTPUT.put_line('    start_date   => ' || get_timestamp(i.start_date) || ',');
+      DBMS_OUTPUT.put_line('    end_date     => ' || get_timestamp(i.end_date) || ');');
+      DBMS_OUTPUT.put_line('  COMMIT;');
+      DBMS_OUTPUT.put_line('END;');
+      DBMS_OUTPUT.put_line('/');
+      DBMS_OUTPUT.put_line(' ');
+      l_last_acl := i.acl;
+      l_last_principal := i.principal;
+      l_last_privilege := i.privilege;
+    END IF;
+
+ 
+
+    IF l_last_principal <> i.principal 
+    OR (l_last_principal = i.principal AND l_last_privilege <> i.privilege) THEN
+      -- Add another principal to an existing ACL.
+      DBMS_OUTPUT.put_line('BEGIN');
+      DBMS_OUTPUT.put_line('  DBMS_NETWORK_ACL_ADMIN.add_privilege (');
+      DBMS_OUTPUT.put_line('    acl       => ''' || i.acl || ''',');
+      DBMS_OUTPUT.put_line('    principal => ''' || i.principal || ''',');
+      DBMS_OUTPUT.put_line('    is_grant  => ' || i.is_grant || ',');
+      DBMS_OUTPUT.put_line('    privilege => ''' || i.privilege || ''',');
+      DBMS_OUTPUT.put_line('    start_date   => ' || get_timestamp(i.start_date) || ',');
+      DBMS_OUTPUT.put_line('    end_date     => ' || get_timestamp(i.end_date) || ');');
+      DBMS_OUTPUT.put_line('  COMMIT;');
+      DBMS_OUTPUT.put_line('END;');
+      DBMS_OUTPUT.put_line('/');
+      DBMS_OUTPUT.put_line(' ');
+      l_last_principal := i.principal;
+      l_last_privilege := i.privilege;
+    END IF;
+
+ 
+
+    IF l_last_host <> i.host||':'||i.lower_port||':'||i.upper_port THEN
+      DBMS_OUTPUT.put_line('BEGIN');
+      DBMS_OUTPUT.put_line('  DBMS_NETWORK_ACL_ADMIN.assign_acl (');
+      DBMS_OUTPUT.put_line('    acl         => ''' || i.acl || ''',');
+      DBMS_OUTPUT.put_line('    host        => ''' || i.host || ''',');
+      DBMS_OUTPUT.put_line('    lower_port  => ' || NVL(TO_CHAR(i.lower_port),'NULL') || ',');
+      DBMS_OUTPUT.put_line('    upper_port  => ' || NVL(TO_CHAR(i.upper_port),'NULL') || ');');
+      DBMS_OUTPUT.put_line('  COMMIT;');
+      DBMS_OUTPUT.put_line('END;');
+      DBMS_OUTPUT.put_line('/');
+      DBMS_OUTPUT.put_line(' ');
+      l_last_host := i.host||':'||i.lower_port||':'||i.upper_port;
+    END IF;
+  END LOOP;
+END;
+/
+
+
+
+
+select
+ round(sofar/totalwork*100,2) percent_completed, 
+ v$session_longops.* 
+from 
+ v$session_longops 
+where
+ sofar <> totalwork 
+order by
+ target, sid;
+ 
+ 
+ send extract P2CSE,status
+  send replicat P5CSR,status
+  stats replicat p2csr
+ 
+ connect to target
+delete replicat replicat name first
+
+connect to source
+unregister the extract
+delete trandata
+delete extract
+delte the trail files from os
+
+
+export ORACLE_BASE=/u01/app
+export ORACLE_HOME=$ORACLE_BASE/product/db19c
+export TNS_ADMIN=$ORACLE_HOME/network/admin
+export LD_LIBRARY_PATH=$ORACLE_HOME/lib
+export GG_HOME=$ORACLE_BASE/product/gg19c
+export PATH=$PATH:$ORACLE_HOME/bin:$GG_HOME:$LD_LIBRARY_PATH
+
+select owner, object_type,status, count(*) from dba_objects where owner in ('INFOWEB_REPORT','SITESCOP','IBM','IC_INT','IRIS','IRIS_SECURE','IRIS_STAGE','IRIS_STAGE1','TANDEM','UCMDB','VC_COMPOSITE','ARCHIVING_MANAGER','CMC','ICAP','INFOWEB','INFOWEB_1','INFOWEB_TEST','IPMS_PROD','OPS$RDS_EXEC','RDSCONF','RDSINTF','RDSREPGEN','RDSUPPORT','SPS','GDPR_RO','NAG_ISIS','RDSTAGE','RDSTORE','HPSINTF') group by owner,object_type,status order by 3 desc;
+
+select owner, object_type,status, count(*) from dba_objects where owner in ('RDSTAGE') group by owner,object_type,status order by 3 desc;
+
+grants:
+
+
+
+SELECT 'GRANT '  ||privilege || ' TO ' ||  grantee || ';'   FROM DBA_SYS_PRIVS  WHERE GRANTEE  in ('INFOWEB_REPORT','SITESCOP','IBM','IC_INT','IRIS','IRIS_SECURE','IRIS_STAGE','IRIS_STAGE1','TANDEM','UCMDB','VC_COMPOSITE','ARCHIVING_MANAGER','CMC','ICAP','INFOWEB','INFOWEB_1','INFOWEB_TEST','IPMS_PROD','OPS$RDS_EXEC','RDSCONF','RDSINTF','RDSREPGEN','RDSUPPORT','SPS','GDPR_RO','NAG_ISIS','RDSTAGE','RDSTORE','HPSINTF')
+
+union all
+
+SELECT 'GRANT '  ||GRANTED_ROLE || ' TO ' ||  grantee || ';'  FROM DBA_ROLE_PRIVS   WHERE GRANTEE  in ('INFOWEB_REPORT','SITESCOP','IBM','IC_INT','IRIS','IRIS_SECURE','IRIS_STAGE','IRIS_STAGE1','TANDEM','UCMDB','VC_COMPOSITE','ARCHIVING_MANAGER','CMC','ICAP','INFOWEB','INFOWEB_1','INFOWEB_TEST','IPMS_PROD','OPS$RDS_EXEC','RDSCONF','RDSINTF','RDSREPGEN','RDSUPPORT','SPS','GDPR_RO','NAG_ISIS','RDSTAGE','RDSTORE','HPSINTF')
+
+union all
+
+select 'grant '||privilege||' on '||owner||'.'||table_name||' to '||grantee  ||case when grantee = 'YES' then ' with grant option' else null end  ||';' from dba_tab_privs where owner  in ('INFOWEB_REPORT','SITESCOP','IBM','IC_INT','IRIS','IRIS_SECURE','IRIS_STAGE','IRIS_STAGE1','TANDEM','UCMDB','VC_COMPOSITE','ARCHIVING_MANAGER','CMC','ICAP','INFOWEB','INFOWEB_1','INFOWEB_TEST','IPMS_PROD','OPS$RDS_EXEC','RDSCONF','RDSINTF','RDSREPGEN','RDSUPPORT','SPS','GDPR_RO','NAG_ISIS','RDSTAGE','RDSTORE','HPSINTF')and grantee in ( select role from dba_roles ) and table_name not in ( select directory_name from dba_directories )
+
+union all
+
+select 'grant '||privilege||' on directory '||table_name||' to '||grantee    ||case when grantee = 'YES' then ' with grant option' else null end  ||';' from dba_tab_privs where owner  in ('INFOWEB_REPORT','SITESCOP','IBM','IC_INT','IRIS','IRIS_SECURE','IRIS_STAGE','IRIS_STAGE1','TANDEM','UCMDB','VC_COMPOSITE','ARCHIVING_MANAGER','CMC','ICAP','INFOWEB','INFOWEB_1','INFOWEB_TEST','IPMS_PROD','OPS$RDS_EXEC','RDSCONF','RDSINTF','RDSREPGEN','RDSUPPORT','SPS','GDPR_RO','NAG_ISIS','RDSTAGE','RDSTORE','HPSINTF') and grantee in ( select role from dba_roles ) and table_name  in ( select directory_name from dba_directories )
+
+union all
+
+select 'grant '||privilege||' on '||owner||'.'||table_name||' to '||grantee  ||case when grantee = 'YES' then ' with grant option' else null end  ||';' from dba_tab_privs where owner  in ('INFOWEB_REPORT','SITESCOP','IBM','IC_INT','IRIS','IRIS_SECURE','IRIS_STAGE','IRIS_STAGE1','TANDEM','UCMDB','VC_COMPOSITE','ARCHIVING_MANAGER','CMC','ICAP','INFOWEB','INFOWEB_1','INFOWEB_TEST','IPMS_PROD','OPS$RDS_EXEC','RDSCONF','RDSINTF','RDSREPGEN','RDSUPPORT','SPS','GDPR_RO','NAG_ISIS','RDSTAGE','RDSTORE','HPSINTF') and grantee in ( select username from dba_users );
+
+union all
+
+select 'GRANT '  || PRIVILEGE || ' ON ' || owner||'.'||TABLE_name|| ' TO ' ||grantee||';' from DBA_TAB_PRIVS where grantee in ('INFOWEB_REPORT','SITESCOP','IBM','IC_INT','IRIS','IRIS_SECURE','IRIS_STAGE','IRIS_STAGE1','TANDEM','UCMDB','VC_COMPOSITE','ARCHIVING_MANAGER','CMC','ICAP','INFOWEB','INFOWEB_1','INFOWEB_TEST','IPMS_PROD','OPS$RDS_EXEC','RDSCONF','RDSINTF','RDSREPGEN','RDSUPPORT','SPS','GDPR_RO','NAG_ISIS','RDSTAGE','RDSTORE','HPSINTF');
+
+
+
+impdp admin/XZ54HmknkozPGXI@ipms-rdstst.cv3awvpprzu2.eu-west-1.rds.amazonaws.com:1521/RDSTST DIRECTORY=DATA_PUMP_DIR dumpfile=RDS2_TST_220221_%U.dmp logfile=RDS2_TST_220221.log sqlfile=RDSTST_2.sql
+
+expdp \"/ as sysdba\"  dumpfile=rds_mig:STG_SDPER_EXPDP_2221_%U.dmp logfile=rds_log:STG_SDPER_EXPDP_2221.log parallel=4 schemas=STG_SDPER metrics=y EXCLUDE=STATISTICS compression=all cluster=n
+
+expdp \"/ as sysdba\"  dumpfile=rds_mig:ERIF_19_EXPDP_2221_%U.dmp logfile=rds_log:ERIF_19_EXPDP_2221.log parallel=4 schemas=ERIF_19 metrics=y EXCLUDE=STATISTICS compression=all cluster=n
+
+expdp \"/ as sysdba\"  dumpfile=rds_mig:ALL_EXPDP_2221_%U.dmp logfile=rds_log:ALL_EXPDP_2221.log parallel=4 schemas=ERBATCH,STG_ERPT,SDPER_19,STG_ERBATCH,STG_ERCC,STG_ERCORE,STG_ERIF,STG_SDPER2,SMSGATEWAY metrics=y EXCLUDE=STATISTICS compression=all cluster=n
+
+
+expdp \"/ as sysdba\"  dumpfile=rds_mig:SMSGATEWAY_EXPDP_2221_%U.dmp logfile=rds_log:SMSGATEWAY_EXPDP_9221.log parallel=4 schemas=SMSGATEWAY metrics=y EXCLUDE=STATISTICS compression=all cluster=n
+
+To do in aix server:
+bash
+bash=$(command -v bash)
+export SHELL="$bash"
+exec "$bash"
+echo $SHELL
+to check the status of bash
+/usr/bin/bash
+
+
+To run the script
+bash script.sh
+
+
+BEGIN
+DBMS_FILE_TRANSFER.PUT_FILE(
+source_directory_object       => 'rds_mig',
+source_file_name              => 'STG_SDPER_EXPDP_2221_01.dmp',
+destination_directory_object  => 'DATA_PUMP_DIR',
+destination_file_name         => 'STG_SDPER_EXPDP_2221_01.dmp',
+destination_database          => 'ETEST' 
+);
+END;
+/ 
+
+Transfer files:
+using script:
+
+
+scr_file_prefix="STERZAFS_EXPDP_3121_copy_"
+op_file_prefix="output_copy_STERZAFS_EXPDP_3121_"
+dp_file_prefix="STERZAFS_EXPDP_3121_"
+for i in {01..14};
+do
+echo -e "BEGIN
+DBMS_FILE_TRANSFER.PUT_FILE(
+source_directory_object       => 'rds_mig',
+source_file_name              => '${dp_file_prefix}${i}.dmp',
+destination_directory_object  => 'DATA_PUMP_DIR',
+destination_file_name         => '${dp_file_prefix}${i}.dmp',
+destination_database          => 'ETEST'
+);
+END;
+/ " > ${scr_file_prefix}${i}.sql
+echo $(date) > ${op_file_prefix}"${i}".out
+sqlplus -s "/ as sysdba" @${scr_file_prefix}"${i}".sql >> ${op_file_prefix}"${i}".out &
+sleep 2;
+done;
+
+
+set serveroutput on;
+DECLARE
+val NUMBER;
+BEGIN
+FOR tb IN (SELECT owner, table_name FROM dba_tables WHERE owner in ('SPXSYS') order by owner,table_name) LOOP
+  EXECUTE IMMEDIATE 'SELECT count(1) FROM ' || tb.owner ||'.'|| tb.table_name INTO val;
+  DBMS_OUTPUT.PUT_LINE(tb.owner||'.'||tb.table_name || ' ==> ' || val );
+  END LOOP;
+END;
+/
