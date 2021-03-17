@@ -1,0 +1,55 @@
+SELECT owner, object_name FROM DBA_GOLDENGATE_SUPPORT_MODE WHERE support_mode NOT IN ('FULL','ID_KEY')
+select distinct owner FROM DBA_GOLDENGATE_SUPPORT_MODE WHERE support_mode NOT IN ('FULL','ID_KEY');
+
+SELECT supplemental_log_data_min, force_logging FROM v$database;
+alter database add supplemental log data; (all)
+ALTER DATABASE FORCE LOGGING;
+alter system switch logfile;
+alter system set enable_goldengate_replication=true;
+
+on-prem
+---------
+create user ggadmin identified by Temple$1 default tablespace users temporary tablespace temp;
+grant connect, resource to ggadmin;
+grant select any dictionary to ggadmin;
+grant create view to ggadmin;
+grant execute on dbms_lock to ggadmin;
+exec dbms_goldengate_auth.GRANT_ADMIN_PRIVILEGE('ggadmin');
+ALTER USER ggadmin QUOTA UNLIMITED ON USERS;
+
+
+RDS
+-------
+CREATE TABLESPACE goldengate;
+CREATE TABLESPACE goldengate_idx;
+CREATE USER ggadmin IDENTIFIED BY "Ggadmin_rds_tst" DEFAULT TABLESPACE goldengate TEMPORARY TABLESPACE temp;
+ALTER USER ggadmin QUOTA UNLIMITED ON goldengate;
+ALTER USER ggadmin QUOTA UNLIMITED ON goldengate_idx; 
+
+GRANT CREATE SESSION TO ggadmin;
+GRANT ALTER SESSION TO ggadmin;
+GRANT CREATE CLUSTER TO ggadmin;
+GRANT CREATE INDEXTYPE TO ggadmin;
+GRANT CREATE OPERATOR TO ggadmin;
+GRANT CREATE PROCEDURE TO ggadmin;
+GRANT CREATE SEQUENCE TO ggadmin;
+GRANT CREATE TABLE TO ggadmin;
+GRANT CREATE TRIGGER TO ggadmin;
+GRANT CREATE TYPE TO ggadmin;
+GRANT SELECT ANY DICTIONARY TO ggadmin;
+GRANT CREATE ANY TABLE TO ggadmin;
+GRANT ALTER ANY TABLE TO ggadmin;
+GRANT LOCK ANY TABLE TO ggadmin;
+GRANT SELECT ANY TABLE TO ggadmin;
+GRANT INSERT ANY TABLE TO ggadmin;
+GRANT UPDATE ANY TABLE TO ggadmin;
+GRANT DELETE ANY TABLE TO ggadmin;
+
+Earlier 12cr2 release
+--------------------
+exec dbms_goldengate_auth.grant_admin_privilege (grantee=>'GGADMIN',privilege_type=>'capture',grant_select_privileges=>true,do_grants=>TRUE);
+   
+From or later 12cr2 release
+----------------------------
+
+exec rdsadmin.rdsadmin_dbms_goldengate_auth.grant_admin_privilege (grantee=>'GGADMIN',privilege_type=>'capture', grant_select_privileges=>true,do_grants=>TRUE);

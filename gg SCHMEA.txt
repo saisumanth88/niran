@@ -1,0 +1,115 @@
+
+
+dblogin userid ggadmin@sponprem
+Temple$1
+
+dblogin userid ggadmin@sprds
+Ggadmin_rds_tst
+
+SELECT owner, object_name FROM DBA_GOLDENGATE_SUPPORT_MODE WHERE support_mode NOT IN ('FULL','ID_KEY')
+select distinct owner FROM DBA_GOLDENGATE_SUPPORT_MODE WHERE support_mode NOT IN ('FULL','ID_KEY');
+
+we can enter by connect to GGSCI directly
+
+SET GLOBALS - ignore if already exists
+=======================================
+
+loging to ggsci from locating at $GGHOME
+---------------------------------------
+*******************************************
+CREATE SUBDIRS 
+
+we have to be under gghome and enter the below.
+/u01/app/product/gg19c
+vi GLOBALS
+CheckpointTable ggadmin.spatial_prd_ckpt
+*******************************************
+
+we can enter by connect to GGSCI directly
+
+Configure Manager Process
+=========================
+edit params mgr for manager process
+-----------------------------------
+*******************************************
+edit params mgr
+PORT 7809
+PurgeOldExtracts /u01/app/product/gg19c/dirdat/*, UseCheckpoints, MINKEEPDAYS 30
+
+start mgr (should be login as ggsci located at $GGHOME)
+*******************************************
+
+CHANGE SYNC
+=============
+
+edit params p2cse for extract change sync
+------------------------------------------
+*******************************************
+edit params p2cse
+EXTRACT p2cse
+SETENV (ORACLE_SID=sponprem)
+SETENV (NLSLANG=WE8MSWIN1252)
+USERID ggadmin@sponprem, PASSWORD Temple$1
+EXTTRAIL /u01/app/product/gg19c/dirdat/p2
+ 
+IGNOREREPLICATES
+GETAPPLOPS
+TRANLOGOPTIONS EXCLUDEUSER ggadmin INTEGRATEDPARAMS (PARALLELISM 6)
+DDL INCLUDE ALL
+DDLOPTIONS ADDTRANDATA
+TABLE SPXSYS.*;
+*******************************************
+
+connect to source db from hub using ggsci
+------------------------------------------
+*******************************************
+dblogin userid ggadmin@sponprem password Temple$1
+add checkpointtable ggadmin.spatial_prd_ckpt
+add trandata SPXSYS.*
+
+add extract p2cse tranlog, INTEGRATED tranlog, SCN 14835795430888
+add exttrail /u01/app/product/gg19c/dirdat/p2 extract p2cse
+
+register EXTRACT p2cse, DATABASE  
+
+start extract p2cse ATCSN 14835795430888
+*******************************************
+
+OUTPUT post register extract process
+-----------------------------------
+2020-10-27 20:21:44  INFO    OGG-02003  Extract p2cse successfully registered with database at SCN 14767403519596.
+
+
+
+
+
+edit params p2csr for replicat change sync
+-------------------------------------------
+*******************************************
+edit params p2csr
+REPLICAT p2csr
+SETENV (ORACLE_SID=pspxmap)
+SETENV (NLSLANG=WE8MSWIN1252)
+USERID ggadmin@sprds, password Ggadmin_rds_tst
+ASSUMETARGETDEFS
+REPERROR (DEFAULT, ABEND)
+REPERROR (-1, IGNORE)
+DDLERROR DEFAULT IGNORE
+MAP_PARALLELISM 2
+APPLY_PARALLELISM 2
+MAPEXCLUDE SPXSYS.RAN_2G_CELL_CHG_MV
+MAPEXCLUDE SPXSYS.RAN_3G_CELL_CHG_MV
+MAPEXCLUDE SPXSYS.RAN_4G_CELL_CHG_MV
+MAP SPXSYS.*, TARGET SPXSYS.*; 
+*******************************************
+
+connect to target db from hub using ggsci
+------------------------------------------
+*******************************************
+dblogin userid ggadmin@sprds password Ggadmin_rds_tst
+add checkpointtable ggadmin.spatial_prd_ckpt
+add replicat p2csr, integrated, parallel,  EXTTRAIL /u01/app/product/gg19c/dirdat/p2
+start p2csr (dont start until inial load) start if inital load finished)
+*******************************************
+
+
