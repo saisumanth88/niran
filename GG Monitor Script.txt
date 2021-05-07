@@ -1,0 +1,36 @@
+bash-4.2$ cat spatialprod-replicat
+p1csr
+p2csr
+p3csr
+p4csr
+p5csr
+p6csr
+
+bash-4.2$ cat ggcheck_spatialprod_rep.sh
+#!/bin/bash
+scirpt_loc="/u01/ggmonitor/replicat"
+ext_list_file="/u01/ggmonitor/replicat/spatialprod-replicat"
+ext_flag=0
+
+while true;
+do
+for replicat_name in $(cat $ext_list_file);
+do
+        output=$(/u01/app/product/gg19c/ggsci << EOF
+        info $replicat_name
+EOF
+)
+         echo "$output -- $(date)"
+        flag=$(echo $output | grep -o "Status ABENDED" | wc -l)
+        if [ "$flag" -eq "1" ]; then
+/u01/app/product/gg19c/ggsci << EOF
+start replicat $replicat_name
+EOF
+        fi
+done
+sleep 180
+done
+
+nohup sh ggcheck_spatialprod_rep.sh &
+
+ps -ef|grep replicat
