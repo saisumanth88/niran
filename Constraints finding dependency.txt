@@ -1,0 +1,28 @@
+PRIMARY CONSTRAINT LIST    
+
+         select acc.owner as schema_name,
+       acc.constraint_name,
+       acc.table_name,
+       LISTAGG(acc.column_name,',')
+              WITHIN GROUP (order by acc.position) as columns
+from dba_constraints con
+join dba_cons_columns acc on con.owner = acc.owner
+     and con.constraint_name = acc.constraint_name
+where con.constraint_type = 'P'
+      and acc.owner in
+      ('SGN')
+      and acc.table_name not like 'BIN$%'
+group by acc.owner,
+         acc.table_name,
+         acc.constraint_name
+order by acc.owner,
+         acc.constraint_name;
+
+FOR  FORGIEN CONTRINT LIST
+
+SELECT B.OWNER parent_OWNER,b.table_name parent_table, b.column_name parent_column,a.OWNER CHILD_OWNER,a.table_name child_table, a.column_name child_column, a.OWNER constraint_owner,a.constraint_name,c.constraint_type
+  FROM DBA_cons_columns a
+  JOIN DBA_constraints c ON a.owner = c.owner AND a.constraint_name = c.constraint_name
+join DBA_cons_columns b on c.owner = b.owner and c.r_constraint_name = b.constraint_name
+WHERE c.constraint_type IN ('R','P','C','O','U','V')  and
+ c.owner in ('SGN') and b.table_name in ('CATALOG_X_LOAD_TYPE','CATALOG_X_DEVICE_TYPE');
