@@ -1,0 +1,87 @@
+SELECT 'SELECT DBMS_METADATA.GET_DDL(''INDEX'','''||  INDEX_NAME|| ''',''OWNER'',) FROM DUAL;' FROM DBA_INDEXES where owner='NEXTFARE_MAIN';
+select dbms_metadata.get_ddl('INDEX','DEPT_IDX','SCOTT') from dual;
+select dbms_metadata.get_ddl('TABLE','API_PUBLISH_MESSAGE','NEXTFARE_MAIN') from dual;
+select 'alter table '||owner||'.'||table_name||' disable constraint '||constraint_name||';' from dba_constraints where owner='NEXTFARE_MAIN' and constraint_type='R';
+select 'alter table '||owner||'.'||table_name||' drop constraint '||constraint_name||';' from dba_constraints where owner='NEXTFARE_MAIN' and constraint_type='R';
+select 'drop index '||owner||'.' || index_name || ';' from dba_indexes where uniqueness='UNIQUE' and owner='NEXTFARE_MAIN' and index_name not like '%SYS%';
+select 'truncate table '||owner||'.' || table_name || ';'  from dba_tables where owner='NEXTFARE_MAIN';
+select 'alter trigger '||owner||'.'||trigger_name||' disable ';' from dba_triggers where owner='NEXTFARE_MAIN' and constraint_type='R';
+
+
+ 
+SELECT DBMS_METADATA.get_ddl ('INDEX', index_name, owner)
+FROM   DBA_indexes
+WHERE  owner = UPPER('NEXTFARE_MAIN') and uniqueness='UNIQUE' and index_name not like '%SYS%';
+
+SELECT DBMS_METADATA.get_ddl (CASE WHEN 
+constraint_type='R' THEN 'REF_CONSTRAINT' ELSE
+'CONSTRAINT' END,constraint_name,owner) 
+FROM   DBA_constraints
+WHERE  owner = UPPER('NEXTFARE_MAIN') and constraint_type='R';
+
+
+SELECT DBMS_METADATA.get_ddl ('CONSTRAINT', constraint_name, owner)
+FROM   dba_constraints
+WHERE  owner = UPPER('NEXTFARE_MAIN') and constraint_type in ('P');
+
+
+select 'alter table '|| u.table_name ||' drop constraint ' ||c.constraint_name  
+ from user_tables u ,user_constraints c 
+where u.table_name =c.table_name ;
+
+/u01/app/oracle/product/19.3.0/dbhome
+
+
+SELECT B.OWNER parent_OWNER,b.table_name parent_table, b.column_name parent_column,a.OWNER CHILD_OWNER,a.table_name child_table, a.column_name child_column, a.OWNER constraint_owner,a.constraint_name,c.constraint_type
+  FROM DBA_cons_columns a
+  JOIN DBA_constraints c ON a.owner = c.owner AND a.constraint_name = c.constraint_name
+join DBA_cons_columns b on c.owner = b.owner and c.r_constraint_name = b.constraint_name
+WHERE c.constraint_type IN ('R','P','C','O','U','V')  and
+ c.owner in ('NEXTFARE_MAIN');
+  select * from NEXTFARE_MAIN.DEVICE;
+  select object_name,object_type,owner from dba_objects where status='INVALID' and owner='NEXTFARE_MAIN';
+ select * from NEXTFARE_MAIN.OP_DEVICE_NTCIP_MANIFEST;
+ select count(*),owner, object_type,status from dba_objects where owner='NEXTFARE_MAIN' group by owner,object_type,status order by object_type asc;
+ select 'truncate table '||owner||'.'||table_name||'';' from dba_tables where owner='NEXTFARE_MAIN';
+
+ SELECT 'SELECT DBMS_METADATA.GET_DDL(''INDEX'','''||  INDEX_NAME|| ''',''OWNER'',) FROM DUAL;' FROM DBA_INDEXES 
+ where uniqueness='UNIQUE' and owner='NEXTFARE_MAIN' and index_name not like '%SYS%';
+ select * from dba_constraints where owner='NEXTFARE_MAIN' and constraint_type='R';
+ SELECT DBMS_METADATA.GET_DDL('INDEX',u.index_name) FROM DBA_INDEXES u;
+ select 'drop index '||owner||'.'||index_name||' ';' from DBA_INDEXES  where uniqueness='UNIQUE' and owner='NEXTFARE_MAIN' and index_name not like '%SYS%';
+select 'drop index '||owner||'.' || index_name || ';' from dba_indexes where uniqueness='UNIQUE' and owner='NEXTFARE_MAIN' and index_name not like '%SYS%';
+ select * from dba_indexes where uniqueness='UNIQUE' and owner='NEXTFARE_MAIN' and index_name not like '%SYS%';
+ 
+ SELECT DBMS_METADATA.get_ddl ('INDEX', index_name, owner)
+FROM   DBA_indexes
+WHERE  owner = UPPER('NEXTFARE_MAIN') and uniqueness='UNIQUE' and index_name not like '%SYS%';
+
+
+nohup impdp \"/ as sysdba\"  DIRECTORY=DATA_PUMP_DIR dumpfile=nextfare_main_data_%U.dmp logfile=nextfare_main_data_07.log metrics=y table_exists_action=append parallel=8 &
+
+nohup impdp \"/ as sysdba\"  DIRECTORY=DATA_PUMP_DIR dumpfile=ncs_main_data.dmp logfile=ncs_main_Mdata.log metrics=y parallel=4 remap_schema=NEXTFARE_MAIN:NETFARE &
+expdp \"/ as sysdba\"  DIRECTORY=DATA_PUMP_DIR dumpfile=ncs_main_data.dmp logfile=ncs_main_data.log metrics=y SCHEMAS=NEXTFARE_MAIN content=metadata_only
+
+
+
+#!/bin/ksh
+export ORACLE_SID=NCS
+export ORACLE_HOME=/u01/app/oracle/product/19.3.0/dbhome
+export PATH=$ORACLE_HOME/bin:$PATH
+sqlplus -s  "/ as sysdba" << EOF > /home/oracle/NCSTables.log
+set echo on feed on head on
+set timing on time on
+select name,open_mode from v\$database;
+@/home/oracle/ncstables.sql
+exit
+EOF
+
+nohup script.sh & 
+
+more nextfare_main_data_07.log|grep ORA-014 > Errori.log
+more nextfare_main_data_06.log|grep ORA- > Errorins.log
+
+https://cubic.zoom.us/j/2453866248?pwd=M21nZXVuVkpXSUUyMFJta0xvZVUzdz09
+Use the following link to open this mailbox with the best performance:
+http://outlook.com/owa/cyient.mail.onmicrosoft.com/Niranjanbabu.Kuruba@cyient.mail.onmicrosoft.com
+More details...
