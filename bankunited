@@ -1,0 +1,4196 @@
+MAXIMO : Backup window                                 :: 22:00-23:00 (RDS local time zone) 
+ODS : Backup window                            :: 20:30-21:00 (RDS local time zone)    
+t3rfcc460z
+gauthamik@hcl.com Sgn$-51743c2c5615
+
+\\Scotia\dfs\Shared\Cloud Programme\DBA\DMS Checks Daily
+
+sftp -P 2222 scotia\\SVC-PROD-IRE-DBA@ec2-prod-sftp01.scotia.sgngroup.net
+
+Pr0Deqwr!rEDb@
+
+sftp -P 2222 scotia\\SVC-QA-IRE-DBA@ec2-qa-sftp01.scotia.sgngroup.net
+
+QA!rED8A
+fgfg
+/sftp/DBBACKUPS/maximo/UAT
+Maximo DB CName : rds-maximo-prd.sgncloud.internal
+M_ODS New CName: rds-maximo-ods.sgncloud.internal
+M_ODS old CName: rds-maximo-ods-prd-714.sgncloud.internal
+
+https://repost.aws/knowledge-center/rds-oracle-storage-optimization
+
+List of open connections :
+
+select
+       substr(a.spid,1,9) pid,
+       substr(b.sid,1,5) sid,
+       substr(b.serial#,1,5) ser#,
+       substr(b.machine,1,6) box,
+       substr(b.username,1,10) username,
+--       b.server,
+       substr(b.osuser,1,8) os_user,
+       substr(b.program,1,30) program
+from v$session b, v$process a
+where
+b.paddr = a.addr
+and type='USER'
+order by spid; 
+
+sqlplus sys/Oracle123@10.184.81.115:1526/ETLPRD as sysdba 
+gauthamik@hcl.com
+Password for DUMPS - METADATA
+impdp SGNADMIN/Ok38TevckozMSCVE@MAXRPRD directory=DATA_PUMP_DIR full=y dumpfile=maxrpd_expdp_schemas_20190529.dmp parallel=40 logfile=maxrpd_expdp_schemas_20190530.log ENCRYPTION_PASSWORD=jZptsP1pH
+cd /sftp/DBBACKUPS/maximo/cloud - PP01 dump with upgraded content
+Maximo: /sftp/DBBACKUPS/MAXIMO/CHG0305228
+
+
+Maximo_ODS: /sftp/DBBACKUPS/MAXIMO-ODS/CHG0305228  
+
+MAXIMO - 10:00 - 11:00 
+MAXIMO_ODS - 8:30 -9:00
+
+scp V839960-01.zip oracle@10.170.35.37:/u01/soft
+
+
+TO COPY THE ENTIRE FOLDER FROM ONE TO ANOTHER:
+
+scp -pr Transfer oracle@10.184.16.74:/u02/Transfer
+ aws s3 cp "/u02/Transfer/Transfer/" "s3://s3-gis-prj-pp-001/transfer/" 
+  aws s3 cp transfer.tar "s3://s3-gis-prj-pp-001/transfer/" 
+  ZIP the files under one folder::
+  tar -cvf transfer.tar /u02/Transfer/Transfer/
+ aws s3 cp /u02/Transfer/Transfer/N7030405-1_1_of_2.png "s3://s3-gis-prj-pp-001/transfer" 
+ 
+/dev/xvdb         /u01    ext4    defaults,nofail        0       2
+
+
+Switch log file :
+
+exec rdsadmin.rdsadmin_util.switch_logfile; 
+
+TO REMOVE THE FILES :
+
+Begin
+utl_file.fremove('DATA_PUMP_DIR','metadata.dmp');
+end;
+
+TO COPY THE FILE FROM GQM TO GQM_ARCH Directory:
+
+BEGIN
+UTL_FILE.FCOPY ('GQM',
+'ORACLEARN.SNC.09052019_095945',
+'GQM_ARCH',
+'ORACLEARN.SNC.09052019_095945');
+END;
+/
+
+select segment_name,segment_type,bytes/1024/1024 MB,owner
+ from dba_segments
+ where segment_type='TABLE' and owner='COGAUDIT'
+ 
+username=CLOUD_MIGRATION
+password=sgndmsgisSRC 
+ 10.184.31.106 
+cogcmpre - sgndmsgisSRC76HCL123
+
+Dbas0nlyHCL2018
+6350284
+access - dev/test
+Track the SR
+this mail - DMS 
+
+sqlloader [LOB values import]:
+
+sqlldr  userid=sgnadmin/sgnmaximopass7506@MAX75D05 control='C:\Users\NK52582\TEST\AUTOSCRIPT_DATA_TABLE.ctl' log='C:\Users\NK52582\TEST\AUTOSCRIPT_DATA_TABLE.log'
+
+sqlldr  userid=sgnadmin/sgnmaximopass7506@MAX75D05 control='C:\Users\NK52582\TEST\REPORT\REPORTDESIGN_DATA_TABLE.ctl' log='C:\Users\NK52582\TEST\REPORT\REPORTDESIGN_DATA_TABLE.log'
+
+REPORTDESIGN_DATA_TABLE
+User ID: NKuruba@HCLGB
+https://sgn.okta-emea.com/app/UserHome?fromLogin=true
+access for db' in Dev/test
+Golden gate installation with oracle client
+
+https://sgn.okta-emea.com/
+
+srcmaximo-oraclegg-poc2 : Migrate existing data and Replicate the data changes
+
+syedmuzaffar.i@hcl.com
+srcmaximo-maxdev11-poc1 : Replicate data changes only
+
+
+SELECT TABLESPACE_NAME,TO_CHAR(SUM(NVL(BYTES,0))/1024/1024/1024, '99,999,990.99') AS "USED SPACE(IN GB)" FROM DBA_SEGMENTS GROUP BY TABLESPACE_NAME
+
+
+SELECT TABLESPACE_NAME,TO_CHAR(SUM(NVL(BYTES,0))/1024/1024/1024, '99,999,990.99') AS "FREE SPACE(IN GB)" FROM DBA_FREE_SPACE GROUP BY TABLESPACE_NAME; 
+
+
+
+10g export ( - 12c import 
+
+12c export (version=datbase version) - 10g import
+create tablespace COGAUD_DATA datafile '/u01/app/oracle/oradata/cogcmdvs/COGAUD_DATA.dbf' size 1G autoextend on maxsize 10G;
+
+Re76HmknkozPGXI
+
+
+10.184.15.123/103  
+10.184.10.183
+select * from nls_database_parameters where parameter='NLS_CHARACTERSET';
+select NLS_CHARACTERSET from nls_database_parameters;
+DB Version, NLS_CHARACTERSET, NLS_NCHAR_CHARACTERSET    
+select * from database_properties;
+
+SCOTIA.SGNGROUP.NET\NK52582
+
+SCOTIA.SGNGROUP.NET\NK52582
+
+scp initBSMT01.ora oracle@10.184.10.158:/u01/app/oracle/product/12.1.0/dbhome_1/dbs
+scp osbws_installer.zip oracle@10.184.10.10:/u01/Backup
+Wq89HmbfbozYDIJ
+select s.sid,s.serial#,s.process,s.status,s.last_call_et,to_char(s.logon_time, 'dd-mon-yyyy hh24:mi:ss '),s.program,s.module,s.machine,p.spid from gv$session s,gv$process p
+where s.paddr=p.addr and p.spid=13957
+
+curl -H 'X-JFrog-Art-Api: AKCp5aUQb4iTciR5MDFArzVgi3JdZbFqcTPAtHxZvxhiR7unB4MDob3geBLfKLWLrVgwS18Zq' -O "https://sgn.jfrog.io/sgn/list/SGN-App-Softwares/oracle/linuxamd64_12c_database_1of2.zip"
+
+curl -H 'X-JFrog-Art-Api: AKCp5aUQb4iTciR5MDFArzVgi3JdZbFqcTPAtHxZvxhiR7unB4MDob3geBLfKLWLrVgwS18Zq' -O "https://sgn.jfrog.io/sgn/list/SGN-App-Softwares/oracle/linuxx64_12102_database.zip" linuxamd64_12c_database_1of2.zip 
+
+AKCp5aUQb4iTciR5MDFArzVgi3JdZbFqcTPAtHxZvxhiR7unB4MDob3geBLfKLWLrVgwS18Zq
+
+SCOTIA.SGNGROUP.NET\NK52582
+SCOTIA.SGNGROUP.NET\NK52582
+yum install python-pip
+yum install python3-pip
+To change the timezone in Ec2 timezone::
+
+unlink /etc/localtime;ln -s /usr/share/zoneinfo/Europe/London /etc/localtime 
+unlink /etc/localtime;ln -s /usr/share/zoneinfo/Europe/London /etc/localtime 
+
+select * from dba_users;
+SQLNET.AUTHENTICATION_SERVICES = (NTS) 
+select * from DBA_SEGMENTS
+ps -ef|grep tns
+
+ps -ef|grep pmon
+
+ps -ef|grep pmon
+
+rds-maximo-prj-pp-0000636.cdn8c2dpuebg.eu-west-1.rds.amazonaws.com
+
+Ne96jlknkozPDYI
+
+ps -ef|grep tns
+448832
+1003617321 
+dabbu
+4766433005234140
+F1IOPQ1N-0618
+Niranjan@1517
+Niranjan@9173
+
+FORM 16
+PAYSLIPS
+
+08041570901 - venkatesh
+
+IDT-BV168501542
+Wq89HmbfbozYDIJ
+sr13yurfvfsx9vk.cqexwwiecxtr.eu-west-1.rds.amazonaws.com
+
+HCL Technologies,Aldwych House, 71-91 Aldwych, London, WC2B 4HN 
+https://www.visa4uk.fco.gov.uk/account/login
+
+8247270863
+AWR REPORT :
+@?/rdbms/admin/addmrpt
+@?/rdbms/admin/awrrpt 
+ODSPRD82 =
+  (DESCRIPTION =
+    (ADDRESS_LIST =
+      (ADDRESS = (PROTOCOL = TCP)(HOST = target-rds-ods-prj-pp-0000582.c9hcwprlfdll.eu-west-1.rds.amazonaws.com)(PORT = 1526))
+    )
+    (CONNECT_DATA =
+      (SID = ODSPRD82)
+    )
+  )
+
+FUSEPP90 =
+  (DESCRIPTION =
+    (ADDRESS_LIST =
+      (ADDRESS = (PROTOCOL = TCP)(HOST = rds-fuse-prj-pp-0000790.c9hcwprlfdll.eu-west-1.rds.amazonaws.com)(PORT = 1526))
+    )
+    (CONNECT_DATA =
+      (SID = FUSEPP90)
+    )
+  )
+  
+  1101 recharge - 28 days
+10 topup
+plan 98
+ALTER SYSTEM KILL SESSION 'sid,serial#' IMMEDIATE;
+ALTER SYSTEM KILL SESSION '500,50078' IMMEDIATE;
+ALTER SYSTEM KILL SESSION ('177','6930');
+
+ALTER SYSTEM KILL SESSION '3807,55234' IMMEDIATE;
+SYS_IMPORT_SCHEMA_01
+DECLARE
+h1 NUMBER;
+BEGIN
+h1:=DBMS_DATAPUMP.ATTACH('SYS_IMPORT_SCHEMA_01','SYS');
+DBMS_DATAPUMP.STOP_JOB (h1,1,0);
+END;
+/
+3807	55234
+1276	62755
+3804	45911
+2546	23753
+alter system kill session '177,6930,@1';
+'177,6930'
+
+select S.USERNAME, s.sid, s.osuser, t.sql_id, sql_text
+from v$sqltext_with_newlines t,V$SESSION s
+where t.address =s.sql_address
+and t.hash_value = s.sql_hash_value
+and s.status = 'ACTIVE'
+and s.username <> 'SYSTEM'
+order by s.sid,t.piece
+/
+
+select
+ round(sofar/totalwork*100,2) percent_completed, 
+ v$session_longops.* 
+from 
+ v$session_longops 
+where
+ sofar <> totalwork 
+order by
+ target, sid;
+ 
+ 
+SELECT SID, SERIAL#,OPNAME, CONTEXT, SOFAR, TOTALWORK,ROUND(SOFAR/TOTALWORK*100,2) "%_COMPLETE" FROM V$SESSION_LONGOPS WHERE OPNAME NOT LIKE '%aggregate%' AND TOTALWORK != 0 AND SOFAR <> TOTALWORK;
+
+rds-fuse-prj-pp-0000790.c9hcwprlfdll.eu-west-1.rds.amazonaws.com
+exec rdsadmin.rdsadmin_util.kill(sid, serial#); 
+exec rdsadmin.rdsadmin_util.kill(sid, serial#); 
+exec rdsadmin.rdsadmin_util.kill(, ); 
+
+select 'exec rdsadmin.rdsadmin_util.kill('||''''||sid||''''||','||''''||serial#||''''||'); ' from v$session  where status='INACTIVE'; 
+select 'ALTER SYSTEM KILL SESSION '||''''||sid||','||serial#||''''||' IMMEDIATE; ' from v$session  where status='INACTIVE';
+Specific user inactive session to kill::
+select 'exec rdsadmin.rdsadmin_util.kill('||''''||sid||''''||','||''''||serial#||''''||'); ' from v$session  where status='INACTIVE' and username='MAXIMO'; 
+
+unlock stats:
+
+exec dbms_stats.unlock_table_stats('SYSMAN', 'EM_MANAGEABLE_ENTITIES_E'); 
+
+SELECT text FROM table(rdsadmin.rds_file_util.read_text_file('DATA_PUMP_DIR','cogcmpre_full_expdp.log'));
+
+select * from table(RDSADMIN.RDS_FILE_UTIL.LISTDIR('DATA_PUMP_DIR')) order by mtime;
+
+select * from all_tab_privs where table_name in (select directory_name from dba_directories);
+
+select * from all_tab_privs where table_name in (select directory_name from dba_directories);
+
+select * from all_tab_privs where table_name in (select directory_name from dba_directories);
+   
+   SELECT sum(bytes)/1024/1024 as size_in_mega,segment_type FROM DBA_SEGMENTS group by SEGMENT_TYPE;
+   
+      SELECT * FROM DBA_SEGMENTS where segment_type='TABLE' and owner! ='SYS' 
+      
+      exec rdsadmin.rdsadmin_util.create_directory(p_directory_name => 'BACKGROUND_DUMP_DEST');
+      select distinct TABLESPACE_NAME from dba_segments
+      
+      exec utl_file.fremove('DATA_PUMP_DIR','/rdsdbdata/datapump/gisacpre_full_21may18ab.log');
+       to grant the prvis to view the dba_directories.fscp
+	   
+	   
+	   grant execute on rdsadmin.rds_file_util to AQSMGR; 
+	   
+   select   sum(bytes)/1024/1024/1024 as size_in_GB, owner from   dba_segments group by  owner;
+    select   sum(bytes)/1024/1024/1024 as size_in_GB, owner from   dba_segments group by  owner;
+  
+select segment_name,segment_type,bytes/1024/1024/1024 GB from dba_segments  where segment_type='TABLE' and owner='SGN';
+
+To check the table level count of the owner
+select table_name,to_number(extractvalue(xmltype(dbms_xmlgen.getxml('select count(*) c from GQMMGR.'||table_name)) ,'/ROWSET/ROW/C')) count from dba_tables where owner='GQMMGR';
+select table_name,to_number(extractvalue(xmltype(dbms_xmlgen.getxml('select count(*) c from GQMMGR.'||table_name)) ,'/ROWSET/ROW/C')) count from dba_tables where owner='GQMMGR'; 
+
+STATISTICS ::
+EXEC DBMS_STATS.GATHER_DATABASE_STATS(ESTIMATE_PERCENT=>100);
+EXEC DBMS_STATS.GATHER_DICTIONARY_STATS;
+EXEC DBMS_STATS.gather_schema_stats('MAXIMO', estimate_percent => 100, cascade => TRUE, degree=>32, method_opt=>'for all indexed columns size auto');
+
+
+EXEC DBMS_STATS.gather_table_stats('MAXIMO', 'CRONTASKHISTORY', estimate_percent => 100, degree=>16, cascade => TRUE, method_opt=>'for all indexed columns size auto');
+
+
+                select ((max(length(COLUMN_NAME)))/(1024)) from table;
+                select 'select (max(length(' || COLUMN_NAME || '))/(1024)) as "Size in KB" from ' || owner || '.' || TABLE_NAME ||';' "maxlobsizeqry" from dba_tab_cols where owner='owner' and table_name=‘table’ and data_type in ('CLOB','BLOB','LOB');
+
+
+select * from dba_tab_statistics where owner='MAXIMO' and stale_stats='YES';
+
+SELECT table_name,last_analyzed,
+       stale_stats
+FROM   dba_tab_statistics
+WHERE  owner      = 'MAXIMO' and stale_stats='YES' order by last_analyzed asc; 
+ 
+select segment_name,segment_type,bytes/1024/1024/1024 GB from dba_segments  where segment_type='TABLE' and owner='MAXIMO' 
+and segment_name like '%XCLKINT_WORKORDERDATA76%';
+
+li,le,love,lo
+
+select message_text from listenerlog 
+select message_text from listenerlog 
+select message_text from listenerlog where message_text like '07-FEB-2019%';
+select message_text from alertlog where message_text like '07-FEB-2019%'
+
+TO CHECK THE CHUNK DATA in the file :
+
+vim -b preprocess_eql.sh
+
+
+
+Select 'drop  public synonym '||object_name||';'
+From dba_objects
+Where status <> 'VALID'
+And owner = 'PUBLIC'
+And table_owner = 'GQMMGR';
+
+  10.184.63.125 & 10.184.63.102  -- Wind
+10.184.63.116 & 10.184.63.109  - RHEL
+
+10.184.59.110 - windows
+10.184.58.40 - Linux
+
+  ps -ef|grep pmon
+  ps -ef|grep smon
+  DELETE ARCHIVELOG ALL COMPLETED BEFORE 'sysdate-2';
+
+ 
+EXEC sys.utl_recomp.RECOMP_SERIAL();
+
+EXEC sys.utl_recomp.RECOMP_SERIAL();
+
+EXEC sys.utl_recomp.RECOMP_SERIAL();
+
+2L - shahzahan basha telugu -
+3L - k manjula hindi 
+
+shami - 10lgt82jackjtrBOSS
+MDB_UPDATE_USER - HT93moontbBSMART
+
+ mdb_schema  - Yk45jackdbBSMART
+Approved for the Visa request against the SGN Cloud Migration track for FO [ODS]
+
+AWS DEV TEST T2
+
+10.184.63.102  -- Jump server
+10.184.59.110 - DB Jump server
+Schema	GQMMGR	Yc96jlefbozPDYI
+
+sr13yurfvfsx9vk.cqexwwiecxtr.eu-west-1.rds.amazonaws.com
+
+34.243.60.61
+172.31.3.240
+
+CREATE OR REPLACE DIRECTORY KU$_STYLESHEET_DIR AS '/u01/app/oracle/product/12.2.0.1/dbhome_1/rdbms/xml/xsl';
+
+CREATE OR REPLACE DIRECTORY DIR_TRILLIUM_OUT AS '/u02/mrpsdev/orainst/exports/trillium/out';
+
+CREATE OR REPLACE DIRECTORY DATA_PUMP_DIR AS '/u01/app/oracle/admin/BSMD02/dpdump/';
+
+sgnadmin	Ne96jlknkozPDYI
+GQMMGR	Yc96jlefbozPDYI
+
+C175032 | CLOUD N
+10.184.79.119
+10.184.79.103
+mtjjyzgxzthhyju.a812516084642.amazonaws.com(10.184.65.10)
+MRPS	Re76HmknkozPGXI
+TM1_RO	Fk35TevckozHIVE
+
+000-800-100-7789
+1800 9724664
+sgnadmin	Ne96jlknkozPDYI
+
+10.184.81.115 - MASTER
+10.184.81.115 - MASTER
+EHelAp@#*502
+10.184.85.247 - SLAVE
+
+SELECT DBTIMEZONE FROM DUAL;  
+SELECT SESSIONTIMEZONE, CURRENT_TIMESTAMP FROM DUAL;  
+select systimestamp from dual; 
+
+SELECT DBTIMEZONE,SESSIONTIMEZONE,CURRENT_TIMESTAMP,systimestamp FROM DUAL;  
+SELECT DBTIMEZONE,SESSIONTIMEZONE,CURRENT_TIMESTAMP,systimestamp FROM DUAL;  
+SELECT DBTIMEZONE,SESSIONTIMEZONE,CURRENT_TIMESTAMP,systimestamp FROM DUAL; 
+
+
+  select to_char(sysdate,'dd-mm-yy hh24:mi:ss')  from dual ;
+  
+  select COUNT(*),to_char(JOB_SUBMIT_TIME,'dd-mm-yy') from ORCLUSER.JOB_BROKER_JOBS group by to_char(JOB_SUBMIT_TIME,'dd-mm-yy') order by 2 desc;
+  
+
+PATCH UPDATE INFORMATION IN RDS::
+
+with a as (select dbms_qopatch.get_opatch_lsinventory patch_output from dual) 
+select x.patch_id, x.patch_uid, x.description from a, 
+xmltable('InventoryInstance/patches/*' passing a.patch_output columns 
+patch_id number path 'patchID', 
+patch_uid number path 'uniquePatchID', 
+description varchar2(80) path 'patchDescription') x;   
+ 
+sgnadmin	WE8ISO8859P1
+
+select * from table(RDSADMIN.RDS_FILE_UTIL.LISTDIR('DATA_PUMP_DIR')) order by mtime;
+  10.184.59.223	stack-dc5163e608f15cae6
+
+  9515535473 - shami
+  9441903923 - narasimha reddy
+  
+  SELECT text FROM table(rdsadmin.rds_file_util.read_text_file('DATA_PUMP_DIR','gisacpre_ddl_15may181.log'));
+    select owner,table_name,NUM_ROWS from dba_tables where owner='COGNOS'
+  
+  select * from dba_segments where owner='SGN' and segment_type='TABLE'
+   select * from dba_directories;   
+  select * from dba_external_locations;   
+select * from dba_external_locations where table_name='SGNBIETL.EXT_INPUT_FILE'; 
+select * from dba_tab_privs where table_name in (select directory_name from dba_directories);
+
+select index_name,status,owner from dba_indexes where status='N/A'
+
+Wq89HmbfbozYDIJ 
+SCOPP01  
+select owner, object_name, object_type, status from dba_objects where owner='MRPS' and status!='VALID' order by object_type;
+select count(*),status from dba_indexes group by status
+
+SELECT c.name, c.detected_usages, C.VERSION   FROM    DBA_FEATURE_USAGE_STATISTICS C   WHERE C.DETECTED_USAGES>0 ; 
+select count(*), data_type from dba_tab_columns where data_type like '%LOB%' group by data_type and owner!='SYS'
+
+select * from dba_tab_columns where data_type='CLOB';
+
+Source null allow chesthundhi – not null
+
+1 cant allow null--- then made as null
+
+SELECT b.host_name,b.instance_name, b.version, c.name, c.detected_usages, C.VERSION
+  FROM v$instance B, DBA_FEATURE_USAGE_STATISTICS C  WHERE C.DETECTED_USAGES>0
+  AND (UPPER(C.NAME) LIKE ''%PARTITION%''
+  OR UPPER(C.NAME) LIKE ''%REAL%''
+  OR UPPER(C.NAME) LIKE ''%SPATIAL%''
+  OR UPPER(C.NAME) LIKE ''%JAVA%''
+  OR UPPER(C.NAME) LIKE ''%OLAP%''
+  OR UPPER(C.NAME) LIKE ''%DATA%GUARD%''
+  OR UPPER(C.NAME) LIKE ''%DATA%GUARD%''
+  OR UPPER(C.NAME) LIKE ''%COMPRESS%'')
+ORDER BY C.NAME,C.VERSION';
+
+select a.data_size+b.temp_size+c.redo_size "total_size"
+	from ( select sum(bytes)/1024/1024/1024 data_size
+	         from dba_data_files ) a,
+	     ( select nvl(sum(bytes)/1024/1024/1024,0) temp_size
+	         from dba_temp_files ) b,
+	     ( select sum(bytes)/1024/1024/1024 redo_size
+	         from sys.v_$log ) c; 
+
+  
+CPU _STATUS:
+SELECT
+   s.username,
+   t.sid,
+   s.serial#,
+   s.logon_time,
+   SUM(VALUE/100) as "cpu usage (seconds)"
+FROM
+   v$session s,
+   v$sesstat t,
+   v$statname n
+WHERE
+   t.STATISTIC# = n.STATISTIC#
+AND
+   NAME like '%CPU used by this session%'
+AND
+   t.SID = s.SID
+AND
+   s.status='ACTIVE'
+AND
+   s.username is not null
+GROUP BY username,t.sid,s.serial#,s.logon_time
+order by s.logon_time
+/
+
+
+FIND COMMAND:
+
+find / -name "db.rsp" -print
+
+ /products/oracle/diag/tnslsnr/porud666/listener/trace
+ select owner, object_name, object_type, status from dba_objects
+where status!='VALID' order by object_type;
+
+select owner, status as Trigger_Status, count(*) from dba_triggers
+group by owner,status;
+
+ORA:00257 archive error::
+
+show parameter db_recovery_file_dest_size
+
+ALTER SYSTEM SET db_recovery_file_dest_size='20G' SCOPE=BOTH; 
+
+col ROUND(SPACE_LIMIT/1048576) heading "Space Allocated (MB)"format 999999
+col round(space_used/1048576) heading "Space Used (MB)" format 99999
+col name format a40
+select name, round(space_limit/1048576) As space_limit,round(space_used/1048576) As space_used
+from v$RECOVERY_FILE_DEST;
+
+EC2 Default instances:
+
+select 'drop user '||username||' cascade;' from dba_users where username not in ('SCOTT',
+'ORACLE_OCM','OJVMSYS','SYSKM','XS$NULL','GSMCATUSER','MDDATA','SYSBACKUP','DIP','SYSDG',
+'APEX_PUBLIC_USER','SPATIAL_CSW_ADMIN_USR','SPATIAL_WFS_ADMIN_USR','GSMUSER','AUDSYS','FLOWS_FILES',
+'DVF','MDSYS','ORDSYS','DBSNMP','WMSYS','APEX_040200','APPQOSSYS','GSMADMIN_INTERNAL','ORDDATA',
+'CTXSYS','ANONYMOUS','XDB','ORDPLUGINS','DVSYS','SI_INFORMTN_SCHEMA','OLAPSYS','LBACSYS','OUTLN',
+'SYSTEM','SYS') and account_status='OPEN'; 
+
+select owner, object_type, count(*) from dba_objects
+group by owner,object_type
+order by 3 desc;
+
+select owner, object_name, object_type, status from dba_objects
+where owner='SDE' and status!='VALID'
+order by object_type;
+
+select owner, object_type,status, count(*) from dba_objects
+where owner='SDE'
+group by owner,object_type,status
+order by 3 desc;
+
+https://mail.hcl.com/owa/auth/logon.aspx?replaceCurrent=1&url=https%3a%2f%2fmail.hcl.com%2fowa%2f
+
+select index_name,index_type,status,domidx_status,domidx_opstatus from dba_indexes 
+where index_type like '%DOMAIN%' and (domidx_status <> 'VALID' or domidx_opstatus <> 'VALID'); 
+
+select owner, index_name, index_type, status, domidx_status, domidx_opstatus
+from dba_indexes 
+
+
+Participated in AWS training on Project basis and Deliverables
+
+Participated and contributed my time to implement some sort of Migration activities in the requirement basis 
+
+I have actively participated in the training and learn very new things which is out of my scope and have prepared the AWS DMS Migration related documents and the same implemented in the project successfully.
+I got to used with AWS Schema conversion Tool and AWS Data migration service which will help in many ways for the further activities.
+I have proved myself capable by learning new skill and working in that since 10 months.Also can deliver the right tasks/deliverables with the right skills at the right time.
+
+
+AWS DEV TEST T2
+
+10.184.63.125 & 10.184.63.102  -- Wind
+10.184.63.116 & 10.184.63.109  - RHEL
+
+10.184.59.110 - windows
+10.184.58.40 - Linux
+GQMMGR	Yc96jlefbozPDYI
+
+sryodf9f9l35u9.cqexwwiecxtr.eu-west-1.rds.amazonaws.com 
+mrpsrds.cqexwwiecxtr.eu-west-1.rds.amazonaws.com 
+
+I have done the configuration and installation successfully with in the time frame in all the environments.
+ 
+ 
+ 
+ I have given a script to devops team to automate and to install the binaries of oracle and packages in silent mode which implemented successfully.
+ 
+ In this project, there needs an intervention of the Goldengate/Linux team to make some required settings so that i can
+ configure Forms/reports on Weblogic server. As this is not by the above required team, i have followed by referring some
+ case studies/documentation from google forums and i am half the way in completing that by myself. As such this is beyond my task/responsibility. 
+ Also prepared some required HLD's for the project as per the need.
+ 
+ Initiatives and Exploring Technical areas beyond the Tasks
+ 
+ In this Project,we got opportunity to do the setup of Migration using Oracle Golden gate which is very new to the entire team and by following the Amazon docs 
+ we were able to achieve it successfully.I have done many configuration and installations in development environments which we made automate the part to install the binaries and packages
+ with the help of devops team.
+ 
+ INSERT INTO MDSYS.SDO_GEOM_METADATA_TABLE(SDO_OWNER, SDO_TABLE_NAME, SDO_COLUMN_NAME,SDO_DIMINFO,SDO_SRID)
+VALUES('PROJUSER', 'LOCAL', 'CD_LOCAL',
+MDSYS.SDO_DIM_ARRAY(MDSYS.SDO_DIM_ELEMENT(NULL, -5220400, -5005651.6353, 0.001),MDSYS.SDO_DIM_ELEMENT(NULL, -15524400, -15309651.6353, 0.001)),null);
+
+\\Scotia\dfs\Shared\Cloud Programme\DBA
+
+Post CHECK :
+
+ select owner, object_type, count(*) from dba_objects
+group by owner,object_type
+order by 3 desc;
+
+SELECT
+ROUND(d.undo_size/(1024*1024),2) "ACTUAL UNDO SIZE [MByte]",
+SUBSTR(e.value,1,25) "UNDO RETENTION [Sec]",
+ROUND((TO_NUMBER(e.value)*TO_NUMBER(f.value)*g.undo_block_per_sec)/(1024*1024),2) "NEEDED UNDO SIZE [MByte]"
+FROM
+(
+SELECT
+SUM(a.bytes) undo_size
+FROM
+v$datafile a,
+v$tablespace b,
+dba_tablespaces c
+WHERE
+c.contents = 'UNDO'
+AND c.status = 'ONLINE'
+AND b.name = c.tablespace_name
+AND a.TS# = b.TS#
+) d,
+v$parameter e,
+v$parameter f,
+(
+SELECT
+MAX(undoblks/((end_time-begin_time)*3600*24))
+undo_block_per_sec
+FROM
+v$undostat
+) g
+WHERE
+e.name = 'undo_retention'
+AND f.name = 'db_block_size'
+;
+
+ps -ef | grep pmon
+	
+
+select df.tablespace_name "Tablespace",
+totalusedspace "Used MB",
+(df.totalspace - tu.totalusedspace) "Free MB",
+df.totalspace "Total MB",
+round(100 * ( (df.totalspace - tu.totalusedspace)/ df.totalspace))
+"Pct. Free"
+from
+(select tablespace_name,
+round(sum(bytes) / 1048576) TotalSpace
+from dba_data_files 
+group by tablespace_name) df,
+(select round(sum(bytes)/(1024*1024)) totalusedspace, tablespace_name
+from dba_segments 
+group by tablespace_name) tu
+where df.tablespace_name = tu.tablespace_name ;
+
+select owner,tablespace_name,sum(bytes)/1024/1024/1024 "IN GB" from dba_segments group by owner,tablespace_name; 
+
+
+SELECT *
+from all_tab_privs
+where table_name in
+  (select directory_name 
+   from dba_directories);
+
+https://appsdbanotes.wordpress.com/2012/03/26/ora-27125-unable-to-create-shared-memory-segment-with-run-dbca/
+To connect from Cloud MRPS Instance to On Prem MAXIMO 
+
+ps -ef | grep pmon
+select 'create DATABASE LINK '||NAME|| ' connect to '|| userid || ' identified by '|| password || ' using '||''''|| host ||''''||'; ' FROM sys.link$; 
+obieerptd.ceyhnx2ss1fw.eu-west-1.rds.amazonaws.com
+create public DATABASE LINK MAXPRENC connect to GQMRO identified by ******* using 
+'(DESCRIPTION = (ADDRESS = (PROTOCOL = TCP)(HOST = Hostname)(PORT = 1526)) (CONNECT_DATA = (SID = DBNAME)))'; 
+
+create public DATABASE LINK MAXTEST connect to cloudmgr identified by cloudmgr using 
+'(DESCRIPTION = (ADDRESS = (PROTOCOL = TCP)(HOST = 10.70.96.172)(PORT = 1526)) (CONNECT_DATA = (SID = MAXPREFO)))'; 
+
+GQMs
+
+'CREATEDATABASELINK'||NAME||'CONNECTTO'||USERID||'IDENTIFIEDBY'||PASSWORD||'USING'||''''||HOST||''''||';'
+------------------------------------------------------------------------------------------------------------------------------------
+create DATABASE LINK TICKET_MAXPRDNC connect to TICKET_UPDATE identified by z41akps9 using 'maxsfit';
+create DATABASE LINK MAXDEVNC connect to GQMRO identified by k1g2l8zs using 'maxsfit';
+
+
+SQL> select 'create DATABASE LINK '||NAME|| ' connect to '|| userid || ' identified by '|| password || ' using '||''''|| host ||''''||'; ' FROM sys.link$;
+
+'CREATEDATABASELINK'||NAME||'CONNECTTO'||USERID||'IDENTIFIEDBY'||PASSWORD||'USING'||''''||HOST||''''||';'
+------------------------------------------------------------------------------------------------------------------------------------
+create DATABASE LINK TICKET_MAXPRDNC connect to TICKET_UPDATE identified by NIX6PVPR using 'maxprenc';
+create DATABASE LINK MAXPRDNC connect to GQMRO identified by RT1ET3AE using 'maxprdfo';
+create DATABASE LINK MAXPRENC connect to GQMRO identified by U84XXPFE using 'maxprenc';
+
+
+MAXPREFO
+
+SQL> select 'create DATABASE LINK '||NAME|| ' connect to '|| userid || ' identified by '|| password || ' using '||''''|| host ||''''||'; ' FROM sys.link$;
+
+'CREATEDATABASELINK'||NAME||'CONNECTTO'||USERID||'IDENTIFIEDBY'||PASSWORD||'USING'||''''||HOST||''''||';'
+------------------------------------------------------------------------------------------------------------------------------------
+create DATABASE LINK GQMPRD.WORLD connect to CUST_LETT identified by  using 'GQMPRE';
+create DATABASE LINK MAXPREFO.WORLD connect to MAXIMO identified by  using 'maxprefo';
+create DATABASE LINK GQMRO.WORLD connect to GQMSUPP identified by  using 'GQMPRE';
+create DATABASE LINK QUOTACPT_GQMPRE.WORLD connect to QUOTACPT identified by  using 'GQMPRE';
+create DATABASE LINK READ_ONLY_CLICK.WORLD connect to CLICKRO identified by  using 'CLKPREFO';
+create DATABASE LINK WMPRDCAD.WORLD connect to TNRO identified by  using 'wmprecad';
+create DATABASE LINK READ_ONLY_WEBMET.WORLD connect to WEBMETRO identified by  using 'WMPRECAD';
+create DATABASE LINK MAXRPPRD.WORLD connect to OPSORA identified by  using 'maxrpprd';
+create DATABASE LINK QUOTACPT_GQMPRD.WORLD connect to QUOTACPT identified by  using 'GQMPRD';
+
+
+
+
+SQL> select 'create DATABASE LINK '||NAME|| ' connect to '|| userid || ' identified by '|| password || ' using '||''''|| host ||''''||'; ' FROM sys.link$;
+
+'CREATEDATABASELINK'||NAME||'CONNECTTO'||USERID||'IDENTIFIEDBY'||PASSWORD||'USING'||''''||HOST||''''||';'
+------------------------------------------------------------------------------------------------------------------------------------
+create DATABASE LINK MAXRPPRD connect to MAXRPD identified by MAXRPD using 'MAXRPPRD';
+
+MRPS	Re76HmknkozPGXI
+
+SELECT DECODE(value, NULL, 'PFILE', 'SPFILE') "Init File" FROM v$parameter WHERE name = 'spfile';
+Excluding schema tables :
+Ec2	GISMD01	Master	sys	Manager123	zmu0n2uxmgm5yjd.A775741782397.AMAZONAWS.COM(10.184.0.115)	1526
+GQMD01=
+        (DESCRIPTION=
+                (ADDRESS=(PROTOCOL=tcp)(HOST=sr13yurfvfsx9vk.cqexwwiecxtr.eu-west-1.rds.amazonaws.com)(PORT=1526))
+            (CONNECT_DATA=
+                (SERVICE_NAME=GQMD01)
+                (INSTANCE_NAME=GQMD01)
+            )
+        ) 
+impdp sgnadmin/Goodday123@gisdev02 parallel=8 directory=DATA_PUMP_DIR dumpfile=gisacpre_full_21may18.dmp logfile=gisacpre_full_21may18sgndata.log schemas=SGN EXCLUDE=TABLE:\"IN \(\'A484\',\'A450\',\'NOTES_ANNO\',\'A482\',\'ABANDONEDPLANT_ANNO\',\'NONNETWORKASSETPOINT\',\'TERMINATOR\',\'A429\',\'DELETEDPLANT\',\'A481\',\'IGT_POLY\',\'A430\',\'LAND_LINE_OSINDEX_INIT\',\'A436\',\'A536\',\'A490\',\'A473\',\'LAND_LINE_IMSANNO_INIT\',\'STREETLANERENTAL\',\'A465\',\'A494\',\'ASBUILTTRANSMISSIONPIPE\',\'A433\',\'A447\',\'LAND_LINE_ARCHIVE_INDEX\',\'TRANSMISSIONNETWORKPLANT\',\'A535\',\'ASBUILT_GEOMNET_JUNCTIONS\',\'PIPEDIMENSION\',\'LAND_LINE_OSPOINTS_INIT\',\'LAND_LINE_OSANNO_INIT\'\)\"
+select owner, object_name, object_type, status from dba_objects
+where status!='VALID'
+order by object_type;
+
+Onsite Job Title  :  Systems Consultant 
+Onsite Job Description :  will liaise with client in order to analyse business
+procedure, clarify client requirements and define the
+scope of existing software, also shall enable the test
+environment with multiple strategy. 
+Onsite Job Description-- Just change some thing
+
+https://dba010.com/2019/01/24/steps-that-are-necessary-to-run-dbca-via-xming-flashgrid-enabled-clusters/
+
+  ps -ef|grep pmon
+  ps -ef|grep smon
+  show parameter DB_RECOVERY_FILE_DEST
+  EXEC sys.utl_recomp.RECOMP_SERIAL();
+  select owner, object_name, object_type, status from dba_objects
+where status!='VALID'
+order by object_type;
+  startup pfile='initMRPSPP1S.ora' nomount;
+  select owner, object_name, object_type, status from dba_objects
+where owner='MRPS' and status!='VALID'
+order by object_type;
+  
+export ORACLE_BASE=/u01/app/oracle
+export ORACLE_HOME=/u01/app/oracle/product/11.2.0/dbhome_1
+export PATH=$PATH:$ORACLE_HOME/bin
+export ORACLE_SID=wmpreifo
+
+export ORACLE_BASE=/u01/app/oracle
+export ORACLE_HOME=/u01/app/oracle/product/12.2.0.1/dbhome_1
+export PATH=$PATH:$ORACLE_HOME/bin
+export ORACLE_SID=MRPSD01S
+
+export ORACLE_BASE=/u01/app/oracle
+export ORACLE_HOME=/u01/app/oracle/product/12.2.0.1/dbhome_1
+export PATH=$PATH:$ORACLE_HOME/bin
+export ORACLE_SID=ETLPRD
+
+/u01/app/oracle/product/12.1.0/client_1
+TCIL Traveldesk <TCIL.Traveldesk@in.thomascook.com>
+export ORACLE_BASE=/u01/app/oracle
+export ORACLE_HOME=/u01/app/oracle/product/12.1.0/client_1
+export PATH=$PATH:$ORACLE_HOME/bin
+rds-mulesoft-DEV-82.sgncloud.internal
+000-800-100-7789
+P@ssw0rd
+export ORACLE_BASE=/u01/app/oracle
+export ORACLE_HOME=/u01/app/oracle/product/12.1.0/dbhome_1
+export PATH=$PATH:$ORACLE_HOME/bin
+export ORACLE_SID=FTPRD
+
+export ORACLE_BASE=/u01/app/oracle
+export ORACLE_HOME=/u01/app/oracle/product/11.2.0/dbhome_1
+export PATH=$PATH:$ORACLE_HOME/bin
+
+
+select message_text from listenerlog; 
+select message_text from listenerlog; 
+
+Authorized uses only. All activity may be monitored and reported.
+Last login: Thu Jan 24 14:36:55 2019 from owm4ogyynda5odm.a595107659281.amazonaws.com
+/usr/bin/xauth:  file /home/SCOTIA/nk52582/.Xauthority does not exist
+[SCOTIA\nk52582@odfhmtrimdc5mdl ~]$
+
+/DOCLINKS/HWA_MAXIMO/DMS_Start_Stop_Task.sh start arn:aws:dms:eu-west-1:538856198949:task:5M6X4U2VDG5MK3RGPV4OV4B5WM resume-processing start
+
+P@ssw0rd - Wework password
+
+SELECT 'SELECT DBMS_METADATA.GET_DDL(''TABLESPACE'','''||  TABLESPACE_NAME || ''') FROM DUAL;' FROM DBA_TABLESPACES;
+SELECT DBMS_METADATA.GET_DDL('TABLESPACE','ADMIN_TBS')  FROM DUAL;
+SELECT 'SELECT DBMS_METADATA.GET_DDL(''USER'','''||  USERNAME || ''') FROM DUAL;' FROM DBA_USERS;
+select dbms_metadata.get_ddl('USER','OPS$MDBPREB') from dual;
+SELECT DBMS_METADATA.GET_GRANTED_DDL('ROLE_GRANT','ADMIN') FROM DUAL;
+SELECT DBMS_METADATA.GET_GRANTED_DDL('SYSTEM_GRANT','ADMIN') FROM DUAL;
+SELECT DBMS_METADATA.GET_GRANTED_DDL('OBJECT_GRANT','ADMIN') FROM DUAL;
+SELECT DBMS_METADATA.GET_GRANTED_DDL('SYSTEM_GRANT','ADMIN') FROM DUAL;
+SELECT DBMS_METADATA.GET_GRANTED_DDL('OBJECT_GRANT','ADMIN') FROM DUAL;
+SELECT 'SELECT DBMS_METADATA.GET_DDL(''TABLE'','''||  TABLE_NAME|| ''') FROM DUAL;' FROM DBA_TABLES;
+SELECT DBMS_METADATA.GET_DDL('DB_LINK',a.db_link,a.owner) FROM all_db_links a;
+
+SELECT DBMS_METADATA.get_ddl ('TABLE', table_name, owner)
+FROM   all_tables
+WHERE  owner      = UPPER('QA_SIS')
+AND    table_name in ('ACTIONS_DIM_TMP','APPLICATIONS_DIM_TMP','APPLICATION_TIERS_DIM_TMP','BPM_AGENTS_DIM_TMP','BPM_ERRS_DIM_TMP','CLIENTS_DIM_TMP','CUSTOMERS_DIM_TMP','EVENTS_DIM_TMP','LOCATIONS_DIM_TMP','SCRIPTS_DIM_TMP','SOFTWARE_ELEMENTS_DIM_TMP','SUBNETS_DIM_TMP','TRANSACTIONS_DIM_TMP','WEBTRACES_DIM_TMP');
+
+SELECT DBMS_METADATA.get_ddl ('INDEX', index_name, owner)
+FROM   all_indexes
+WHERE  owner      = UPPER('QA_SIS')
+AND    table_name in ('ACTIONS_DIM_TMP','APPLICATIONS_DIM_TMP','APPLICATION_TIERS_DIM_TMP','BPM_AGENTS_DIM_TMP','BPM_ERRS_DIM_TMP','CLIENTS_DIM_TMP','CUSTOMERS_DIM_TMP','EVENTS_DIM_TMP','LOCATIONS_DIM_TMP','SCRIPTS_DIM_TMP','SOFTWARE_ELEMENTS_DIM_TMP','SUBNETS_DIM_TMP','TRANSACTIONS_DIM_TMP','WEBTRACES_DIM_TMP');
+
+select dbms_metadata.get_ddl('TABLE','CDM_TMP_EID','MGT_QA1') from dual;
+
+select dbms_metadata.get_ddl('INDEX','SYS_C0027725','SPS') from dual;
+select dbms_metadata.get_ddl('INDEX','IDX1_ASSETSPEC','MAXRPD') from dual;
+select dbms_metadata.get_ddl('INDEX','COG_WORKORDER_MV_INDX2','MAXRPD') from dual;
+select dbms_metadata.get_ddl('MATERIALIZED_VIEW', 'WORKORDER_MV','MAXRPD') from dual;
+WORKORDER_MV
+
+ India, Bangalore  : +91 80 6760 8758 
+   India, Chennai  : +91 44 6310 0209
+
+Guest Passcode:               241 049 3287
+Welcome123sgn#45 
+
+I will be out of the office[04-06-2019]. If you need immediate technical assistance during my absence, 
+please contact SGN_HCL_DB@hcl.com. Otherwise I will respond to your emails as soon as possible upon my return. Thank you for your message.
+
+1099511627776
+17592186036224
+17592186036224
+17592186036224
+
+export ORACLE_BASE=/u01/app/oracle
+export ORACLE_HOME=/u01/app/oracle/product/12.1.0.2/dbhome_1
+export PATH=$PATH:$ORACLE_HOME/bin
+export ORACLE_SID=GQMD01
+
+export ORACLE_BASE=/u01/app/oracle
+export ORACLE_HOME=/u01/app/oracle/product/12.1.0/dbhome_1/
+export PATH=$PATH:$ORACLE_HOME/bin
+export ORACLE_SID=BSMD01
+
+export ORACLE_BASE=/u01/app/oracle
+export ORACLE_HOME=/u01/app/oracle/product/12.1.0/client_1/
+export PATH=$PATH:$ORACLE_HOME/bin
+
+Dev-Test Teir1	COGBIUAT-Ec2-clone	Master	sys	oracle123	10.184.8.19	1521	(10.184.8.19)
+		COGBIUAT-Ec2-clone	Schema	SGNBIETL	Monday$84Hcl			
+		COGBIUAT-Ec2-clone	Schema	SGNBIMART	Friday$84Hcl			
+		COGBIUAT-Ec2-clone	Schema	SGNBITDS	Thursday$841Hcl	9306777255
+
+		alter system set local_listener='(DESCRIPTION=(ADDRESS=(PROTOCOL=tcp)(HOST=10.170.245.49)(PORT=1531)))' sid='ALDIDB' scope=both;
+		
+		alter system set local_listener='(DESCRIPTION=(ADDRESS=(PROTOCOL=tcp)(HOST=10.184.8.132)(PORT=1526)))' sid='rmandev' scope=both;
+		
+		alter system set local_listener='(DESCRIPTION=(ADDRESS=(PROTOCOL=tcp)(HOST=10.184.8.132)(PORT=1527)))' sid='wmpremws' scope=both;
+		
+			alter system set local_listener='(DESCRIPTION=(ADDRESS=(PROTOCOL=tcp)(HOST=njuwytdmnmyxmdy.A538856198949.AMAZONAWS.COM)(PORT=1527)))' sid='MRPSD02' scope=both;
+		
+alter system register;
+
+COGBIUAT =
+  (DESCRIPTION_LIST =
+    (DESCRIPTION =
+      (ADDRESS = (PROTOCOL = TCP)(HOST = ywuwywe0yzgxzte.A775741782397.AMAZONAWS.COM)(PORT = 1521))
+      (ADDRESS = (PROTOCOL = IPC)(KEY = EXTPROC1521))
+    )
+  )
+  Schema	MRPS	Re76HmknkozPGXI
+
+  Aditya PROD COGNOS mail
+  GQM interface
+  
+  stack-okt6qyxltypvz0hqn
+ BG71594 - yt87jackbtr
+LJ57129 - ue65jackuwq
+AH54954 - eq58jackhes
+ 
+Hi,  
+I am Out Of Office from 19-09-2018 to 20-09-2018 with limited access to emails. 
+Please expect delay in my response to your email.
+I am reachable on my mobile +919731258844.  
+
+In case of any need on Database, please contact 
+kamalakannan_p@hcl.com
+or DL_SGNCloud_DB@sgn.co.uk
+Master	sgnadmin	He89HmkckozXPGI
+Schema	scomgr	HekckozXPG43
+Schema	scoreports	Hmb43fbozY
+Env	MASTER_USERNAME	MASTER_PASSWORD	SCHEMAPREFIX_NAME	SCHEMAPREFIX_PASSWORD	SCOMGR_SCHEMA_PASSWORD	SCOREPORTS_SCHEMA_PASSWORD
+Dev/Test	sgnadmin	He89HmkckozXPGI	DEV	fraclercu123	HekckozXPG43	Hmb43fbozY
+QA	sgnadmin	Wq89HmbfbozYDIJ	PP	fraclercu123	HekckozXPG63	Hmb63fbozY
+Prod	sgnadmin	Ne89jlknkozPDYI	PRD	fraclercu123	HekckozXPG83	Hmb83fbozY
+
+Kindly provide S3 Full access policy for EC2 Instances (10.184.50.82) Dev T2, to access S3 bucket.
+Also create a S3 bucket for oracle Database backup.
+
+IAM role: XXXXXXXX
+S3 Bucket: XXXXXXXX
+
+GQMMGR	Yc96jlefbozPDYI
+
+
+ drop role R_READ_ONLY;
+
+
+ aws s3 cp  s3://s3-dbbackup-dev-prj-001/ 
+
+
+Hi Team,
+
+Please attach the below security groups to Load balancer: stack-Appli-30MQUHN4WNNX
+
+	1. sg-35724f48
+	2. sg-acb91dd6
+	
+and attach the EC2 Instance ID: i-013daab195c2679b2 to Target Group: stack-Appli-30MQUHN4WNNX
+
+Regards,
+Prakash Jasthy
+
+SELECT DECODE(value, NULL, 'PFILE', 'SPFILE') "Init File Type"FROM sys.v_$parameter WHERE name = 'spfile';
+
+Please copy the snapshot(sr11zekrtg6dv2d-falsd01) from Dev T1(775741782397) to DEV T2(538856198949) environment 
+
+
+
+HI Team,
+
+Snapshot name : sr11zekrtg6dv2d-falsd01
+
+This Snapshot name has to be moved to AWS SGN DevTest T2(538856198949) Ireland from AWS SGN DevTest T1(775741782397) Ireland.
+No need of any encryption.
+Need to restore the snapshot(sr11zekrtg6dv2d-falsd01) to New RDS instance in AWS SGN DevTest T2 Ireland.
+
+Thanks
+Niranjan.
+
+
+Please copy the snapshot(sr9jr0pxylibir-falnd01) from Dev T1(775741782397) to DEV T2(538856198949) environment 
+
+HI Team,
+
+Snapshot name : sr9jr0pxylibir-falnd01
+
+This Snapshot name has to be moved to AWS SGN DevTest T2(538856198949) Ireland from AWS SGN DevTest T1(775741782397) Ireland.
+No need of any encryption.
+Need to restore the snapshot(sr9jr0pxylibir-falnd01) to New RDS instance in AWS SGN DevTest T2 Ireland.
+
+Thanks
+Niranjan.
+
+Hi Team,
+
+Could you please copy the Snapshot of FALCON South from  QA T2(812516084642) to DEV T2(538856198949) Environment.
+
+FALCON South :: HOSTNAME : sr1vcpzgamt2am5.c9hcwprlfdll.eu-west-1.rds.amazonaws.com : 1526 DBNAME :FALSPP01
+
+Snapshot name : sr1vcpzgamt2am57dec949am
+
+Thanks
+
+Niranjan
+
+DBA:Please copy the snapshot sr1vcpzgamt2am57dec949am from QA T2(812516084642) to DEV T2(538856198949) Environment.
+Checked with Shiva regarding the UK Work permit visa
+He told to apply work permit after three months 
+But as of now he told to travel with B visa after coming back apply for work permit after some days like that he suggested Ilangovan
+
+SubjectDBA:Please copy the snapshot sr1vcpzgamt2am57dec949am from QA T2(812516084642) to DEV T2(538856198949) Environment.
+RFC ID36b3e584-8336-9151-88af-60dd8035611e
+Change Type IDct-1e1xtak34nx76
+Created2018-12-20T09:53:45+00:00
+Requested startASAP
+
+usermod -u 1003 -g oinstall -G oinstall,dba oracle
+[oracle@njuwytdmnmyxmdy admin]$ timedatectl status
+      Local time: Tue 2018-11-06 15:00:34 UTC
+  Universal time: Tue 2018-11-06 15:00:34 UTC
+        RTC time: Tue 2018-11-06 15:00:34
+       Time zone: UTC (UTC, +0000)
+     NTP enabled: yes
+NTP synchronized: yes
+ RTC in local TZ: no
+      DST active: n/a
+
+ India, Bangalore  : +91 80 6760 8758 
+   India, Chennai  : +91 44 6310 0209
+
+Guest Passcode:               241 049 3287
+
+HCLTechnologies office,c/o Wework,71-91 Aldwych, London WC2B 4HN 
+Hi Team,
+
+
+In the console level we can see the timezone as EUROPE/LONDON,where in the HOST LEVEL/DB LEVEL its showing as Asia/Calcutta.
+
+We have requested the oracle engine to be with EUROPE/LONDON Timezone in the host level.
+Could you please let us know why the instances are showing with different timezone,update us ASAP.
+
+SELECT DBTIMEZONE,SESSIONTIMEZONE,CURRENT_TIMESTAMP,systimestamp FROM DUAL; 
+
+DBTIME SESSIONTIMEZONE                 CURRENT_TIMESTAMP                          SYSTIMESTAMP                       
+------ ------------------------------- ------------------------------------------ -----------------------------------
++00:00 Asia/Calcutta                   06-DEC-18 19.35.56.553549000 ASIA/CALCUTTA 06-DEC-18 14.05.56.553544000 +00:00
+
+DB Details ::
+
+RDS 1 :
+rds-graphicalfalcon-north-prj-prd-0000317.c5x6st7c8yl9.eu-west-1.rds.amazonaws.com
+
+RDS 2 :
+rds-graphicalfalcon-south-prj-prd-0000317.c5x6st7c8yl9.eu-west-1.rds.amazonaws.com
+
+
+Thanks
+Niranjan.
+1076001 
+
+https://www.gov.uk/apply-national-insurance-number
+https://www.iciciaccountopening.co.uk
+https://www.iciciaccountopening.co.uk
+Hi Team,
+
+Could you please enable the security groups for the below instance in QA T2.(812516084642).
+RDS : sr3pxhclzi3isx.c9hcwprlfdll.eu-west-1.rds.amazonaws.com
+
+SG-Oracle1526-SGNSITES-PRJ-QA-001-InstanceSecurityGroup-1GXRJ14O01QF9 (sg-02545630e7e7c167d)	CIDR/IP - Inbound	10.0.0.0/8
+SG-Oracle1526-SGNSITES-PRJ-QA-001-InstanceSecurityGroup-1GXRJ14O01QF9 (sg-02545630e7e7c167d)	CIDR/IP - Outbound	0.0.0.0/0
+Thanks
+Niranjan.
+
+
+
+1. about Visa
+2. medical claim
+3. allowence
+    
+SELECT dbms_metadata.get_ddl('PROFILE','SGN_LVL1_NOLOCK') "DDL" FROM dual;
+SELECT dbms_metadata.get_ddl('PROFILE','SGN_LVL1_SECURITY') "DDL" FROM dual;
+SELECT dbms_metadata.get_ddl('PROFILE','SGN_LVL2_NOLOCK') "DDL" FROM dual;
+SELECT dbms_metadata.get_ddl('PROFILE','SGN_LVL2_SECURITY') "DDL" FROM dual;
+SELECT dbms_metadata.get_ddl('PROFILE','SSE_LVL1_NOLOCK') "DDL" FROM dual;
+SELECT dbms_metadata.get_ddl('PROFILE','SSE_LVL1_SECURITY') "DDL" FROM dual;
+SELECT dbms_metadata.get_ddl('PROFILE','SSE_LVL2_NOLOCK') "DDL" FROM dual;
+SELECT dbms_metadata.get_ddl('PROFILE','SSE_LVL2_SECURITY') "DDL" FROM dual;
+
+SGN_LVL1_NOLOCK
+SGN_LVL1_SECURITY
+SGN_LVL2_NOLOCK
+SGN_LVL2_SECURITY
+SSE_LVL1_NOLOCK
+SSE_LVL1_SECURITY
+SSE_LVL2_NOLOCK
+SSE_LVL2_SECURITY
+
+
+Hi Team,
+
+We have raised RFC earlier to CONFIGURE Monitoring for DMS Tasks to below Email ID's.
+
+But we dont see all email id's are updated , only we are getting notifications to ID(Saikrishna.Kalluri@sgn.co.uk).
+
+Not sure how rest of ID's are not getting and please do add all ID's for notification to get notifications .
+
+Do let us know if any info reuqired from our end
+HCL Internal :: Profile :: Cloud Migration Experience:: Database 
+
+Earleir RFC details
+
+SubjectDBA :: DMS Task Notifications
+RFC IDc4b5edf6-405a-78ff-2050-8d995b28b1b6
+VIKRAM BHATIA [40108922 ]	AWS Cloud - Architecture	AWS Cloud - Migration/AWS Cloud - Configuration/Implementation/		Sydney Trains	E1	E1.2	SENIOR SOFTWARE ENGINEER	4.5-8 Years	1. Ability to perform the detailed analysis required for migrating off-the-shelf, .NET (for Azure), JAVA and other computer language applications from on-premise to Cloud 2. Ability to build artefacts like Flow diagrams, High Level Design, Low Level Design , network diagrams etcâ€¦ as required 3. Ability to identify and configure the touch points of IT eco-system required for deploying an application like AD authentication, DNS, SSL-certificates, CI/CD pipelines etc.. 4. Responsible for building and deploying cost-optimized resources for hosting the applications that includes VPCâ€™s, EC2, RDS, Cognito, ELBâ€™s, IAM , Cloudwatch, etc.. 5. Responsible for building and deploying cost-optimized resources for hosting the applications in Azure on both IaaS and PaaS that includes VNETâ€™s, ASPâ€™s, Virtual Machines, storage accounts, App Service plans, Application gateways, managed DB instances etc.. 6. Ability to build and automate tasks that are repetitive like provisioning of AWS resources that may be EC2, RDS,ELBâ€™s using Cloudformation 7. Ability to build CI/CD pipelines using AWS Native tools or 3rd party tools like Git,Jenkins etc.. 8. Ability to build and automate tasks in Azure that are repetitive using ARM templates. 9. Ability to build CI/CD pipelines using Azure Devops 10. Excellent communication skills	Australia	SS Australia	Sydney
+
+Pratibha Deve Gowda [51640611 ]	Oracle DBA	Sql Developer/Functional - Test Lead/		Credit Suisse	E2	E2.2	Senior Technical Lead	7-12 Years	To be responsible for managing technology in projects and providing technical guidance / solutions for work completion	Switzerland	SS Switzerland	Switzerland
+
+
+Email id :SIVAPRASAD BALACHANDAR [51438591 ]	AWS Cloud - Migration			Travelodge Hotels Limited	E6	E6.1	General Manager - Delivery	13-17 Years	To provide Enterprise Architecture Design solutions and technical strategies for Implementation and roadmaps for meeting Customers IT and Business Vision	INDIA	SS India	Chennai
+
+
+Niranjan.Kuruba@sgn.co.uk
+Saikrishna.Kalluri@sgn.co.uk
+Rajapremkumar.Jeyakaran@sgn.co.uk
+Kamalakannan.Ponnusamy@sgn.co.uk
+VIKRAM BHATIA [40108922 ]
+APPS/APPS/2019/1169455
+Pratibha Deve Gowda [51640611 ]
+
+BR,
+Sai 
+ APPS/APPS/2019/1174381	Suma Oggisetty [51698166 ]	Oracle Cloud				Disney Worldwide Services	E3	E3.2	Project Manager	5-7 Years	To manage and ensure that the project schedules are adhered to as per the client specifications and deliveries are as per the time and quality standards.	UK	SS Great Britain	London
+
+50100322645931
+
+[?06-?03-?2020 13:16]  Trinadharaju Chippada:  
+MRPQAHA=
+  (DESCRIPTION =
+     (ADDRESS_LIST =
+       (FAILOVER = ON)
+       (LOAD_BALANCE = OFF)
+       (ADDRESS = (PROTOCOL = TCP)(HOST = 10.184.65.10)(PORT = 1526))
+       (ADDRESS = (PROTOCOL = TCP)(HOST = 10.184.71.162)(PORT = 1526))
+     )
+     (CONNECT_DATA =
+       (SERVICE_NAME = mrpqaha.hapool.oradbcloud)
+        (FAILOVER_MODE =
+        (TYPE = SELECT)
+        (METHOD = basic)
+        (RETRIES=20)
+        (DELAY=15)
+      )
+     )
+  ) 
+  
+MAXPP25=
+  (DESCRIPTION =
+    (ADDRESS_LIST =
+      (ADDRESS = (PROTOCOL = TCP)(HOST =rds-maximo-pp-25.sgncloud.internal)(PORT = 1526))
+    )
+    (CONNECT_DATA =
+      (SID = MAXPP25)
+    )
+  ) 
+ 
+
+
+
+===========================================================================================================================================================
+
+
+
+FOR Graphical mode interface and to work as usual :
+
+Download the Mobaxterm portable(works like putty) :
+
+Portable Edition:
+
+https://mobaxterm.mobatek.net/download-home-edition.html
+
+run this command to enable the X11 forwarding :
+
+sudo yum install -y xterm* xorg* xauth xclock 
+
+7063481078
+To create the user :
+useradd oracle
+To set the password :
+passwd oracle(user)
+To create the group :
+groupadd dba
+groupadd  oinstall
+We can check the user and groups in /etc/group – more /etc/group
+
+usermod -u 1002 -g oinstall -G oinstall,dba oracle
+usermod -u 1002 -g oinstall -G oinstall,dba oracle
+
+Dowloaded the oracle database 11.2.0.3 software from metalink:
+
+https://updates.oracle.com/Orion/Services/download/p10404530_112030_Linux-x86-64_1of7.zip?aru=14125322&patch_file=p10404530_112030_Linux-x86-64_1of7.zip
+
+https://updates.oracle.com/Orion/Services/download/p10404530_112030_Linux-x86-64_2of7.zip?aru=14125322&patch_file=p10404530_112030_Linux-x86-64_2of7.zip
+
+Through winscp copied the zip files to the Server.
+
+Unziped the files :
+
+Unzip p10404530_112030_Linux-x86-64_1of7.zip;
+Unzip p10404530_112030_Linux-x86-64_2of7.zip;
+
+Run the runinstaller :
+
+Cd /database
+./Runinstaller
+
+While in the prerequsites Tab it will recommend to fix some parameters:
+
+Installing the requires packages,setting the swap size,setting the kernel parameters :
+
+Install the Packages :
+
+Yum install <packages name>
+
+ libaio-0.3.105
+ glibc-2.3.4-2.41
+ compat-libstdc++-33-3.2.3
+ elfutils-libelf-devel-0.97
+ gcc-c++-3.4.6
+ libaio-devel-0.3.105
+ libgcc-3.4.6
+ libstdc++-3.4.6
+ unixODBC-2.2.11  
+ unixODBC-devel-2.2.11  
+ pdksh-5.2.14
+ 
+ set the Swap size as required :
+ 
+ Swap Size - This is a prerequisite condition to test whether sufficient total swap space is available on the system.
+Expected Value
+: 16 GB 
+Actual Value
+: 0 
+1 check what swap size 
+#swapon –s
+Filename                                Type            Size    Used    Priority
+/dev/xvda3                              partition       2097144 0       -1
+>90% used 
+
+
+2 Create a file that you’ll use for swap with dd command with   as root 
+
+[root@localhost]#dd if=/dev/zero of=/root/oracleswapfile bs=1G count=5
+Note :- Above command will be create the 17Gb swapfile on /home location as  swapfile
+3 Set up a Linux swap area   #mkswap /home/swapfile
+4: Enabling the swap file
+#swapon /home/swapfile
+#swapon –a
+5 status of add swap # swapon -s
+
+Adjust the Kernel level parameters as required :
+
+# For more information, see sysctl.conf(5) and sysctl.d(5).
+kernel.shmall = 2097152
+fs.file-max = 6815744
+net.ipv4.ip_local_port_range = 9000 65500
+net.core.rmem_default = 262144
+net.core.wmem_default = 262144
+net.core.rmem_max = 4194304
+net.core.wmem_max = 1048576
+fs.aio-max-nr = 1048576
+kernel.sem = 250 32000 100 128
+kernel.shmmax = 4294967295
+kernel.shmmni = 4096
+
+Created the database using dbca :
+P@ssw0rd
+2Es3y7G4NyiTpK45
+Bin folder : /home/oracle/app/oracle/product/11.2.0/dbhome_1/bin - ./dbca
+
+=========================================================================================================================================
+oracle-ee-12-1-process
+kernel.msgmnb = 65536
+kernel.msgmax = 65536
+kernel.shmmax = 68719476736
+kernel.shmall = 4294967296
+kernel.sem = 256 32000 100 142
+kernel.shmall = 2097152
+kernel.shmmax = 68719476736
+kernel.shmmni = 4096
+kernel.msgmax = 8192
+kernel.msgmnb = 65535
+kernel.msgmni = 2878
+fs.file-max = 6815744
+net.ipv4.ip_local_port_range = 9000 65500
+net.core.rmem_default = 262144
+net.core.rmem_max = 4194304
+net.core.wmem_default = 262144
+net.core.wmem_max = 1048576
+fs.aio-max-nr = 1048576
+
+
+
+
+oracle              soft    nproc   2047
+oracle              hard    nproc   16384
+oracle              soft    nofile  4096
+oracle              hard    nofile  65536
+oracle              soft    stack   10240
+
+usermod -u 1007 -g dba -G oinstall,dba cogcm
+
+dd if=/dev/zero of=/software/swapfile bs=1G count=17 
+mkswap /home/oracle/swapfile
+swapon /home/oracle/swapfile
+
+export ORACLE_BASE=/u01/app/oracle
+export ORACLE_HOME=/u01/app/oracle/product/12.2.0.1/dbhome_1
+export PATH=$PATH:$ORACLE_HOME/bin
+
+
+COGCMDVS =
+  (DESCRIPTION =
+    (ADDRESS = (PROTOCOL = TCP)(HOST = ip-172-31-5-16.eu-west-1.compute.internal)(PORT = 1521))
+    (CONNECT_DATA =
+      (SERVER = DEDICATED)
+      (SERVICE_NAME = cogcmdvs)
+    )
+  )
+  
+  
+  
+COGCMDVT =
+  (DESCRIPTION =
+    (ADDRESS = (PROTOCOL = TCP)(HOST = 172.31.5.51)(PORT = 1521))
+    (CONNECT_DATA =
+      (SERVER = DEDICATED)
+      (SERVICE_NAME = cogcmdvt)
+    )
+  )
+
+  
+  
+LISTENER =
+  (DESCRIPTION_LIST =
+    (DESCRIPTION =
+      (ADDRESS = (PROTOCOL = TCP)(HOST = ip-172-31-5-16.eu-west-1.compute.internal)(PORT = 1521))
+      (ADDRESS = (PROTOCOL = IPC)(KEY = EXTPROC1521))
+    )
+  )
+
+ADR_BASE_LISTENER = /software/app/cogcm
+
+impdp cognosadmin/cognospass directory=DATA_PUMP_DIR full=y dumpfile=cogcmpre_expdp.dmp logfile=cogcmpre_expdp.log
+
+create tablespace COGAUD_DATA datafile '/u01/app/oracle/oradata/cogcmdvs/COGAUD_DATA.dbf' size 1G autoextend on maxsize 10G;
+
+
+LISTENER =
+  (DESCRIPTION_LIST =
+    (DESCRIPTION =
+      (ADDRESS = (PROTOCOL = TCP)(HOST = 172.31.5.51)(PORT = 1521))
+      (ADDRESS = (PROTOCOL = IPC)(KEY = EXTPROC1521))
+    )
+  )
+
+ADR_BASE_LISTENER = /software/app/cogcm
+
+
+
+kernel.msgmnb = 65536
+kernel.msgmax = 65536
+kernel.shmmax = 1073741824
+kernel.shmall = 1073741824
+kernel.sem = 256 32000 100 142
+kernel.shmall = 2097152
+kernel.shmmax = 1073741824
+kernel.shmmni = 4096
+kernel.msgmax = 8192
+kernel.msgmnb = 65535
+kernel.msgmni = 2878
+fs.file-max = 6815744
+net.ipv4.ip_local_port_range = 9000 65500
+net.core.rmem_default = 262144
+net.core.rmem_max = 4194304
+net.core.wmem_default = 262144
+net.core.wmem_max = 1048576
+fs.aio-max-nr = 1048576
+/etc/sysctl.conf
+17179869184
+2147483648
+
+
+select * from table(RDSADMIN.RDS_FILE_UTIL.LISTDIR('DATA_PUMP_DIR')) order by mtime; 
+SELECT text FROM table(rdsadmin.rds_file_util.read_text_file('DATA_PUMP_DIR','cogcmpre_full_expdp.log'));  
+
+Hi Team,
+
+We have created one new user with name HWAUSER.
+May we know what are all grants do we need to pro
+
+ALTER SYSTEM SET smtp_out_server ='smtp.office365.com:587';
+EC2	Synergi	SPLPP01	Master	system	Oracle123	10.184.73.183	1526
+		SPLPP02	Master	system	Oracle123	10.184.75.231	
+
+DB Details:
+
+srqjkr15y0d19a.cqexwwiecxtr.eu-west-1.rds.amazonaws.com
+SQSD01
+1526
+
+# .bash_profile
+
+# Get the aliases and functions
+if [ -f ~/.bashrc ]; then
+        . ~/.bashrc
+fi
+
+# User specific environment and startup programs
+
+PATH=$PATH:$HOME/.local/bin:$HOME/bin
+
+export PATH
+. /home/oracle/ETLPRD.env
+
+export LD_LIBRARY_PATH=$ORACLE_HOME/lib:$ORACLE_HOME/precomp/public:/usr/lib
+echo "##########Welcome##########"
+echo "Sourced DB_Name: "$ORACLE_SID
+echo "ORACLE_HOME: "$ORACLE_HOME
+echo "###########################"
+
+# .bash_profile
+
+# Get the aliases and functions
+if [ -f ~/.bashrc ]; then
+        . ~/.bashrc
+fi
+
+# User specific environment and startup programs
+
+PATH=$PATH:$HOME/.local/bin:$HOME/bin
+
+export PATH
+
+
+===========================================================================================================================================================
+
+select 'drop user '||username||' cascade;' from dba_users where username not in ('SCOTT',
+'ORACLE_OCM','OJVMSYS','SYSKM','XS$NULL','GSMCATUSER','MDDATA','SYSBACKUP','DIP','SYSDG',
+'APEX_PUBLIC_USER','SPATIAL_CSW_ADMIN_USR','SPATIAL_WFS_ADMIN_USR','GSMUSER','AUDSYS','FLOWS_FILES',
+'DVF','MDSYS','ORDSYS','DBSNMP','WMSYS','APEX_040200','APPQOSSYS','GSMADMIN_INTERNAL','ORDDATA',
+'CTXSYS','ANONYMOUS','XDB','ORDPLUGINS','DVSYS','SI_INFORMTN_SCHEMA','OLAPSYS','LBACSYS','OUTLN',
+'SYSTEM','SYS');  
+
+select owner, sum(bytes/1024/1024/1024) 
+from dba_segments
+where owner='SGNBIETL'
+group by owner;
+
+select owner, object_type,status, count(*) from dba_objects
+where owner='SGNBIETL'
+group by owner,object_type,status
+order by status desc;
+expdp \'/ as sysdba\' DIRECTORY=DATA_PUMP_DIR LOGFILE=BSMT01_fullexpdp_21032019.log DUMPFILE=BSMT01_fullexpdp_21032019.dmp full=y COMPRESSION=ALL
+select constraint_type, status, count(*)
+from dba_constraints
+where owner='SGNBIETL' 
+group by constraint_type, status;
+
+select 'alter table '||owner||'.'||table_name||' enable constraint '||constraint_name||';'
+from dba_constraints
+where owner='SGNBIETL'
+and constraint_type='C';
+
+select 'alter table '||table_name||' disable constraint '|| constraint_name||'; 'from user_constraint
+where r_constraint_name in
+(select constraint_name
+    from user_constraints
+    where constraint_type='R');
+
+select 'truncate table '||owner||'.'||table_name|| ';' from dba_tables where owner='SGNBIETL';
+
+cognos-onprem-to-rds-cdc-03
+141277.17
+
+select count(*) from dba_tables where owner='SGNBIETL';
+
+COMMAND TO UPLOAD THE FILES TO JFROG:
+
+curl -u niranjan.kuruba@sgn.co.uk:password -X PUT "https://sgn.jfrog.io/sgn/SGN-App-Softwares/oracle/MPRS_Full_Prod_16Aug2019.dmp" -T MPRS_Full_Prod_16Aug2019.dmp
+
+
+COMMAND TO DOWNLOAD THE FILES TO JFROG:
+
+curl -H 'X-JFrog-Art-Api: AKCp5aUQb4iTciR5MDFArzVgi3JdZbFqcTPAtHxZvxhiR7unB4MDob3geBLfKLWLrVgwS18Zq' -O "https://sgn.jfrog.io/sgn/SGN-App-Softwares/oracle/MPRS_Full_Prod_16Aug2019.dmp" 
+
+
+RDS	FALNPRD	Master	sgnadmin	Wq98HmbfbozYDIJ - rds-graphicalfalcon-north-prj-prd-0000317.c5x6st7c8yl9.eu-west-1.rds.amazonaws.com
+		Schmea	Falcon	or98jahkbozI
+RDS	FALSPRD	Master	sgnadmin	He98HmkckozXPGI - rds-graphicalfalcon-south-prj-prd-0000317.c5x6st7c8yl9.eu-west-1.rds.amazonaws.com
+		Schmea	Falcon	gt98jahkjtr
+
+
+		
+		Need to get this package body ( PCK_C_GEN_BSMART_CONTEXT) from Hari Kamal..
+Please find the version below.
+  EXEC sys.utl_recomp.RECOMP_SERIAL();
+#
+ aws s3 cp alert_BSMD01S.log s3://s3-dbbackup-dev-prj-001/ 
+  
+OWNER        OBJECT_NAME            OBJECT_TYPE             STATUS 
+------------ ---------------------- ----------------------- -------
+OPS$ORACLE   FN_GET_REPLY_DUE_BY    FUNCTION                INVALID
+AQSMGR       TRUNCATE_ALL           PROCEDURE               INVALID
+rds-graphicalfalcon-north-prj-prd-0000317.c5x6st7c8yl9.eu-west-1.rds.amazonaws.com
+SCOTIA.SGNGROUP.NET\NK52582
+
+  EXEC sys.utl_recomp.RECOMP_SERIAL();
+  ps -ef|grep pmon
+    ps -ef|grep pmon
+	  ps -ef|grep pmon
+
+ORA:00257 archive error::
+sgnadmin	Ne96jlknkozPDYI	sr13yurfvfsx9vk.cqexwwiecxtr.eu-west-1.rds.amazonaws.com
+India, Bangalore  : +91 80 6760 8758 
+
+
+10.184.80.0/22, 10.184.84.0/22, 10.184.88.0/22			
+10.184.80.0/22, 10.184.84.0/22, 10.184.88.0/22			
+priyanush@081718
+show parameter db_recovery_file_dest_size
+Schmea	GQMMGR	Yc96jlefbozPDYI
+
+ALTER SYSTEM SET db_recovery_file_dest_size='100G' SCOPE=BOTH; 
+
+col ROUND(SPACE_LIMIT/1048576) heading "Space Allocated (MB)"format 999999
+col round(space_used/1048576) heading "Space Used (MB)" format 99999
+col name format a40
+select name, round(space_limit/1048576) As space_limit,round(space_used/1048576) As space_used
+from v$RECOVERY_FILE_DEST;
+
+SELECT sequence#, first_time, next_time, applied FROM v$archived_log ORDER BY first_time asc;
+
+SELECT sequence#, first_time, next_time, applied FROM v$archived_log ORDER BY sequence#;
+
+ select thread#,max(sequence#) from v$archived_log group by thread#; --- in prod
+	 select thread#,max(sequence#) from v$archived_log where applied='YES' group by thread#; ---- in Dr 
+
+	nohup dgmgrl -logfile /home/oracle/observer.log sys/Oracle123@GQMD01 "start observer" &  
+	
+	 select name,open_mode,database_role from v$database;
+SELECT  PROCESS, STATUS,SEQUENCE#,BLOCK#,BLOCKS, DELAY_MINS FROM V$MANAGED_STANDBY;
+
+DELETE ARCHIVELOG ALL COMPLETED BEFORE 'sysdate-1'; 
+
+delete noprompt expired archivelog all;
+
+Arch difference ::
+
+SELECT ARCH.THREAD# "Thread", ARCH.SEQUENCE# "Last Sequence Received", APPL.SEQUENCE# "Last Sequence Applied", (ARCH.SEQUENCE#-APPL.SEQUENCE#) "Difference"
+FROM
+(SELECT THREAD# ,SEQUENCE# FROM V$ARCHIVED_LOG WHERE (THREAD#,FIRST_TIME ) IN
+(SELECT THREAD#,MAX(FIRST_TIME) FROM V$ARCHIVED_LOG GROUP BY THREAD#)) ARCH,
+(SELECT THREAD# ,SEQUENCE# FROM V$LOG_HISTORY WHERE (THREAD#,FIRST_TIME ) IN
+(SELECT THREAD#,MAX(FIRST_TIME) FROM V$LOG_HISTORY GROUP BY THREAD#)) APPL
+WHERE
+ARCH.THREAD# = APPL.THREAD#
+ORDER BY 1; 
+
+list backup tag='TAG20190502T070028'; 
+select dest_id,status,error from v$archive_dest where status<>'INACTIVE';
+
+backup incremental from scn 30792474 database format '/u02/inc_backup_%U';
+
+BACKUP INCREMENTAL FROM SCN 7728610994157 DATABASE FORMAT ‘/db/flashback/rmanback/ForStandby_%U’ tag ‘STANDBY’;
+
+CONFIGURE CHANNEL DEVICE TYPE 'SBT_TAPE' PARMS  'SBT_LIBRARY=/u01/app/oracle/product/12.2.0.1/dbhome_1/lib/libosbws.so SBT_PARMS=(OSB_WS_PFILE=/u01/app/oracle/product/12.2.0.1/dbhome_1/dbs/osbwsGQMD01.ora)';
+
+CONFIGURE CHANNEL DEVICE TYPE DISK FORMAT = '?/bkup_%U';
+
+catalog start with '/u03/bkp/';
+
+catalog backuppiece '/u02/inc_backup_19tsba9a_1_1';
+
+catalog backuppiece '/u02/inc_backup_1atsbaae_1_1';
+
+catalog backuppiece '/u02/inc_backup_1btsbab7_1_1';
+scp *.rmb *.ctl 
+FILE#
+scp *_1_1  oracle@10.184.52.70:/u02
+
+startup pfile='initGQMD01S.ora' nomount;
+Hi Kamal/Ilangovan,
+
+Archives has not applied to standby from FEB 2,when I checked the status of standby its not running mode.
+I have started the DB and restarted the MRP process, still the archive log gap is there.
+
+@ilangovan,can we copy 
+Amazon S3/ -->applicationcode-temp/-->CIPS_07022019
+
+9845936159
+
+MRPSD01 =
+(DESCRIPTION =
+        (ADDRESS_LIST =
+                (ADDRESS = (PROTOCOL = TCP)(HOST = ec2-dev-mrps-001.sgncloud.internal)(PORT = 1526))
+        )
+        (CONNECT_DATA =
+                (SERVER = DEDICATED)
+                (SERVICE_NAME = MRPSD01)
+        )
+)
+ AQSMIG - Pn96jlefbozIZKW;
+ AQSMGR - Lt86jlefbozQAKW;
+ AQSSUPP -  Qx76jlefbozHEJR;
+ CISSGN - Ib16jlefbozHEIO;
+ CISSSE - Ue26jlefbozNYKW;
+
+add database MRPSD01S as connect identifier is MRPSD01S;
+MRPSD01 =
+(DESCRIPTION =
+        (ADDRESS_LIST =
+                (ADDRESS = (PROTOCOL = TCP)(HOST = 10.184.50.82)(PORT = 1526))
+        )
+        (CONNECT_DATA =
+                (SERVER = DEDICATED)
+                (SERVICE_NAME = MRPSD01)
+        )
+)
+
+11G:
+
+#SQLNET.CRYPTO_CHECKSUM_TYPES_SERVER= (SHA1, MD5)
+#SQLNET.ENCRYPTION_TYPES_SERVER= (AES256, RC4_256, 3DES168, AES192, AES128, 3DES112, RC4_128, DES, RC4_56, RC4_40, DES40)
+
+#SQLNET.INBOUND_CONNECT_TIMEOUT = 120
+
+12C :
+
+SQLNET.CRYPTO_CHECKSUM_TYPES_SERVER= (SHA256, SHA384, SHA512, SHA1, MD5)
+SQLNET.ENCRYPTION_TYPES_SERVER= (AES256, RC4_256, 3DES168, AES128, AES192, RC4_128, 3DES112, RC4_56, DES, RC4_40, DES40)
+SQLNET.ENCRYPTION_SERVER =Requested
+SQLNET.CRYPTO_CHECKSUM_SERVER = Requested 
+
+select PCK_C_GEN_BSMART_CONTEXT.f_get_version from dual;
+1.2.0.1 
+Core GIS OnPrem
+===============
+gisacpre=(DESCRIPTION = (ADDRESS_LIST = (ADDRESS = (PROTOCOL = TCP)(HOST = 10.70.96.202)(PORT = 1526))) (CONNECT_DATA = (SERVICE_NAME = gisacpre)))
+
+OnPrem user name and password:
+
+username=CLOUD_MIGRATION
+password=sgndmsgisSRC
+
+
+RDS database details:
+==================
+gisacpoc=(DESCRIPTION=(ADDRESS=(PROTOCOL=TCP)(HOST=srbgp03gjxbxw6.crqlomteue96.eu-west-1.rds.amazonaws.com)(PORT=1526))(CONNECT_DATA=(SID=gisacpoc)))
+
+username=master
+password=sgngispass
+
+Employee Cost Center : 1003C122S0
+Proposed Client/ Prospect Name : Scotia Gas Networks
+Mode of Expense for the Travel  : HCL Pays all expenses
+Project ID/ Name   :C175032 | CLOUD Native - Transformation - APPS SGN
+Billable Cost Centre : NA
+Client Address: HCL Technologies,Aldwych House, 71-91 Aldwych, London, WC2B 4HN 
+
+Employee Cost Center : 1003617321  
+Billable Cost Centre : 1003617321 
+
+
+passpo
+
+
+
+Hi Shiva,
+This is Niranjan from DBA Team.
+As my tickets got booked on FEB 9th to travel UK, planned to go to hometown this weekend to spend time with family members.
+I Planned to come back on FEB 7th (Thursday),If you give permission will come to office on FEB 7th.
+Thanks in advance - Niranjan
+
+
+
+PRODUCTION - DB	Connect descriptor	Ip Address	Host:port/sid	CNAME	End Point
+MAXIMO	(DESCRIPTION=(ADDRESS=(PROTOCOL=TCP)(HOST=rds-maximo-prd.sgncloud.internal)(PORT=1526))(CONNECT_DATA=(SID=MAXPRD)))	10.184.43.183	rds-maximo-prd.sgncloud.internal:1526/MAXPRD	rds-maximo-prd.sgncloud.internal	rds-maximo-fof-prd-0000714.cnyp7gatuh0y.eu-west-1.rds.amazonaws.com
+MAXIMO -ODS	(DESCRIPTION=(ADDRESS=(PROTOCOL=TCP)(HOST=ODS-Prod-714.sgncloud.internal)(PORT=1526))(CONNECT_DATA=(SID=MAXRPRD)))	10.184.80.162	ODS-Prod-714.sgncloud.internal:1526/MAXRPRD	ODS-Prod-714.sgncloud.internal	target-rds-ods-fof-prd-0000714.c5x6st7c8yl9.eu-west-1.rds.amazonaws.com
+
+
+
+
+
+DECLARE 
+l_recipient VARCHAR2(100):='Kamalakannan.Ponnusamy@sgn.co.uk'; 
+BEGIN 
+UTL_MAIL.SEND(SENDER => 'Ilangovan.Thankarose@sgn.co.uk', 
+RECIPIENTS => l_recipient, 
+SUBJECT => 'Test 10/10 Survey Mail', 
+MESSAGE => 'Test Mail Body'); 
+END;  
+/  
+
+
+===========================================================================================================================================================
+
+Maximo: M72HmknkozPGXI
+Maximo_ODS: Ok38TevckozMSCVE
+
+exec rdsadmin.rdsadmin_util.switch_logfile; 
+
+CREATE PUBLIC DATABASE LINK MAXPP04 connect to sgnadmin IDENTIFIED BY MQ82HmknlonHWPGXI using 'MAXPP04';
+
+CREATE PUBLIC DATABASE LINK MAXPP05 connect to sgnadmin IDENTIFIED BY sgnmaximopass7609 using 'MAXPP05';
+
+select * from dba_tablespaces;
+select * from dba_profiles;
+select distinct profile from dba_profiles;
+
+create tablespace MAXIMO_DATA datafile size 10G autoextend on next 512M maxsize 650G;
+create tablespace MAXIMO_INDEX datafile size 10G autoextend on next 512M  maxsize 650G;
+
+create tablespace XOSERVE_LOAD_INDEX datafile size 10G autoextend on next 512M maxsize 650G;
+create tablespace XOSERVE_LOAD_DATA datafile size 10G autoextend on next 512M maxsize 650G;
+
+ALTER TABLESPACE SYSAUX AUTOEXTEND ON NEXT 100M MAXSIZE 10G;
+ALTER TABLESPACE SYSTEM AUTOEXTEND ON NEXT 100M MAXSIZE 10G;
+ALTER TABLESPACE USERS AUTOEXTEND ON NEXT 100M MAXSIZE 10G;
+
+
+
+
+
+
+
+begin
+-- SGN Rule: Min of 8 characters
+-- Min of 1 upper character and 1 digit
+-- Min of 1 special character, but not the @ sign
+-- Min of 4 distinct characters
+-- Cannot be the same as username
+-- Disallow simple strings
+-- NOT contain any part of the username
+-- Check if the password is same as the username
+    rdsadmin.rdsadmin_password_verify.create_verify_function(
+        p_verify_function_name => 'SGN_PWD_LVL1_VERIFY_FUNCTION', 
+        p_min_length           => 8, 
+        p_min_uppercase        => 1, 
+        p_min_digits           => 1, 
+        p_min_special          => 1,
+        p_disallow_at_sign     => true,
+		p_min_different_chars  => 4,
+		p_disallow_username     => true,
+		p_disallow_simple_strings => true);
+end;
+/
+
+begin
+-- SGN Rule: Min of 15 characters
+-- Min of 1 upper character and 1 digit
+-- Min of 1 special character, but not the @ sign
+-- Min of 4 distinct characters
+-- Cannot be the same as username
+-- Disallow simple strings
+-- NOT contain any part of the username
+-- Check if the password is same as the username
+    rdsadmin.rdsadmin_password_verify.create_verify_function(
+        p_verify_function_name => 'SGN_PWD_LVL2_VERIFY_FUNCTION', 
+        p_min_length           => 15, 
+        p_min_uppercase        => 1, 
+        p_min_digits           => 1, 
+        p_min_special          => 1,
+        p_disallow_at_sign     => true,
+		p_min_different_chars  => 4,
+		p_disallow_username     => true,
+		p_disallow_simple_strings => true);
+end;
+/
+
+
+
+
+begin
+-- SGN Rule: Min of 8 characters
+-- Min of 1 upper character and 1 digit
+-- Min of 1 special character, but not the @ sign
+-- Min of 4 distinct characters
+-- Cannot be the same as username
+-- Disallow simple strings
+-- NOT contain any part of the username
+-- Check if the password is same as the username
+    rdsadmin.rdsadmin_password_verify.create_verify_function(
+        p_verify_function_name => 'SSE_PWD_LVL1_VERIFY_FUNCTION', 
+        p_min_length           => 8, 
+        p_min_uppercase        => 1, 
+        p_min_digits           => 1, 
+        p_min_special          => 1,
+        p_disallow_at_sign     => true,
+		p_min_different_chars  => 4,
+		p_disallow_username     => true,
+		p_disallow_simple_strings => true);
+end;
+/
+
+begin
+-- SGN Rule: Min of 15 characters
+-- Min of 1 upper character and 1 digit
+-- Min of 1 special character, but not the @ sign
+-- Min of 4 distinct characters
+-- Cannot be the same as username
+-- Disallow simple strings
+-- NOT contain any part of the username
+-- Check if the password is same as the username
+    rdsadmin.rdsadmin_password_verify.create_verify_function(
+        p_verify_function_name => 'SSE_PWD_LVL2_VERIFY_FUNCTION', 
+        p_min_length           => 15, 
+        p_min_uppercase        => 1, 
+        p_min_digits           => 1, 
+        p_min_special          => 1,
+        p_disallow_at_sign     => true,
+		p_min_different_chars  => 4,
+		p_disallow_username     => true,
+		p_disallow_simple_strings => true);
+end;
+/
+
+SGN_LVL1_NOLOCK
+SGN_LVL1_SECURITY
+SGN_LVL2_NOLOCK
+SGN_LVL2_SECURITY
+SSE_LVL1_NOLOCK
+SSE_LVL1_SECURITY
+SSE_LVL2_NOLOCK
+SSE_LVL2_SECURITY
+
+create USER MAXIMO identified by sgnmaximopass8844 DEFAULT TABLESPACE MAXIMO_DATA TEMPORARY TABLESPACE TEMP ACCOUNT UNLOCK;
+
+CREATE USER "MAXIMO" IDENTIFIED BY Ux76HmknbhZ$PGXI DEFAULT TABLESPACE "MAXIMO_DATA"      TEMPORARY TABLESPACE "TEMP"      PROFILE "SGN_LVL2_NOLOCK" ACCOUNT UNLOCK;
+grant create trigger to maximo;
+grant create session to maximo;
+grant create sequence to maximo;
+grant create synonym to maximo;
+grant create table to maximo;
+grant create view to maximo;
+grant create procedure to maximo;
+grant alter session to maximo;
+grant create job to maximo;
+grant select_catalog_role to maximo;
+grant execute on ctxsys.ctx_ddl to maximo; 
+grant connect,resource,ctxapp to maximo;
+alter user maximo quota unlimited on users; 
+ALTER USER "MAXIMO" QUOTA UNLIMITED ON XOSERVE_LOAD_INDEX;
+ALTER USER "MAXIMO" QUOTA UNLIMITED ON MAXIMO_INDEX;
+ALTER USER "MAXIMO" QUOTA UNLIMITED ON MAXIMO_DATA;
+ALTER USER "MAXIMO" QUOTA UNLIMITED ON XOSERVE_LOAD_DATA;
+alter user maximo temporary tablespace temp;
+
+
+alter user maximoui quota unlimited on MAXIMO_DATA;
+alter user maximoui quota unlimited on MAXIMO_INDEX;
+
+
+call ctx_ddl.drop_preference('global_lexer');
+call ctx_ddl.drop_preference('default_lexer');
+call ctx_ddl.drop_preference('english_lexer');
+call ctx_ddl.drop_preference('chinese_lexer');
+call ctx_ddl.drop_preference('japanese_lexer');
+call ctx_ddl.drop_preference('korean_lexer');
+call ctx_ddl.drop_preference('german_lexer');
+call ctx_ddl.drop_preference('dutch_lexer');
+call ctx_ddl.drop_preference('swedish_lexer');
+call ctx_ddl.drop_preference('french_lexer');
+call ctx_ddl.drop_preference('italian_lexer');
+call ctx_ddl.drop_preference('spanish_lexer');
+call ctx_ddl.drop_preference('portu_lexer');
+call ctx_ddl.create_preference('default_lexer','basic_lexer');
+call ctx_ddl.create_preference('english_lexer','basic_lexer');
+call ctx_ddl.create_preference('chinese_lexer','chinese_lexer');
+call ctx_ddl.create_preference('japanese_lexer','japanese_lexer');
+call ctx_ddl.create_preference('korean_lexer','korean_morph_lexer');
+call ctx_ddl.create_preference('german_lexer','basic_lexer');
+call ctx_ddl.create_preference('dutch_lexer','basic_lexer');
+call ctx_ddl.create_preference('swedish_lexer','basic_lexer');
+call ctx_ddl.create_preference('french_lexer','basic_lexer');
+call ctx_ddl.create_preference('italian_lexer','basic_lexer');
+call ctx_ddl.create_preference('spanish_lexer','basic_lexer');
+call ctx_ddl.create_preference('portu_lexer','basic_lexer');
+call ctx_ddl.create_preference('global_lexer', 'multi_lexer');
+call ctx_ddl.add_sub_lexer('global_lexer','default','default_lexer');
+call ctx_ddl.add_sub_lexer('global_lexer','english','english_lexer','en');
+call ctx_ddl.add_sub_lexer('global_lexer','simplified chinese','chinese_lexer','zh');
+call ctx_ddl.add_sub_lexer('global_lexer','japanese','japanese_lexer',null);
+call ctx_ddl.add_sub_lexer('global_lexer','korean','korean_lexer',null);
+call ctx_ddl.add_sub_lexer('global_lexer','german','german_lexer','de');
+call ctx_ddl.add_sub_lexer('global_lexer','dutch','dutch_lexer',null);
+call ctx_ddl.add_sub_lexer('global_lexer','swedish','swedish_lexer','sv');
+call ctx_ddl.add_sub_lexer('global_lexer','french','french_lexer','fr');
+call ctx_ddl.add_sub_lexer('global_lexer','italian','italian_lexer','it');
+call ctx_ddl.add_sub_lexer('global_lexer','spanish','spanish_lexer','es');
+call ctx_ddl.add_sub_lexer('global_lexer','portuguese','portu_lexer',null);
+commit;
+
+Ne96jlknkozPDYI
+
+Default users :
+
+ANONYMOUS
+APPQOSSYS
+AUDSYS
+CTXSYS
+DBSNMP
+DIP
+GSMADMIN_INTERNAL
+GSMCATUSER
+GSMUSER
+OUTLN
+RDSADMIN
+SGNADMIN
+SYS
+SYSBACKUP
+SYSDG
+SYSKM
+SYSTEM
+XDB
+XS$NULL
+
+
+impdp SGNADMIN/Fr1$a03Km7@MAXPP01 directory=DATA_PUMP_DIR full=y dumpfile=maxprefo_expdp_20190423.dmp logfile=maxprefo_impdp_20190423.log  
+impdp SGNADMIN/Fr1$a03Km7@MAXPP01 directory=DATA_PUMP_DIR full=y dumpfile=maxprefo_expdp_20190423.dmp logfile=maxprefo_impdp_20190428.log 
+impdp SGNADMIN/Fr1$a03Km7@MAXPP01 directory=DATA_PUMP_DIR full=y dumpfile=maxprefo_expdp_20190423.dmp parallel=8 logfile=maxprefo_impdp_20190430.log 
+
+impdp SGNADMIN/*********@MAXPRD directory=DATA_PUMP_DIR full=y dumpfile=dumpfile.dmp parallel=40 logfile=dumfile.log metrics=y
+
+impdp SGNADMIN/M72HmknkozPGXI@MAXPRD directory=DATA_PUMP_DIR full=y dumpfile=maxprefo_expdp_dry_run%U.dmp parallel=40 logfile=maxprefo_impdp_dry_run_03102019.log metrics=y
+impdp SGNADMIN/M72HmknkozPGXI@MAXPRD directory=DATA_PUMP_DIR full=y dumpfile=maxprefo_expdp_dry_run%U.dmp parallel=40 logfile=maxprefo_impdp_dry_run_03102019.log metrics=y
+
+
+
+ALTER USER "OPS$ORACLE" QUOTA UNLIMITED ON USERS;
+ALTER USER "OPSORA" QUOTA UNLIMITED ON USERS; 
+
+check the status :
+
+select index_name,index_type,status,domidx_status,domidx_opstatus from user_indexes 
+where index_type = 'DOMAIN' and (domidx_status <> 'VALID' or domidx_opstatus <> 'VALID'); 
+
+
+select owner, object_name, object_type, status from dba_objects
+where owner='MAXIMO' and status!='VALID'
+order by object_type;
+
+MAXIMO	PKG_XOSERVE_EQL_DATA_LOAD	PACKAGE BODY	INVALID
+MAXIMO	CR393_WO_UPDATE	PROCEDURE	INVALID
+MAXIMO	CR0279_B1_ASSETUPDATE	PROCEDURE	INVALID
+MAXIMO	XCLKINT_PURGETABLESPROC	PROCEDURE	INVALID
+MAXIMO	CR802_POSTCODE_LIST_INSERT	PROCEDURE	INVALID
+MAXIMO	CR716_PM_LIST_UPDATE	PROCEDURE	INVALID
+MAXIMO	CR636_POSTCODE_LIST_INSERT	PROCEDURE	INVALID
+MAXIMO	CR636_PM_LIST_UPDATE	PROCEDURE	INVALID
+MAXIMO	CR558_UPDATETEARWO_UPD	PROCEDURE	INVALID
+MAXIMO	CR0076_ASSET_STATUS	PROCEDURE	INVALID
+MAXIMO	CR0568_MRP_TEST	PROCEDURE	INVALID
+MAXIMO	CR0568_GIS_TEST	PROCEDURE	INVALID
+MAXIMO	CR0568_ASSET_TEST1	PROCEDURE	INVALID
+MAXIMO	CR0279_B4_ASSETUPDT_RECOVERY	PROCEDURE	INVALID
+MAXIMO	CR0279_B4_ASSETUPDATE	PROCEDURE	INVALID
+MAXIMO	CR0279_B3_ASSETUPDATE	PROCEDURE	INVALID
+MAXIMO	CR0279_B2_ASSETUPDATE	PROCEDURE	INVALID
+MAXIMO	REPORTSVIEW	VIEW	INVALID
+MAXIMO	REPORTSVIEWINCWO	VIEW	INVALID
+
+
+drop role APP_SUPP_READONLY;
+drop role ENV_USER_ROLE;
+drop role TEST_USER_ROLE;
+drop role SUMMARY_READ;
+drop role QUALYS_ROLE;
+#drop role COGNOS_READONLY;
+#drop role BIRT_READONLY;
+
+
+create role APP_SUPP_READONLY;
+create role ENV_USER_ROLE;
+create role TEST_USER_ROLE;
+create role SUMMARY_READ;
+create role QUALYS_ROLE;
+#create role COGNOS_READONLY;
+#create role BIRT_READONLY;
+
+
+grant SELECT ANY TABLE,SELECT ANY DICTIONARY,CREATE SESSION to APP_SUPP_READONLY;
+grant SELECT ANY TABLE,SELECT ANY DICTIONARY,CREATE SESSION to ENV_USER_ROLE;
+grant SELECT ANY TABLE,SELECT ANY DICTIONARY,CREATE SESSION to TEST_USER_ROLE;
+grant CREATE SESSION to QUALYS_ROLE;
+
+grant TEST_USER_ROLE to DJ64212 ;
+grant TEST_USER_ROLE to DS48996 ;
+grant TEST_USER_ROLE to MA61513 ;
+grant TEST_USER_ROLE to PP06962 ;
+grant TEST_USER_ROLE to RH59069 ;
+grant TEST_USER_ROLE to RW23570 ;
+grant TEST_USER_ROLE to SS54446 ;
+
+
+grant APP_SUPP_READONLY to AM50699 ;
+grant APP_SUPP_READONLY to AT72154 ;
+grant APP_SUPP_READONLY to AU29159 ;
+grant APP_SUPP_READONLY to BB11572 ;
+grant APP_SUPP_READONLY to CH94969 ;
+grant APP_SUPP_READONLY to CL12411 ;
+grant APP_SUPP_READONLY to DD26417 ;
+grant APP_SUPP_READONLY to DE08671 ;
+grant APP_SUPP_READONLY to DJ12905 ;
+grant APP_SUPP_READONLY to DJ17099 ;
+grant APP_SUPP_READONLY to DK05044 ;
+grant APP_SUPP_READONLY to DY56439 ;
+grant APP_SUPP_READONLY to GK66413 ;
+grant APP_SUPP_READONLY to JW13186 ;
+grant APP_SUPP_READONLY to LP45788 ;
+grant APP_SUPP_READONLY to MA26418 ;
+grant APP_SUPP_READONLY to MJ25315 ;
+grant APP_SUPP_READONLY to MM04939 ;
+grant APP_SUPP_READONLY to MR11812 ;
+grant APP_SUPP_READONLY to MR66258 ;
+grant APP_SUPP_READONLY to MS03471 ;
+grant APP_SUPP_READONLY to MV95177 ;
+grant APP_SUPP_READONLY to NB51614 ;
+grant APP_SUPP_READONLY to NS94155 ;
+grant APP_SUPP_READONLY to PD09742 ;
+grant APP_SUPP_READONLY to PD57886 ;
+grant APP_SUPP_READONLY to RK05049 ;
+grant APP_SUPP_READONLY to RM14519 ;
+grant APP_SUPP_READONLY to RM17214 ;
+grant APP_SUPP_READONLY to RP96844 ;
+grant APP_SUPP_READONLY to RS05066 ;
+grant APP_SUPP_READONLY to SA14518 ;
+grant APP_SUPP_READONLY to SB95505 ;
+grant APP_SUPP_READONLY to SD09802 ;
+grant APP_SUPP_READONLY to SD93216 ;
+grant APP_SUPP_READONLY to SK00278 ;
+grant APP_SUPP_READONLY to SP04626 ;
+grant APP_SUPP_READONLY to SP04748 ;
+grant APP_SUPP_READONLY to SP51894 ;
+grant APP_SUPP_READONLY to SP98558 ;
+grant APP_SUPP_READONLY to SR47487 ;
+grant APP_SUPP_READONLY to SS39604 ;
+
+
+
+grant ENV_USER_ROLE to CH12670;
+grant ENV_USER_ROLE to JM11416;
+grant ENV_USER_ROLE to MB12434;
+grant ENV_USER_ROLE to MD12738;
+grant ENV_USER_ROLE to NM13065;
+grant ENV_USER_ROLE to US06023;
+
+exec rdsadmin.rdsadmin_util.create_directory(p_directory_name => 'XOSERVE_PUMP_DIR');
+exec rdsadmin.rdsadmin_util.create_directory(p_directory_name => 'DIR_NC_TEMP');
+exec rdsadmin.rdsadmin_util.create_directory(p_directory_name => 'DIR_NC_LOGS');
+exec rdsadmin.rdsadmin_util.create_directory(p_directory_name => 'DIR_FO_TEMP');
+exec rdsadmin.rdsadmin_util.create_directory(p_directory_name => 'DIR_FO_LOGS');
+exec rdsadmin.rdsadmin_util.create_directory(p_directory_name => 'DIR_MAXIMO_OUT');
+exec rdsadmin.rdsadmin_master_util.create_archivelog_dir;
+exec rdsadmin.rdsadmin_master_util.create_onlinelog_dir;
+
+
+ GRANT WRITE ON DIRECTORY "DIR_MAXIMO_OUT" TO "OPSORA" WITH GRANT OPTION;
+ GRANT READ ON DIRECTORY "DIR_MAXIMO_OUT" TO "OPSORA" WITH GRANT OPTION;
+
+ GRANT WRITE ON DIRECTORY "DIR_MAXIMO_OUT" TO "OPS$ORACLE" WITH GRANT OPTION;
+ GRANT READ ON DIRECTORY "DIR_MAXIMO_OUT" TO "OPS$ORACLE" WITH GRANT OPTION;
+
+ GRANT WRITE ON DIRECTORY "DIR_FO_LOGS" TO "MAXIMO";
+ GRANT READ ON DIRECTORY "DIR_FO_LOGS" TO "MAXIMO";
+
+ GRANT WRITE ON DIRECTORY "DIR_FO_LOGS" TO "OPS$ORACLE" WITH GRANT OPTION;
+ GRANT READ ON DIRECTORY "DIR_FO_LOGS" TO "OPS$ORACLE" WITH GRANT OPTION;
+
+ GRANT WRITE ON DIRECTORY "DIR_FO_TEMP" TO "OPS$ORACLE" WITH GRANT OPTION;
+ GRANT READ ON DIRECTORY "DIR_FO_TEMP" TO "OPS$ORACLE" WITH GRANT OPTION;
+
+ GRANT WRITE ON DIRECTORY "DIR_NC_LOGS" TO "OPS$ORACLE" WITH GRANT OPTION;
+ GRANT READ ON DIRECTORY "DIR_NC_LOGS" TO "OPS$ORACLE" WITH GRANT OPTION;
+
+ GRANT WRITE ON DIRECTORY "DIR_NC_TEMP" TO "OPS$ORACLE" WITH GRANT OPTION;
+ GRANT READ ON DIRECTORY "DIR_NC_TEMP" TO "OPS$ORACLE" WITH GRANT OPTION;
+
+ GRANT WRITE ON DIRECTORY "XOSERVE_PUMP_DIR" TO "MAXIMO";
+ GRANT READ ON DIRECTORY "XOSERVE_PUMP_DIR" TO "MAXIMO";
+
+
+ GRANT WRITE ON DIRECTORY "XOSERVE_PUMP_DIR" TO "OPS$ORACLE" WITH GRANT OPTION;
+ GRANT READ ON DIRECTORY "XOSERVE_PUMP_DIR" TO "OPS$ORACLE" WITH GRANT OPTION;
+GRANT WRITE ON DIRECTORY "DIR_MAXIMO_OUT" TO "MAXIMO";
+GRANT READ ON DIRECTORY "DIR_MAXIMO_OUT" TO "MAXIMO";
+
+GRANT WRITE ON DIRECTORY "DIR_NC_LOGS" TO "MAXIMO";
+GRANT READ ON DIRECTORY "DIR_NC_LOGS" TO "MAXIMO";
+
+GRANT WRITE ON DIRECTORY "DIR_NC_TEMP" TO "MAXIMO";
+GRANT READ ON DIRECTORY "DIR_NC_TEMP" TO "MAXIMO";
+
+GRANT WRITE ON DIRECTORY "XOSERVE_PUMP_DIR" TO "MAXIMO";
+GRANT READ ON DIRECTORY "XOSERVE_PUMP_DIR" TO "MAXIMO";
+
+
+
+
+grant read, write on directory XOSERVE_PUMP_DIR to MAXIMO;
+grant read, write on directory DIR_NC_TEMP to MAXIMO;
+grant read, write on directory DIR_NC_LOGS  to MAXIMO;
+grant read, write on directory DIR_FO_TEMP to MAXIMO;
+grant read, write on directory DIR_FO_LOGS to MAXIMO;
+grant read, write on directory DIR_MAXIMO_OUT to MAXIMO;
+
+grant read, write on directory XOSERVE_PUMP_DIR to HWABATCH;
+grant read, write on directory DIR_NC_TEMP to HWABATCH;
+grant read, write on directory DIR_NC_LOGS  to HWABATCH;
+grant read, write on directory DIR_FO_TEMP to HWABATCH;
+grant read, write on directory DIR_FO_LOGS to HWABATCH;
+grant read, write on directory DIR_MAXIMO_OUT to HWABATCH;
+
+TABLE Privileges:[GQM OBJECTS]
+
+grant select,insert on MAXIMO.OBJGQMTKTIFACE to TICKET_UPDATE; - this table wont be available in cloud MAXIMO DB.
+grant select,insert on MAXIMO.mxin_inter_trans to TICKET_UPDATE;
+grant select,insert,update,delete on MAXIMO.TICKET to TICKET_UPDATE;
+
+LOB VALUE :
+
+select 'select max(dbms_lob.getlength ('||column_name||'))/1024 as LOB_SIZE_KB from '||owner||'.'||table_name||';' from
+dba_lobs  where owner='MAXIMO'
+and table_name not like 'DR$%'
+and table_name not in('DUMMY_TABLE','DMPKGSTAGING')
+and column_name is not null
+order by table_name; 
+
+
+select owner, table_name, column_name from dba_tab_columns where data_type = 'BLOB' and owner = 'MAXIMO';
+select distinct table_name  from dba_tab_columns where data_type like '%LOB%' and owner = 'WITA';
+
+USER CREATION :
+
+
+hwabatch:
+
+CREATE USER HWABATCH IDENTIFIED BY "hwaQk021cjw8peUpsG"
+ DEFAULT TABLESPACE USERS
+-- PROFILE SGN_LVL2_NOLOCK
+ QUOTA UNLIMITED ON USERS;
+
+GRANT ALTER SESSION TO HWABATCH;
+
+GRANT UNLIMITED TABLESPACE TO HWABATCH;
+
+
+GRANT DBA TO HWABATCH;
+GRANT SUMMARY_READ TO HWABATCH;
+ALTER USER HWABATCH DEFAULT ROLE DBA, SUMMARY_READ;
+ALTER USER HWABATCH profile SGN_LVL2_NOLOCK;
+
+MULESOFT :
+
+   CREATE USER MULESOFT IDENTIFIED BY mulesoftpass
+      DEFAULT TABLESPACE USERS
+      TEMPORARY TABLESPACE TEMP;
+	  
+alter user MULESOFT profile SGN_LVL1_NOLOCK;
+      
+PROMPT
+PROMPT GRANTING PRIVS TO USER MULESOFT
+PROMPT
+
+GRANT CREATE SESSION TO MULESOFT;
+
+GRANT SELECT ANY TABLE TO MULESOFT;
+
+
+=================================================================================
+
+
+grant execute on maximo.SP_CHECKJOBTYPEANDMPRN to mulesoft;
+grant execute on maximo.SP_DELETEMRPGASPIPEINFO to mulesoft;
+grant execute on maximo.SP_GETCARRIERDATA to mulesoft;
+grant execute on maximo.SP_GETGISPIPEDATA to mulesoft; 
+grant execute on maximo.SP_GETMRPSTREETDATA to mulesoft;
+grant execute on maximo.SP_GETSAMDATA to mulesoft;
+grant execute on maximo.SP_GETWORKCOMPLETIONDETAILS to mulesoft;
+grant execute on maximo.SP_GET_BARHOLE_DATA to mulesoft;
+grant execute on maximo.SP_GET_GISPIPE_DATA to mulesoft;
+grant execute on maximo.SP_GET_GTR_DATA to mulesoft;
+grant execute on maximo.SP_GET_MRP_DIST_DATA to mulesoft; 
+grant execute on maximo.SP_GET_MRP_PIPE_DATA to mulesoft;
+grant execute on maximo.SP_GET_PEM_DATA to mulesoft;
+grant execute on maximo.SP_GET_PIPE_REPORT to mulesoft;
+grant execute on maximo.SP_GET_STREET_REPORT to mulesoft;
+grant execute on maximo.SP_INSERTSAMMPRN to mulesoft;
+grant execute on maximo.SP_MIMSWORKORDER to mulesoft;
+grant execute on maximo.SP_ONLINEAPPTVALIDATION to mulesoft; 
+grant execute on maximo.XCLKINT_GETCRAFTDATA to mulesoft;  - it wont be there because of not having connection with click.
+   
+-----------------------------------------------------------------------------------
+
+  GRANT EXECUTE ON "MAXIMO"."XCLKINT_GETDATAPKG" TO "MULESOFT"             ;
+  GRANT EXECUTE ON "MAXIMO"."SP_CHECKJOBTYPEANDMPRN" TO "MULESOFT"         ;
+  GRANT EXECUTE ON "MAXIMO"."SP_DELETEMRPGASPIPEINFO" TO "MULESOFT"        ;
+  GRANT EXECUTE ON "MAXIMO"."SP_GETCARRIERDATA" TO "MULESOFT"              ;
+  GRANT EXECUTE ON "MAXIMO"."SP_GETGISPIPEDATA" TO "MULESOFT"              ;
+  GRANT EXECUTE ON "MAXIMO"."SP_GETMRPSTREETDATA" TO "MULESOFT"            ;
+  GRANT EXECUTE ON "MAXIMO"."SP_GETSAMDATA" TO "MULESOFT"                  ;
+  GRANT EXECUTE ON "MAXIMO"."SP_GETWORKCOMPLETIONDETAILS" TO "MULESOFT"    ;
+  GRANT EXECUTE ON "MAXIMO"."SP_GET_BARHOLE_DATA" TO "MULESOFT"            ;
+  GRANT EXECUTE ON "MAXIMO"."SP_GET_GISPIPE_DATA" TO "MULESOFT"            ;
+  GRANT EXECUTE ON "MAXIMO"."SP_GET_GTR_DATA" TO "MULESOFT"                ;
+  GRANT EXECUTE ON "MAXIMO"."SP_GET_MRP_DIST_DATA" TO "MULESOFT"           ;
+  GRANT EXECUTE ON "MAXIMO"."SP_GET_MRP_PIPE_DATA" TO "MULESOFT"           ;
+  GRANT EXECUTE ON "MAXIMO"."SP_GET_PEM_DATA" TO "MULESOFT"                ;
+  GRANT EXECUTE ON "MAXIMO"."SP_GET_PIPE_REPORT" TO "MULESOFT"             ;
+  GRANT EXECUTE ON "MAXIMO"."SP_GET_STREET_REPORT" TO "MULESOFT"           ;
+  GRANT EXECUTE ON "MAXIMO"."SP_INSERTSAMMPRN" TO "MULESOFT"               ;
+  GRANT EXECUTE ON "MAXIMO"."SP_MIMSWORKORDER" TO "MULESOFT"               ;
+  GRANT EXECUTE ON "MAXIMO"."SP_ONLINEAPPTVALIDATION" TO "MULESOFT"        ;
+  
+   CREATE USER maximoui IDENTIFIED BY sgnmaximouipass
+      DEFAULT TABLESPACE MAXIMO_DATA
+      TEMPORARY TABLESPACE TEMP;
+	  
+	  alter user maximoui profile SGN_LVL1_NOLOCK;
+
+     ALTER USER maximoui DEFAULT ROLE ALL;
+	  
+prompt
+prompt Grant system privs and roles to maximo user....
+prompt
+
+GRANT CONNECT TO maximoui;
+GRANT CTXAPP TO maximoui;
+
+-- GRANT CREATE CREDENTIAL TO maximoui;
+  GRANT CREATE JOB TO maximoui;
+  GRANT CREATE TRIGGER TO maximoui;
+  GRANT CREATE PROCEDURE TO maximoui;
+  GRANT CREATE SEQUENCE TO maximoui;
+  GRANT CREATE VIEW TO maximoui;
+  GRANT CREATE SYNONYM TO maximoui;
+  GRANT CREATE TABLE TO maximoui;
+  GRANT ALTER SESSION TO maximoui;
+  GRANT CREATE SESSION TO maximoui;
+  grant select_catalog_role to maximo;
+  grant select any dictionary to maximo;
+
+
+alter user maximo quota unlimited on MAXIMO_DATA;
+alter user maximo quota unlimited on MAXIMO_INDEX;
+alter user maximoui quota unlimited on MAXIMO_DATA;
+alter user maximoui quota unlimited on MAXIMO_INDEX;
+
+#alter user ctxsys identified by ctxsys account unlock;
+
+grant all on ctx_ddl to public,maximoui;
+exit
+
+ t3rfcc460z
+NOTE : DB LINKS have to point to the right one(pls crosscheck)
+
+
+
+INVALIDS:
+
+REPORTSVIEW, REPORTSVIEWINCWO? These two views will use the GQMPRD database link so this could be reason for INVALID. Currently in QAt2 We don’t Have GQM in QAT2
+
+XCLKINT_PURGETABLESPROC? this procedure will use the web methods database as we don’t have any web methods database in Cloud so Rahul and Integration team did some fix.
+
+procedure : SP_GETGISPIPEDATA     
+Milan Team will change in procedure level to make the object valid.
+
+INSERT INTO gispipe_wm (ASSETNUM, AS_LOCATION, INSTALLDATE, AS_SITEID, AS_STATUS, XOWNER, AS_ORGID, PARENT, TRANSID, GISPIPE_WMID)
+
+           VALUES (vassetnum, vlocation, vinstalldate, vsiteid, vstatus,
+
+                   vxowner, vorgid, vparent, vtransid, GISPIPE_WMIDSEQ.nextval); 
+
+
+
+Please find attachment for all three details.
+
+
+MAXIMO	REPORTSVIEW	VIEW	INVALID
+MAXIMO	REPORTSVIEWINCWO	VIEW	INVALID
+MAXIMO	XCLKINT_PURGETABLESPROC	PROCEDURE	INVALID
+
+
+After upgrade need to create the synonym.
+
+CREATE OR REPLACE NONEDITIONABLE PUBLIC SYNONYM "OBJGQMTKTIFACE" FOR "MAXIMO"."OBJGQMTKTIFACE";
+
+Check this once ; it related to db link(ticket_update).
+
+grant select,insert,update,delete on MAXIMO.TICKET to TICKET_UPDATE;
+
+
+BEGIN
+DBMS_FILE_TRANSFER.PUT_FILE(
+source_directory_object       => 'DATA_PUMP_DIR',
+source_file_name              => 'maxrppre_maxrpd_expdp_20190423.dmp',
+destination_directory_object  => 'DATA_PUMP_DIR',
+destination_file_name         => 'maxrppre_maxrpd_expdp_20190423.dmp',
+destination_database          => 'ODSPP01' 
+);
+END;
+/ 
+
+select object_type,count(*)  from dba_objects where owner='MAXIMO'   group by object_type;
+
+select object_type,count(*)  from dba_objects where owner='MAXIMO' and object_name like '%DR$%'  group by object_type;
+
+select sum(bytes/1024/1024/1024) from dba_segments where owner='MAXIMO' order by bytes;
+
+select count(*) from dba_objects where owner='MAXIMO';
+
+CREATE PUBLIC DATABASE LINK ODSPP01 connect to SGNADMIN IDENTIFIED BY Fr1$a03da7 using 'ODSPP01';
+For Exporting the complete schema MAXIMO - 1hour
+
+To transfer the dump files(.dmp files) from source to target - 1 hour
+
+
+select * from dba_objects where object_name='MAXIMO';
+
+select * from dba_tablespaces
+
+select owner, sum(bytes)/1024/1024 Size_MB from dba_segments group  by owner;
+
+
+
+exec utl_file.fremove('DATA_PUMP_DIR','/rdsdbdata/datapump/maximo_%U.dmp');
+
+
+SELECT text FROM table(rdsadmin.rds_file_util.read_text_file('DATA_PUMP_DIR','cogcmpre_expdp.log'));
+
+
+select * from table(RDSADMIN.RDS_FILE_UTIL.LISTDIR('DATA_PUMP_DIR')) order by mtime;
+
+MAXIMO USER list:
+select personid, displayname, firstname, lastname 
+  from person p 
+where exists (select 1 from maxuser u where u.personid = p.personid and u.status = 'ACTIVE');
+
+POST UPGRADE Export :
+
+
+expdp SGNADMIN/sgnmaximopass7609@MAXQA82 directory=DATA_PUMP_DIR full=y dumpfile=maxqa82_expdp_full_20190531.dmp parallel=8 logfile=maxqa82_expdp_full_20190531.log compression=all
+expdp SGNADMIN/M72HmknkozPGXI@MAXPRD directory=DATA_PUMP_DIR full=y dumpfile=MAXPRD_EXP_PROD_04092019_%U.dmp parallel=4 logfile=MAXPRD_EXP_PROD_04092019.log compression=all FLASHBACK_SCN=2049046936003 metrics=y
+impdp SGNADMIN/M72HmknkozPGXI@MAXPRDDR directory=DATA_PUMP_DIR full=y dumpfile=MAXPRD_EXP_PROD_04092019_%U.dmp parallel=32 logfile=MAXPRD_IMP_PROD_04092019.log metrics=y
+expdp SGNADMIN/***********@MAXPRD directory=DATA_PUMP_DIR full=y dumpfile=dumpfile.dmp parallel=32 logfile=dumpfile.log compression=all FLASHBACK_SCN=2049046936003 metrics=y
+03-SEP-19 11.19.12.000000000 AM
+
+
+03-SEP-19 12.48.46.000000000 PM --- 2049038236574
+
+select current_scn from v$database;---- 1. 2049037896720
+select scn_to_timestamp(2049039269596) as timestamp from dual; -- 03-SEP-19 11.50.53.000000000 AM
+select timestamp_to_scn(to_timestamp('03/09/2019 11:50:13','DD/MM/YYYY HH24:MI:SS')) as scn from dual;
+select timestamp_to_scn(to_timestamp('03-SEP-19 03.40.08.000000000 PM')) as scn from dual; -- 2049039262925
+2049039269596
+SELECT TO_CHAR(dbms_flashback.get_system_change_number) FROM dual; - 
+
+ select to_timestamp((to_char(sysdate,'dd-mm-yyyy hh24:mi:ss')),'DD-mm-RR HH24:MI:SS.FF')  from dual;  -- 03-SEP-19 03.38.58.000000000 PM
+ 
+  select to_timestamp((to_char(sysdate,'dd-mm-yyyy hh24:mi:ss')),'DD-mm-RR HH24:MI:SS.FF')  from dual;
+  select timestamp_to_scn(to_timestamp('03-SEP-19 03.40.08.000000000 PM')) as scn from dual; 
+  select scn_to_timestamp(2049039269596) as timestamp from dual; 
+  
+INDEXES:
+
+set feedback on
+set serveroutput on
+
+spool 7_cr_5_unq_idxs
+Suman$1234$
+prompt
+prompt Create a unique index on each of the 5 LOB tables.....
+prompt A_LONGDESCRIPTION SKDODMEMSG XWORKCOMPDTLS COMMLOG_GDPR_AUD LONGDESCRIPTION_GDPR_AUD
+prompt
+prompt Press enter to continue or Ctrl+C to cancel
+pause
+
+set timing on
+--drop index "MAXIMO"."A_LONGDESCRIPTION_LDKEY";
+
+CREATE UNIQUE INDEX "MAXIMO"."A_LONGDESCRIPTION_LDKEY" ON "MAXIMO"."A_LONGDESCRIPTION" ("LDKEY")
+  TABLESPACE "MAXIMO_INDEX" ;
+
+--drop index  "MAXIMO"."SKDODMEMSG_SKDPROJECTID";
+
+CREATE UNIQUE INDEX "MAXIMO"."SKDODMEMSG_SKDPROJECTID" ON "MAXIMO"."SKDODMEMSG" ("SKDPROJECTID")
+  TABLESPACE "MAXIMO_INDEX" ;
+
+CREATE UNIQUE INDEX "MAXIMO"."XWORKCOMPDTLS_XXJOBNUM_XWONUM" ON "MAXIMO"."XWORKCOMPDTLS" ("XXESTJOBNUM", "XWONUM")
+  TABLESPACE "MAXIMO_INDEX" ;
+
+CREATE UNIQUE INDEX MAXIMO.COMMLOG_GDPR_AUD_PKI ON MAXIMO.COMMLOG_GDPR_AUD
+(GDPR_COMMLOGID)
+TABLESPACE MAXIMO_INDEX;
+
+ALTER TABLE MAXIMO.COMMLOG_GDPR_AUD
+  ADD CONSTRAINT COMMLOG_GDPR_AUD_PKI
+  PRIMARY KEY (GDPR_COMMLOGID);
+
+CREATE UNIQUE INDEX "MAXIMO"."LONGDESCRIPTION_GDPR_AUD_LDKEY" ON "MAXIMO"."LONGDESCRIPTION_GDPR_AUD" ("LDKEY")
+  TABLESPACE "MAXIMO_INDEX" ;
+
+
+expdp \'/ as sysdba\' directory=DATA_PUMP_DIR dumpfile=ods_expdp_triggers_ssvua780_MAXIMO.expdp logfile=ods_expdp_triggers_ssvua780_MAXIMO.expdp.log content=metadata_only schemas=SDE "INCLUDE=TRIGGER:\"LIKE 'GDB%\"" reuse_dumpfiles=yes
+expdp \'/ as sysdba\' directory=DATA_PUMP_DIR dumpfile=ods_expdp_triggers_ssvua780_MAXIMO.expdp logfile=ods_expdp_triggers_ssvua780_MAXIMO.expdp.log content=metadata_only schemas=SDE INCLUDE=TRIGGER:"LIKE 'GDB%'" reuse_dumpfiles=yes
+EXCLUDE=TRIGGER:"LIKE 'GDB%' "
+
+EXCLUDE = TRIGGER:”IN (‘TRIG1’, ‘TRIG2’)”, INDEX:”= ‘INDX1'”, REF_CONSTRAINT
+
+"INCLUDE=TRIGGER:\"IN('MAXIMO','MAXRPD')\"" 
+
+"INCLUDE=TRIGGER:\"LIKE 'GDB%\""
+
+INCLUDE=TRIGGER:"LIKE 'GDB%' "
+
+include=TRIGGER:"in\('EMP'\,'DEPT'\)"
+
+
+expdp sgnadmin/sgnmaximopass7609@ODSTST005 directory=DATA_PUMP_DIR full=y dumpfile=ods_metadata_schemas_ssvud766.dmp logfile=ods_metadata_schemas_ssvud766.log 
+content=metadata_only "exclude=SCHEMA:\"IN('MAXIMO','MAXRPD')\"" 
+
+grant read,write on Directory DATA_PUMP_DIR to master;
+select * from dba_directories
+
+TO REMOVE THE FILES :
+
+Begin
+utl_file.fremove('DATA_PUMP_DIR','metadata.dmp');
+end;
+
+TO COPY THE FILE FROM GQM TO GQM_ARCH Directory:
+
+BEGIN
+UTL_FILE.FCOPY ('GQM',
+'ORACLEARN.SNC.09052019_095945',
+'GQM_ARCH',
+'ORACLEARN.SNC.09052019_095945');
+END;
+/
+
+select * from table(RDSADMIN.RDS_FILE_UTIL.LISTDIR('DATA_PUMP_DIR')) order by mtime; 
+
+select filename,filesize/1024/1024/1024 from table(RDSADMIN.RDS_FILE_UTIL.LISTDIR('DATA_PUMP_DIR')) order by mtime; 
+
+select * from v$database;
+
+select * from dba_datapump_jobs;
+
+
+
+
+BEGIN
+DBMS_FILE_TRANSFER.PUT_FILE(
+source_directory_object       => 'DATA_PUMP_DIR',
+source_file_name              => 'maximo_05.dmp',
+destination_directory_object  => 'DATA_PUMP_DIR',
+destination_file_name         => 'maximo_05.dmp',
+destination_database          => 'to_rds' 
+);
+END;
+/ 
+
+
+expdp sys/****** directory=DATA_PUMP_DIR FULL=Y CONTENT=METADATA_ONLY DUMPFILE=gisacpre.dmp LOGFILE=gisacpre.log
+
+===================================================================================================================================
+
+To check the supplemental log in the source instance :
+
+select SUPPLEMENTAL_LOG_DATA_MIN,SUPPLEMENTAL_LOG_DATA_PK,SUPPLEMENTAL_LOG_DATA_UI,FORCE_LOGGING,SUPPLEMENTAL_LOG_DATA_PL from v$database;
+
+SELECT supplemental_log_data_min FROM v$database;
+
+ALTER DATABASE ADD SUPPLEMENTAL LOG DATA;
+
+SELECT supplemental_log_data_min FROM v$database; 
+
+
+GRANT SELECT ANY TABLE to SGNADMIN;
+
+GRANT SELECT on ALL_VIEWS to SGNADMIN;
+
+GRANT SELECT ANY TRANSACTION to SGNADMIN;
+
+exec rdsadmin.rdsadmin_util.grant_sys_object('V_$ARCHIVED_LOG','SGNADMIN','SELECT');
+
+exec rdsadmin.rdsadmin_util.grant_sys_object('V_$LOG','SGNADMIN','SELECT');
+
+exec rdsadmin.rdsadmin_util.grant_sys_object('V_$LOGFILE','SGNADMIN','SELECT');
+
+exec rdsadmin.rdsadmin_util.grant_sys_object('V_$DATABASE','SGNADMIN','SELECT');
+
+exec rdsadmin.rdsadmin_util.grant_sys_object('V_$THREAD','SGNADMIN','SELECT');
+
+exec rdsadmin.rdsadmin_util.grant_sys_object('V_$PARAMETER','SGNADMIN','SELECT');
+
+exec rdsadmin.rdsadmin_util.grant_sys_object('V_$NLS_PARAMETERS','SGNADMIN','SELECT');
+
+exec rdsadmin.rdsadmin_util.grant_sys_object('V_$TIMEZONE_NAMES','SGNADMIN','SELECT');
+
+exec rdsadmin.rdsadmin_util.grant_sys_object('V_$TRANSACTION','SGNADMIN','SELECT');
+
+
+GRANT SELECT on ALL_INDEXES to SGNADMIN;
+GRANT SELECT on ALL_OBJECTS to SGNADMIN;
+GRANT SELECT on ALL_TABLES to SGNADMIN;
+GRANT SELECT on ALL_USERS to SGNADMIN;
+GRANT SELECT on ALL_CATALOG to SGNADMIN;
+GRANT SELECT on ALL_CONSTRAINTS to SGNADMIN;
+GRANT SELECT on ALL_CONS_COLUMNS to SGNADMIN;
+GRANT SELECT on ALL_TAB_COLS to SGNADMIN;
+GRANT SELECT on ALL_IND_COLUMNS to SGNADMIN;
+GRANT SELECT on ALL_LOG_GROUPS to SGNADMIN;
+
+
+exec rdsadmin.rdsadmin_util.grant_sys_object('DBA_REGISTRY','SGNADMIN','SELECT');
+exec rdsadmin.rdsadmin_util.grant_sys_object('OBJ$','SGNADMIN','SELECT');
+
+GRANT SELECT on DBA_TABLESPACES to SGNADMIN;
+
+GRANT SELECT on ALL_TAB_PARTITIONS to SGNADMIN;
+
+GRANT LOGMINING TO SGNADMIN;
+
+exec rdsadmin.rdsadmin_util.grant_sys_object('ALL_ENCRYPTED_COLUMNS','SGNADMIN','SELECT');
+
+exec rdsadmin.rdsadmin_util.grant_sys_object('V_$LOGMNR_LOGS','SGNADMIN','SELECT');
+
+exec rdsadmin.rdsadmin_util.grant_sys_object('V_$LOGMNR_CONTENTS','SGNADMIN','SELECT');
+
+exec rdsadmin.rdsadmin_util.grant_sys_object('DBMS_LOGMNR','SGNADMIN','EXECUTE');
+
+exec rdsadmin.rdsadmin_util.alter_supplemental_logging('ADD');
+
+exec rdsadmin.rdsadmin_util.alter_supplemental_logging('ADD','PRIMARY KEY');
+exec rdsadmin.rdsadmin_master_util.create_archivelog_dir;
+exec rdsadmin.rdsadmin_master_util.create_onlinelog_dir;
+
+TO ENABLE THE SUPPLEMENTAL LOGGING IN TABLE LEVEL : 
+
+select 'alter table '||owner||'.'||table_name||' add supplemental log data (ALL) columns;'
+from
+(select owner,table_name from all_tables
+where owner='MAXIMO'
+and table_name not like 'DR$%'
+and temporary!='Y'
+and table_name not in ('DMPKGSTAGING','SYS_EXPORT_SCHEMA_01','SYS_IMPORT_TABLE_01','DUMMY'));
+
+TO SET the archivelog retention :
+
+set serveroutput on
+exec rdsadmin.rdsadmin_util.show_configuration; 
+
+
+begin
+    rdsadmin.rdsadmin_util.set_configuration(
+        name  => 'archivelog retention hours',
+        value => '168');
+end;
+/
+commit;
+
+----------------------
+
+  
+Select thread#, dest_id, name, sequence#, archived, deleted, status,to_char(completion_time,'DD-MON-YY HH:MI AM') from v$archived_log 
+where sequence# =11509 order by completion_time ;
+
+select FILENAME from table
+    (rdsadmin.rds_file_util.listdir(p_directory => 'ARCHIVELOG_DIR')) order by FILENAME ASC  ; 
+	
+-------------------------
+
+
+select owner, status as Trigger_Status, count(*) from dba_triggers where owner='MAXIMO' group by owner,status;
+
+spool off
+
+spool 4_disable_trigger.tmp
+
+
+select 'alter trigger '||owner||'.'||trigger_name||' disable;' from dba_triggers where owner='MAXIMO'; 	
+
+--------------------------------------
+
+IN LINE LOB MODE Settings URL:
+
+https://aws.amazon.com/blogs/database/introducing-aws-dms-replication-engine-version-3-1-2/
+
+QUERY which we used to confirm the DATA SYNC :
+
+select wonum,worktype,siteid, reportedby,reportdate from workorder where reportdate like '02-SEP-19%';    
+
+user creation process ::
+
+•create user <new_user> identified by <new_user>;
+•GRANT APP_SUPP_READONLY TO <new_user>;
+•GRANT CREATE SESSION TO <new_user>;
+•alter user <new_user> PROFILE SGN_LVL1_SECURITY;
+•alter user <new_user> ACCOUNT UNLOCK;
+•alter user <new_user> PASSWORD EXPIRE; 
+
+To crosscheck the count MAXIMO and ODS :
+
+select reportdate,count(*) from MAXIMO.WORKORDER where reportdate between '01-SEP-19' and '03-SEP-2019' group by reportdate;
+
+select description from MAXIMO.WORKORDER where wonum='W100981980';
+
+
+
+===========================================================================================================================================================
+
+
+aws s3 cp alert_BSMD01S.log s3://s3-dbbackup-dev-prj-001/
+
+
+create tablespace MAXRPD_DATA datafile size 10G autoextend on next 512M maxsize 650G;
+create tablespace MAXRPD_INDEX datafile size 10G autoextend on next 512M maxsize 650G;
+create tablespace ASSET_DATA datafile size 10G autoextend on next 512M  maxsize 650G;
+create tablespace ASSET_INDEX datafile size 10G autoextend on next 512M maxsize 650G;
+ALTER TABLESPACE SYSAUX AUTOEXTEND ON NEXT 100M MAXSIZE 10G;
+ALTER TABLESPACE SYSTEM AUTOEXTEND ON NEXT 100M MAXSIZE 10G;
+ALTER TABLESPACE USERS AUTOEXTEND ON NEXT 100M MAXSIZE 10G;
+
+
+begin
+-- SGN Rule: Min of 8 characters
+-- Min of 1 upper character and 1 digit
+-- Min of 1 special character, but not the @ sign
+-- Min of 4 distinct characters
+-- Cannot be the same as username
+-- Disallow simple strings
+-- NOT contain any part of the username
+-- Check if the password is same as the username
+    rdsadmin.rdsadmin_password_verify.create_verify_function(
+        p_verify_function_name => 'SGN_PWD_LVL1_VERIFY_FUNCTION', 
+        p_min_length           => 8, 
+        p_min_uppercase        => 1, 
+        p_min_digits           => 1, 
+        p_min_special          => 1,
+        p_disallow_at_sign     => true,
+		p_min_different_chars  => 4,
+		p_disallow_username     => true,
+		p_disallow_simple_strings => true);
+end;
+/
+
+begin
+-- SGN Rule: Min of 15 characters
+-- Min of 1 upper character and 1 digit
+-- Min of 1 special character, but not the @ sign
+-- Min of 4 distinct characters
+-- Cannot be the same as username
+-- Disallow simple strings
+-- NOT contain any part of the username
+-- Check if the password is same as the username
+    rdsadmin.rdsadmin_password_verify.create_verify_function(
+        p_verify_function_name => 'SGN_PWD_LVL2_VERIFY_FUNCTION', 
+        p_min_length           => 15, 
+        p_min_uppercase        => 1, 
+        p_min_digits           => 1, 
+        p_min_special          => 1,
+        p_disallow_at_sign     => true,
+		p_min_different_chars  => 4,
+		p_disallow_username     => true,
+		p_disallow_simple_strings => true);
+end;
+/
+
+
+
+
+begin
+-- SGN Rule: Min of 8 characters
+-- Min of 1 upper character and 1 digit
+-- Min of 1 special character, but not the @ sign
+-- Min of 4 distinct characters
+-- Cannot be the same as username
+-- Disallow simple strings
+-- NOT contain any part of the username
+-- Check if the password is same as the username
+    rdsadmin.rdsadmin_password_verify.create_verify_function(
+        p_verify_function_name => 'SSE_PWD_LVL1_VERIFY_FUNCTION', 
+        p_min_length           => 8, 
+        p_min_uppercase        => 1, 
+        p_min_digits           => 1, 
+        p_min_special          => 1,
+        p_disallow_at_sign     => true,
+		p_min_different_chars  => 4,
+		p_disallow_username     => true,
+		p_disallow_simple_strings => true);
+end;
+/
+
+begin
+-- SGN Rule: Min of 15 characters
+-- Min of 1 upper character and 1 digit
+-- Min of 1 special character, but not the @ sign
+-- Min of 4 distinct characters
+-- Cannot be the same as username
+-- Disallow simple strings
+-- NOT contain any part of the username
+-- Check if the password is same as the username
+    rdsadmin.rdsadmin_password_verify.create_verify_function(
+        p_verify_function_name => 'SSE_PWD_LVL2_VERIFY_FUNCTION', 
+        p_min_length           => 15, 
+        p_min_uppercase        => 1, 
+        p_min_digits           => 1, 
+        p_min_special          => 1,
+        p_disallow_at_sign     => true,
+		p_min_different_chars  => 4,
+		p_disallow_username     => true,
+		p_disallow_simple_strings => true);
+end;
+/
+
+
+SGN_LVL1_NOLOCK
+SGN_LVL1_SECURITY
+SGN_LVL2_NOLOCK
+SGN_LVL2_SECURITY
+SSE_LVL1_NOLOCK
+SSE_LVL1_SECURITY
+SSE_LVL2_NOLOCK
+SSE_LVL2_SECURITY
+
+
+create USER MAXRPD identified by Sgnhclpass$8844 DEFAULT TABLESPACE MAXRPD_DATA TEMPORARY TABLESPACE "TEMP"      PROFILE "SGN_LVL2_NOLOCK" ACCOUNT UNLOCK;
+grant create trigger to MAXRPD;
+grant create session to MAXRPD;
+grant create sequence to MAXRPD;
+grant create synonym to MAXRPD;
+grant create table to MAXRPD;
+grant create view to MAXRPD;
+grant create procedure to MAXRPD;
+grant alter session to MAXRPD;
+grant create job to MAXRPD;
+grant select_catalog_role to MAXRPD;
+grant execute on ctxsys.ctx_ddl to MAXRPD; 
+grant connect,resource,ctxapp to MAXRPD;
+alter user MAXRPD quota unlimited on users; 
+ALTER USER "MAXRPD" QUOTA UNLIMITED ON MAXRPD_DATA;
+ALTER USER "MAXRPD" QUOTA UNLIMITED ON MAXRPD_INDEX;
+ALTER USER "MAXRPD" QUOTA UNLIMITED ON ASSET_DATA;
+ALTER USER "MAXRPD" QUOTA UNLIMITED ON ASSET_INDEX;
+alter user MAXRPD temporary tablespace temp;
+
+expdp sgnadmin/sgnmaximopass7609@ODSTST005 directory=DATA_PUMP_DIR full=y dumpfile=ods_metadata_schemas_ssvud766.dmp logfile=ods_metadata_schemas_ssvud766.log 
+network_link=ONPREM_MAXRPPRE content=metadata_only "exclude=SCHEMA:\"IN('MAXIMO','MAXRPD')\"" 
+
+
+
+expdp ******************** directory=DATA_PUMP_DIR full=y dumpfile=ods_metadata_schemas_ssvua780.dmp logfile=ods_metadata_schemas_ssvud780.log 
+content=metadata_only "exclude=SCHEMA:\"IN('MAXIMO','MAXRPD')\"" 
+
+expdp ****************** directory=DATA_PUMP_DIR dumpfile=ods_maxrpd_schema_ssvua780.dmp logfile=ods_maxrpd_schema_ssvua780.log schemas=maxrpd logtime=all
+
+Create parfile for Triggers
+
+vi ods_expdp_triggers_ssvua780_MAXIMO.par
+
+dumpfile=ods_expdp_triggers_ssvua780_MAXIMO.dmp
+logfile=ods_expdp_triggers_ssvua780_MAXIMO.log
+directory=DATA_PUMP_DIR
+content=metadata_only
+schemas=MAXIMO
+INCLUDE=TRIGGER:"LIKE 'SGNBI%'"
+
+Create parfile for Packages
+
+vi ods_expdp_packages_ssvua780_MAXIMO.par
+
+dumpfile=ods_expdp_packages_ssvua780_MAXIMO.dmp
+logfile=ods_expdp_packages_ssvua780_MAXIMO.log
+directory=DATA_PUMP_DIR
+content=metadata_only
+schemas=MAXIMO
+INCLUDE=PACKAGE,PROCEDURE
+
+
+impdp SGNADMIN/Fr1$a03da7@ODSPP01 directory=DATA_PUMP_DIR full=y dumpfile=maxrppre_maxrpd_expdp_20190423.dmp logfile=maxrppre_maxrpd_impdp_20190423.log
+impdp SGNADMIN/Fr1$a03da7@ODSPP01 directory=DATA_PUMP_DIR full=y dumpfile=ods_metadata_schemas_ssvud766.dmp logfile=ods_metadata_schemas_ssvud766.log
+
+
+impdp SGNADMIN/sgnmaximopass7609@ODSPRD82 directory=DATA_PUMP_DIR full=y dumpfile=maxrpd_expdp_schemas_20190529.dmp parallel=32 logfile=maxrpd_impdp_schemas_20190603.log 
+
+impdp SGNADMIN/sgnmaximopass7609@ODSPRD82 directory=DATA_PUMP_DIR full=y dumpfile=maxrpd_expdp_triggers_20190528.dmp parallel=32 logfile=maxrpd_expdp_triggers_20190603.log
+
+impdp SGNADMIN/sgnmaximopass7506@ODS75d05a directory=DATA_PUMP_DIR full=y dumpfile=maxqa82_expdp_full_20190729.dmp parallel=8 logfile=maxqa82_expdp_full_20190821.log 
+
+impdp SGNADMIN/sgnmaximopass7506@ODS75d05b directory=DATA_PUMP_DIR full=y dumpfile=maxqa82_expdp_full_20190729.dmp parallel=8 logfile=maxqa82_expdp_full_20190821.log metrics=y 
+
+exec rdsadmin.rdsadmin_util.create_directory(p_directory_name => 'ODS_LOG');
+
+GRANT READ,WRITE ON DIRECTORY "ODS_LOG" TO "MAXRPD";
+
+
+
+drop role APP_SUPP_READONLY;
+drop role APP_SUPP_EXECUTE;
+
+create role APP_SUPP_READONLY;
+create role APP_SUPP_EXECUTE;
+
+SGNBI_XAPPLIANCE_TRG	ENABLED  - trigger extra enabled
+
+create role APP_SUPP_READONLY;
+create role APP_SUPP_EXECUTE;
+grant SELECT ANY TABLE,SELECT ANY DICTIONARY,CREATE SESSION to APP_SUPP_READONLY;
+grant SELECT ANY TABLE,CREATE SESSION to SGNBI_INTERFACE;
+
+
+
+GRANT SELECT ON "MAXRPD"."T_ODS_ASSETATTR" TO "MAXIMO";
+GRANT INSERT ON "MAXRPD"."SGNBI_ASSET_AUD" TO "MAXIMO";
+GRANT UPDATE ON "MAXRPD"."SGNBI_ASSET_AUD" TO "SGNBI_INTERFACE";
+GRANT INSERT ON "MAXRPD"."SGNBI_ASSETSPEC_AUD" TO "MAXIMO";
+GRANT INSERT ON "MAXRPD"."SGNBI_ASSETTRANS_AUD" TO "MAXIMO";
+GRANT INSERT ON "MAXRPD"."SGNBI_COMMLOG_AUD" TO "MAXIMO";
+GRANT INSERT ON "MAXRPD"."SGNBI_CRM_CUSTADDRESS_AUD" TO "MAXIMO";
+GRANT INSERT ON "MAXRPD"."SGNBI_CRM_EXTREFSYS_AUD" TO "MAXIMO";
+GRANT INSERT ON "MAXRPD"."SGNBI_CRM_PAYMENTS_AUD" TO "MAXIMO";
+GRANT INSERT ON "MAXRPD"."SGNBI_CRM_WID_AUD" TO "MAXIMO";
+GRANT INSERT ON "MAXRPD"."SGNBI_CRM_WIDQUESTION_AUD" TO "MAXIMO";
+GRANT INSERT ON "MAXRPD"."SGNBI_CRM_WIDSECTION_AUD" TO "MAXIMO";
+GRANT INSERT ON "MAXRPD"."SGNBI_FAILUREREPORT_AUD" TO "MAXIMO";
+GRANT UPDATE ON "MAXRPD"."SGNBI_FAILUREREPORT_AUD" TO "SGNBI_INTERFACE";
+GRANT INSERT ON "MAXRPD"."SGNBI_LABOR_AUD" TO "MAXIMO";
+GRANT UPDATE ON "MAXRPD"."SGNBI_LABOR_AUD" TO "SGNBI_INTERFACE";
+GRANT INSERT ON "MAXRPD"."SGNBI_LOCATIONS_AUD" TO "MAXIMO";
+GRANT UPDATE ON "MAXRPD"."SGNBI_LOCATIONS_AUD" TO "SGNBI_INTERFACE";
+GRANT INSERT ON "MAXRPD"."SGNBI_LOCHIERARCHY_AUD" TO "MAXIMO";
+GRANT INSERT ON "MAXRPD"."SGNBI_LONGDESCRIPTION_AUD" TO "MAXIMO";
+GRANT UPDATE ON "MAXRPD"."SGNBI_LONGDESCRIPTION_AUD" TO "SGNBI_INTERFACE";
+GRANT INSERT ON "MAXRPD"."SGNBI_PERSON_AUD" TO "MAXIMO";
+GRANT UPDATE ON "MAXRPD"."SGNBI_PERSON_AUD" TO "SGNBI_INTERFACE";
+GRANT INSERT ON "MAXRPD"."SGNBI_PERSONGROUPTEAM_AUD" TO "MAXIMO";
+GRANT INSERT ON "MAXRPD"."SGNBI_TICKET_AUD" TO "MAXIMO";
+GRANT INSERT ON "MAXRPD"."SGNBI_TKOWNERHISTORY_AUD" TO "MAXIMO";
+GRANT INSERT ON "MAXRPD"."SGNBI_TKSTATUS_AUD" TO "MAXIMO";
+GRANT INSERT ON "MAXRPD"."SGNBI_WORKLOG_AUD" TO "MAXIMO";
+GRANT INSERT ON "MAXRPD"."SGNBI_WORKORDER_AUD" TO "MAXIMO";
+GRANT UPDATE ON "MAXRPD"."SGNBI_WORKORDER_AUD" TO "SGNBI_INTERFACE";
+GRANT INSERT ON "MAXRPD"."SGNBI_WOSTATUS_AUD" TO "MAXIMO";
+GRANT UPDATE ON "MAXRPD"."SGNBI_WOSTATUS_AUD" TO "SGNBI_INTERFACE";
+GRANT INSERT ON "MAXRPD"."SGNBI_XADDRESS_AUD" TO "MAXIMO";
+GRANT UPDATE ON "MAXRPD"."SGNBI_XAPPLIANCE_AUD" TO "SGNBI_INTERFACE";
+GRANT INSERT ON "MAXRPD"."SGNBI_XAPPLIANCE_AUD" TO "MAXIMO";
+GRANT INSERT ON "MAXRPD"."SGNBI_XASSETCHSTATUS_AUD" TO "MAXIMO";
+GRANT INSERT ON "MAXRPD"."SGNBI_XFRMALTHEATCOOK_AUD" TO "MAXIMO";
+GRANT INSERT ON "MAXRPD"."SGNBI_XFRMDEFECTPRI_AUD" TO "MAXIMO";
+GRANT INSERT ON "MAXRPD"."SGNBI_XFRMGASDEFECT_AUD" TO "MAXIMO";
+GRANT INSERT ON "MAXRPD"."SGNBI_XFRMGASDEFTODOR_AUD" TO "MAXIMO";
+GRANT INSERT ON "MAXRPD"."SGNBI_XFRMGENDEFECT_AUD" TO "MAXIMO";
+GRANT INSERT ON "MAXRPD"."SGNBI_XFRMSUPPLYINTER_AUD" TO "MAXIMO";
+GRANT INSERT ON "MAXRPD"."SGNBI_XINSTDTL_AUD" TO "MAXIMO";
+GRANT INSERT ON "MAXRPD"."SGNBI_XLABSTDBY_AUD" TO "MAXIMO";
+GRANT INSERT ON "MAXRPD"."SGNBI_XMETER_AUD" TO "MAXIMO";
+GRANT UPDATE ON "MAXRPD"."SGNBI_XMETER_AUD" TO "SGNBI_INTERFACE";
+GRANT INSERT ON "MAXRPD"."SGNBI_XREPORTIND_AUD" TO "MAXIMO";
+GRANT UPDATE ON "MAXRPD"."SGNBI_XREPORTIND_AUD" TO "SGNBI_INTERFACE";
+GRANT INSERT ON "MAXRPD"."SGNBI_XREVISION_AUD" TO "MAXIMO";
+GRANT UPDATE ON "MAXRPD"."SGNBI_XREVISION_AUD" TO "SGNBI_INTERFACE";
+GRANT INSERT ON "MAXRPD"."SGNBI_XSITEREPORT_AUD" TO "MAXIMO";
+GRANT UPDATE ON "MAXRPD"."SGNBI_XSITEREPORT_AUD" TO "SGNBI_INTERFACE";
+GRANT INSERT ON "MAXRPD"."SGNBI_XWO_COMPLETION_AUD" TO "MAXIMO";
+GRANT INSERT ON "MAXRPD"."SGNBI_XWOADDRESS_AUD" TO "MAXIMO";
+GRANT UPDATE ON "MAXRPD"."SGNBI_XWOADDRESS_AUD" TO "SGNBI_INTERFACE";
+GRANT INSERT ON "MAXRPD"."SGNBI_XWOCOMP2_AUD" TO "MAXIMO";
+GRANT UPDATE ON "MAXRPD"."SGNBI_XWOCOMP2_AUD" TO "SGNBI_INTERFACE";
+GRANT INSERT ON "MAXRPD"."SGNBI_XWOCOMP4_AUD" TO "MAXIMO";
+GRANT UPDATE ON "MAXRPD"."SGNBI_XWOCOMP4_AUD" TO "SGNBI_INTERFACE";
+GRANT INSERT ON "MAXRPD"."SGNBI_XWOCOMPLETION_AUD" TO "MAXIMO";
+GRANT UPDATE ON "MAXRPD"."SGNBI_XWOCOMPLETION_AUD" TO "SGNBI_INTERFACE";
+GRANT EXECUTE ON "MAXRPD"."PKG_PU" TO "APP_SUPP_EXECUTE";
+GRANT EXECUTE ON "MAXRPD"."FN_GET_ASSETDEPOT" TO "MAXIMORO";
+GRANT EXECUTE ON "MAXRPD"."FN_GET_ASSETDEPOT" TO "APP_SUPP_READONLY";
+GRANT EXECUTE ON "MAXRPD"."FN_GET_METERMODEL" TO "APP_SUPP_READONLY";
+
+TABLE Privileges:
+
+grant select,insert on MAXIMO.OBJGQMTKTIFACE to TICKET_UPDATE;
+grant select,insert on MAXIMO.mxin_inter_trans to TICKET_UPDATE;
+
+select 'GRANT '  || PRIVILEGE || ' ON ' || owner||'.'||TABLE_name|| ' TO ' ||grantee||';' from DBA_TAB_PRIVS where grantee in
+('SGNBI_INTERFACE','TEST_USER_ROLE','MAXIMO','MAXRPD','ENV_USER_ROLE','APP_SUPP_EXECUTE','APP_SUPP_READONLY','CONNECT','CTXAPP');
+ and owner not in('SYS','CTXSYS'); 
+ 
+
+ 
+ select * from dba_roles;
+SELECT * FROM dba_role_privs WHERE GRANTEE in ('SGNBI_INTERFACE','TEST_USER_ROLE','MAXIMO','MAXRPD','ENV_USER_ROLE','APP_SUPP_EXECUTE','APP_SUPP_READONLY','CONNECT','CTXAPP');
+select 'GRANT '  || PRIVILEGE || ' ON ' || owner||'.'||TABLE_name|| ' TO ' ||role||';' from role_tab_privs where ROLE in ('SGNBI_INTERFACE','TEST_USER_ROLE','MAXIMO','MAXRPD','ENV_USER_ROLE','APP_SUPP_EXECUTE','APP_SUPP_READONLY','CONNECT','CTXAPP');
+select 'GRANT ' || GRANTED_ROLE||' TO ' ||GRANTEE||';' from dba_role_privs where GRANTED_ROLE in ('SGNBI_INTERFACE','TEST_USER_ROLE','MAXIMO','MAXRPD','ENV_USER_ROLE','APP_SUPP_EXECUTE','APP_SUPP_READONLY','CONNECT','CTXAPP');
+select 'GRANT ' || GRANTED_ROLE||' TO ' ||GRANTEE||';' from dba_role_privs where GRANTEE in ('SGNBI_INTERFACE','TEST_USER_ROLE','MAXIMO','MAXRPD','ENV_USER_ROLE','APP_SUPP_EXECUTE','APP_SUPP_READONLY','CONNECT','CTXAPP');
+select 'GRANT '  || PRIVILEGE || ' ON ' || owner||'.'||TABLE_name|| ' TO ' ||grantee||';' from DBA_TAB_PRIVS where grantee in ('SGNBI_INTERFACE','TEST_USER_ROLE','MAXIMO','MAXRPD','ENV_USER_ROLE','APP_SUPP_EXECUTE','APP_SUPP_READONLY','CONNECT','CTXAPP');
+
+
+======================================================================
+TRIGGERS PART :
+
+select owner,count(*) from dba_triggers where owner in('MAXIMO','MAXRPD')
+group by owner;
+
+select owner,trigger_name,status from dba_triggers
+where owner in('MAXIMO','MAXRPD')
+and trigger_name like 'SGNBI_%'
+order by status;
+
+select 'alter trigger '||owner||'.'||trigger_name||' disable;' from dba_triggers where owner='MAXIMO'; 
+
+select owner, status as Trigger_Status, count(*) from dba_triggers where owner='MAXIMO' group by owner,status; 
+
+select 'alter trigger '||owner||'.'||trigger_name||' disable;' from dba_triggers where owner='MAXIMO'
+and
+trigger_name not in
+(
+'SGNBI_ASSET_TRG'
+,'SGNBI_FAILUREREPORT_TRG'
+,'SGNBI_LABOR_TRG'
+,'SGNBI_LOCATIONS_TRG'
+,'SGNBI_LONGDESCRIPTION_TRG'
+,'SGNBI_PERSON_TRG'
+,'SGNBI_WORKORDER_TRG'
+,'SGNBI_WOSTATUS_TRG'
+,'SGNBI_XMETER_TRG'
+,'SGNBI_XREPORTIND_TRG'
+,'SGNBI_XREVISION_TRG'
+,'SGNBI_XSITEREPORT_TRG'
+,'SGNBI_XWOADDRESS_TRG'
+,'SGNBI_XWOCOMP2_TRG'
+,'SGNBI_XWOCOMP4_TRG'
+,'SGNBI_XWOCOMPLETION_TRG'
+,'SGNBI_XAPPLIANCE_TRG'
+); 
+ 
+select trigger_name,status from dba_triggers where
+trigger_name not in
+(
+'SGNBI_ASSET_TRG'
+,'SGNBI_FAILUREREPORT_TRG'
+,'SGNBI_LABOR_TRG'
+,'SGNBI_LOCATIONS_TRG'
+,'SGNBI_LONGDESCRIPTION_TRG'
+,'SGNBI_PERSON_TRG'
+,'SGNBI_WORKORDER_TRG'
+,'SGNBI_WOSTATUS_TRG'
+,'SGNBI_XMETER_TRG'
+,'SGNBI_XREPORTIND_TRG'
+,'SGNBI_XREVISION_TRG'
+,'SGNBI_XSITEREPORT_TRG'
+,'SGNBI_XWOADDRESS_TRG'
+,'SGNBI_XWOCOMP2_TRG'
+,'SGNBI_XWOCOMP4_TRG'
+,'SGNBI_XWOCOMPLETION_TRG'
+,'SGNBI_XAPPLIANCE_TRG'
+); 
+
+select owner,trigger_name,status from dba_triggers where owner in('MAXIMO','MAXRPD') and trigger_name like 'SGNBI_%' and status='ENABLED' order by owner,status; 
+
+---------------------------------------------------------------------------------------------------------------------
+
+ CREATE TABLE "MAXIMO"."TEMP_MISSING_INFO" 
+   (	"JOB_ID" VARCHAR2(10 BYTE), 
+	"ESTIMATE_ID" VARCHAR2(3 BYTE)
+   ) SEGMENT CREATION DEFERRED 
+  PCTFREE 10 PCTUSED 40 INITRANS 1 MAXTRANS 255 
+ NOCOMPRESS LOGGING
+  STORAGE( INITIAL 262144 NEXT 262144 MINEXTENTS 1 MAXEXTENTS 2147483645
+  PCTINCREASE 0 FREELISTS 1 FREELIST GROUPS 1
+  BUFFER_POOL DEFAULT FLASH_CACHE DEFAULT CELL_FLASH_CACHE DEFAULT)
+  TABLESPACE "MAXIMO_DATA" ;
+
+---------------------------------------------------------------------------------------------------------------------
+
+drop table MAXRPD.WORKORDER_MV CASCADE CONSTRAINTS;
+
+DROP MATERIALIZED VIEW MAXRPD.WORKORDER_MV;
+
+CREATE MATERIALIZED VIEW LOG ON MAXIMO.WORKORDER
+TABLESPACE MAXIMO_DATA
+NOCACHE
+NOLOGGING
+PARALLEL ( DEGREE 4 INSTANCES 1 )
+WITH ROWID
+INCLUDING NEW VALUES;
+
+CREATE MATERIALIZED VIEW MAXRPD.WORKORDER_MV
+    (WONUM,WOCLASS,SITEID,STATUS,STATUSDATE,
+     HASFOLLOWUPWORK,XCHARGEABLE,WORKORDERID,XROOTWONUM,DESCRIPTION,
+     ASSETNUM,PARENT,XSUPPINTFORM_FLAG,XSUPPREST_FLAG,XEARLYDATE,
+     XSECCOMFLAG,XEXTJOBNUM,XPROJREFNO,VENDOR,XLDZ,
+     XJOC,PERSONGROUP,XTEAMMANAGER,WORKTYPE,XSTATUSCODE,
+     XJOBTYPE,LEAD,SUPERVISOR,XMETHODISSUE,LOCATION,
+     XPROGREASCATEGORY,XPROGRAMM,XJOBPRIORITY,XADDRESSNUM,XRGMA,
+    JPNUM,WOPRIORITY,REPORTEDBY,CHANGEBY,PROBLEMCODE,
+     FAILURECODE,ORIGRECORDID,XREPLANCODE,ACTSTART,ACTFINISH,
+     XLATESTARTDATE,REPORTDATE,SCHEDSTART,SCHEDFINISH,TARGCOMPDATE,
+     TARGSTARTDATE,XONSITESTATUSDATE,XSLADURATION,XLATEDATE,XORIGINATORID,
+     XSLOT)
+TABLESPACE MAXRPD_DATA
+PARALLEL ( DEGREE 4 INSTANCES 1 )
+BUILD IMMEDIATE
+USING INDEX
+            TABLESPACE MAXRPD_INDEX
+REFRESH FAST ON DEMAND
+WITH ROWID
+AS
+SELECT WONUM,
+       WOCLASS,
+       SITEID,
+       STATUS,
+       STATUSDATE,
+       HASFOLLOWUPWORK,
+       XCHARGEABLE,
+       WORKORDERID,
+       XROOTWONUM,
+       DESCRIPTION,
+       ASSETNUM,
+       PARENT,
+       XSUPPINTFORM_FLAG,
+       XSUPPREST_FLAG,
+       XEARLYDATE,
+       XSECCOMFLAG,
+       XEXTJOBNUM,
+       XPROJREFNO,
+       VENDOR,
+       XLDZ,
+       XJOC,
+       PERSONGROUP,
+       XTEAMMANAGER,
+       WORKTYPE,
+       XSTATUSCODE,
+       XJOBTYPE,
+       LEAD,
+       SUPERVISOR,
+       XMETHODISSUE,
+       LOCATION,
+       XPROGREASCATEGORY,
+       XPROGRAMM,
+       XJOBPRIORITY,
+       XADDRESSNUM,
+       XRGMA,
+       JPNUM,
+       WOPRIORITY,
+       REPORTEDBY,
+       CHANGEBY,
+       PROBLEMCODE,
+       FAILURECODE,
+       ORIGRECORDID,
+       XREPLANCODE,
+       ACTSTART,
+       ACTFINISH,
+       XLATESTARTDATE,
+       REPORTDATE,
+       SCHEDSTART,
+       SCHEDFINISH,
+       TARGCOMPDATE,
+       TARGSTARTDATE,
+       XONSITESTATUSDATE,
+       XSLADURATION,
+       XLATEDATE,
+       XORIGINATORID,
+       XSLOT
+  FROM MAXIMO.WORKORDER;
+
+
+COMMENT ON MATERIALIZED VIEW MAXRPD.WORKORDER_MV IS 'snapshot table for snapshot MAXRPD.WORKORDER_MV';
+
+CREATE OR REPLACE SYNONYM MAXRPD.COG_WORKORDER FOR MAXRPD.WORKORDER_MV;
+
+CREATE UNIQUE INDEX MAXRPD.COG_WORKORDER_MV_INDX1 ON MAXRPD.WORKORDER_MV
+(SITEID, WONUM, XROOTWONUM)
+LOGGING
+TABLESPACE MAXRPD_INDEX;
+
+
+CREATE INDEX MAXRPD.COG_WORKORDER_MV_INDX2 ON MAXRPD.WORKORDER_MV
+(WONUM, STATUS)
+LOGGING
+TABLESPACE MAXRPD_INDEX;
+
+CREATE INDEX MAXRPD.COG_WORKORDER_MV_INDX3 ON MAXRPD.WORKORDER_MV
+(WORKTYPE, STATUS)
+LOGGING
+TABLESPACE MAXRPD_INDEX;
+
+-- Index I_SNAP$_WORKORDER_MV will be created/dropped automatically by Oracle with the associated materialized view.
+
+ALTER TABLE MAXRPD.WORKORDER_MV ADD (
+  CHECK ("WONUM" IS NOT NULL)
+  ENABLE ,
+  CHECK ("WOCLASS" IS NOT NULL)
+  ENABLE ,
+  CHECK ("SITEID" IS NOT NULL)
+  ENABLE ,
+  CHECK ("STATUS" IS NOT NULL)
+  ENABLE ,
+  CHECK ("STATUSDATE" IS NOT NULL)
+  ENABLE ,
+  CHECK ("HASFOLLOWUPWORK" IS NOT NULL)
+  ENABLE ,
+  CHECK ("XCHARGEABLE" IS NOT NULL)
+  ENABLE ,
+  CHECK ("WORKORDERID" IS NOT NULL)
+  ENABLE );
+
+imp userid=cogadmin/cogadmin@cogcm1 file=C:\Users\NiranjanbabuK\Downloads\cogcs1.dmp fromuser=cogcs touser=cogcs ignore=y log=C:\Users\NiranjanbabuK\Downloads\cogcs1.log
+
+
+exp userid=cogadmin/cogadmin@cogcm1 file=C:\Users\NiranjanbabuK\Downloads\cogcs1.dmp full=y Statistics=NONE BUFFER=2000000 RECORDLENGTH=64000 log=cogadmin.log
+
+===========================================================================================================================================================
+
+
+RUN
+{
+    sql 'alter system archive log current';
+	BACKUP AS compressed backupset DATABASE FORMAT '/home/oracle/app/oracle/oradata/orcl/backup/DB_%d_%p_%T_%s.rbkp' TAG DAILY_BACKUP;
+    sql 'alter system archive log current';    
+    BACKUP AS compressed backupset CURRENT CONTROLFILE FORMAT '/home/oracle/app/oracle/oradata/orcl/backup/CNT_%d_%p_%T_%s.rbkp' TAG CONTROL_FILE;
+    CROSSCHECK BACKUP;
+	DELETE NOPROMPT EXPIRED BACKUP;
+}
+exit;
+ 
+ 
+RUN
+{	
+	sql 'alter system archive log current';
+	BACKUP AS compressed backupset ARCHIVELOG ALL FORMAT '/home/oracle/app/oracle/oradata/orcl/backup/ARCBAK_%d_%p_%T_%s.rbkp' TAG ARCHIVE_BKP;
+	CROSSCHECK ARCHIVELOG ALL;
+    DELETE ARCHIVELOG UNTIL TIME 'sysdate-1';
+    DELETE NOPROMPT OBSOLETE;
+    DELETE NOPROMPT EXPIRED ARCHIVELOG ALL;
+}
+exit;
+
+[oracle@zgixzde1owqxzjl scripts]$ ls
+archivebackup.rcv  BITST01.env  fullbackup.rcv  logs  rman_archive.sh  rman_full.sh
+[oracle@zgixzde1owqxzjl scripts]$ cat rman_full.sh
+#!/bin/bash
+. /u01/Backup/scripts/BITST01.env
+logdate=`date '+%Y-%m-%d_%H:%M:%S'`
+rman target / @/u01/Backup/scripts/fullbackup.rcv log=/u01/Backup/scripts/logs/fullbackup_$logdate.log
+find /u01/Backup/scripts/logs/ -type f -name '*.log' -mtime +7 -exec rm {} \;
+exit
+[oracle@zgixzde1owqxzjl scripts]$ cat rman_archive.sh
+#!/bin/bash
+. /u01/Backup/scripts/BITST01.env
+logdate=`date '+%Y-%m-%d_%H:%M:%S'`
+rman target / @/u01/Backup/scripts/archivebackup.rcv log=/u01/Backup/scripts/logs/archivebackup_$logdate.log
+exit
+[oracle@zgixzde1owqxzjl scripts]$ cat BITST01.env
+export ORACLE_HOME=/u01/app/oracle/product/11.2.0/dbhome_1
+export PATH=$PATH:$ORACLE_HOME/bin
+export ORACLE_SID=BITST01
+[oracle@zgixzde1owqxzjl scripts]$ cat fullbackup.rcv
+run {
+allocate channel ch1 DEVICE TYPE 'SBT_TAPE' PARMS 'ENV=(OSB_WS_PFILE=/u01/app/oracle/product/11.2.0/dbhome_1/dbs/osbwsBITST01.ora),SBT_LIBRARY=/u01/app/oracle/product/11.2.0/dbhome_1/lib/libosbws.so';
+allocate channel ch2 DEVICE TYPE 'SBT_TAPE' PARMS 'ENV=(OSB_WS_PFILE=/u01/app/oracle/product/11.2.0/dbhome_1/dbs/osbwsBITST01.ora),SBT_LIBRARY=/u01/app/oracle/product/11.2.0/dbhome_1/lib/libosbws.so';
+allocate channel ch3 DEVICE TYPE 'SBT_TAPE' PARMS 'ENV=(OSB_WS_PFILE=/u01/app/oracle/product/11.2.0/dbhome_1/dbs/osbwsBITST01.ora),SBT_LIBRARY=/u01/app/oracle/product/11.2.0/dbhome_1/lib/libosbws.so';
+sql 'alter system switch logfile';
+sql 'alter system switch logfile';
+sql 'alter system switch logfile';
+backup as compressed backupset database;
+sql 'alter system archive log current';
+backup as compressed backupset archivelog all not backed up;
+delete archivelog all completed before 'sysdate-1';
+backup current controlfile;
+}
+
+
+
+
+===========================================================================================================================================================
+
+
+Below are the technical KT session.
+
+Please capture the below items under technical KT for each application in your new plan. 
+-	Job details [ Backup, cron, TWS, Maintenance ]
+-	Pre-steps against DB for application specific
+-	DB & Application Refresh documents
+-	Maintenance details 
+-   concurrent user details
+-   Database growth statistics
+-   Application dependencies
+-   Important Schema's
+-   Startup/shutdown SOP for application
+-   Application dependencies
+-   Backup/Restore of Application/DB strategy
+-   Which time DB will be used more
+-   Monthly Freeze period
+-   DBLink's which are remotely connected
+-   Mail functionality
+
+
+	Share Database Refresh documents [ Pre & Post refresh steps ].
+	List the TWS Job details & scripts 
+	List the cron Job details & scripts
+	List the Backup details with intervals & Maintenance jobs.
+	List the Pre-steps details against DB for application specific activity.
+	List Monthly/weekly Maintenance activities
+	List the Important Schema details.
+	what is the backup/restore strategy for DB.
+	List the DBA_Directories details.
+	Details of Monthly Freeze period.
+	List the DB link details with appropriate application. 
+	Database Server details against environments with Oracle SID
+
+1.Share Database Refresh documents [ Pre & Post refresh steps ].
+2.List the TWS Job details & scripts 
+3.List the cron Job details & scripts
+4.List the Backup details with intervals & Maintenance jobs.
+5.List the Pre-steps details against DB for application specific activity.
+6.List Monthly/weekly Maintenance activities
+7.List the Important Schema details.
+8.what is the backup/restore strategy for DB.
+9.Details of Monthly Freeze period.
+10.List the DB link details with appropriate application. 
+11.Database Server details against environments with Oracle SID
+12.List of dba directories and importance of those directories.
+13.List of oracle external tables.
+14.what is the process of User creation(is there any approval matrix)
+15.What type of roles will be assigned to the user.
+16.what is the password policies in profile.
+sr13yurfvfsx9vk.cqexwwiecxtr.eu-west-1.rds.amazonaws.com
+
+
+1.Details of DB name, version and size.
+2.Details of DB High Availability feature.
+3.Details of Oracle Application.
+4.SOP for DB and application (startup and shutdown).
+5.Share Database Refresh documents [ Pre & Post refresh steps ].
+6.List the TWS Job details & scripts 
+7.List the cron Job details & scripts
+8.List the Backup details with intervals & Maintenance jobs.
+9.List Monthly/weekly Maintenance activities.
+10.List the Important Schema details.
+11.what is the backup/restore strategy for DB.
+12.Details of Monthly Freeze period.
+13.List the DB link details with appropriate application. 
+14.Database Server details against environments with Oracle SID
+15.List of dba directories and importance of those directories.
+16.List of oracle external tables.
+17.what is the process of User creation(is there any approval matrix)
+18.What type of roles will be assigned to the user.
+19.Details of password policies.
+
+MRPS DBA Questions:
+
+1. For New Server Deployment, Is the Servers will be launched by Devops Jenkins pipeline? - Yes 
+Whom we need to contact on AMS Team? - DEVOPS TEAM will provsion the instances
+Any Specific Manual steps required? - will share the doc
+
+2. After the DB Restore or refresh activity, Is there Specific post checks we need to follow? If yes, Share the details?
+Will share the doc with the post scripts
+
+3. From the MRPS E2E doc, After the DB restored,execute the below sql scripts.  
+		•	UpdateUsersTable.sql
+		•	alter_pipe
+		•	MRPS200nc, MRPS202nc, MRPS211nc, MRPS212nc
+   Where can i get these scripts? what is purpose of these scripts? Do we need to execute every time when we perform the DB refresh activity? 
+   - Yes,these are available in the repository and will share the same to you in the doc.
+4. Any Specific Scripts we need to run for DB user Creation? - We have not created any user in MRPS.
+ Any action required from DBA, when user is asking for App user Passowrd reset/new app user Creation? - Have to check with app team.
+5. How to enable the Secure intregration between the MAXIMO and MRPS? - Have to check with app team
+Is there anything DBA Should do for MRPS/MAXIMO Integration? - Have to check with app team
+Is there any DB links configuredin DB?  -  Yes DBLINK is there but client said no need to create the link as its not in use from longtime.
+6. Any Issues faced while Migrating DB to Cloud? If yes, please share issues details. - No
+7. DB server is using both EBS and EFS drives. Will EFS drives only for FTP Use? Anything DBA Should know here? - DB is using EBS mountpoints
+8. In case of FTP file transfer not working from DB server to other servers, Who should take the action to resolve the issues? - Have to check with HWA Team
+9. How the Application will connect to DB which is configured based on Datagurad Active/Passive? - Application is connecting through C-Name,DB is configured with Physical standby using DG Broker.
+10.Is there manual actions required from Application/DB Team after switching to Standy in case of Primary Failure? - Yes we need to switch the physical standby to Primary using DG Broker.
+11.Any DB encryption mechanisam is configured on MRPS? - No
+12.In case New DB server depolyment, any DB related jobs(Like any DataLoad etc.) need to configure on HWA? - YES (Have to check with HWA and app Team)
+13.Who is responsible for enable connectivity between On-Prem FTP server and Cloud SFTP Gateway on Linux EC2 instance? - DEVOPS Team
+14.Anything DBA Should know about Triggers for MAXIMO interface programs/MRPS Interface programs? - NO
+15.GDPR Data masking scripts on MRPS? 
+Is these scripts are already executed or Do we need to plan after the go-live activity? - check with app team(what ever scripts we have executed will be shared in the doc)
+16.Please let me know,if any Specific Tasks which we need to take care for MRPS DB. If any DB related docs prepared for MRPS,please share with me. - ok. (UpdateUsersTable.sql,alter_pipe,MRPS200nc, MRPS202nc, MRPS211nc, MRPS212nc) 
+
+===========================================================================================================================================================
+
+create tablespace SGMS_DATA_L datafile '/u02/app/oracle/oradata/BSMD02/SGMS_DATA_L.dbf' size 1G autoextend on maxsize 30G;
+create tablespace SGMS_DATA_S datafile '/u02/app/oracle/oradata/BSMD02/SGMS_DATA_S.dbf' size 1G autoextend on maxsize 30G;
+create tablespace SGMS_DATA_M datafile '/u02/app/oracle/oradata/BSMD02/SGMS_DATA_M.dbf' size 1G autoextend on maxsize 30G;
+
+ALTER TABLESPACE USERS ADD DATAFILE '/u02/app/oracle/oradata/BSMD02/users02.dbf' SIZE 1G AUTOEXTEND ON NEXT 512K MAXSIZE 30G;
+
+ALTER TABLESPACE SGMS_INDEX_L ADD DATAFILE '/u02/app/oracle/oradata/BSMD02/SGMS_INDEX_L01.dbf' SIZE 1G AUTOEXTEND ON NEXT 512K MAXSIZE 30G;
+ALTER TABLESPACE SGMS_DATA_L ADD DATAFILE '/u02/app/oracle/oradata/BSMD02/SGMS_DATA_L01.dbf' SIZE 1G AUTOEXTEND ON NEXT 512K MAXSIZE 30G;
+
+
+===========================================================================================================================================================
+
+EXEC DBMS_STATS.gather_table_stats('MAXIMO', 'WMBBCQ3CRO', 			estimate_percent => 100, degree=>16, cascade => TRUE, method_opt=>'for all indexed columns size auto');
+EXEC DBMS_STATS.gather_table_stats('MAXIMO', 'XCLKINT_WORKORDER', estimate_percent => 100, degree=>16, cascade => TRUE, method_opt=>'for all indexed columns size auto');
+
+===========================================================================================================================================================
+
+SELECT TO_CHAR(dbms_flashback.get_system_change_number) FROM dual; 
+
+*****************************
+Parameters which need to update in cloud INSTANCE
+*****************************
+workarea_size_policy='AUTO'
+undo_retention=7200
+undo_management='AUTO'
+timed_statistics=true
+skip_unusable_indexes=true
+sga_max_size=51539607552
+session_cached_cursors=0(?)
+sec_case_sensitive_logon=false
+remote_login_passwordfile='exclusive'
+recyclebin='ON'
+query_rewrite_enabled='true'(?)
+parallel_adaptive_multi_user=true
+os_authent_prefix='OPS$(?)
+optimizer_secure_view_merging=true
+optimizer_mode='all_rows'
+optimizer_features_enable='11.2.0.4'(?)
+o7_dictionary_accessibility=false
+nls_length_semantics='CHAR'
+memory_target=51539607552(?)
+log_archive_min_succeed_dest=1
+log_archive_max_processes=2
+local_listener='listener_maxprdfo'(?)
+instance_name='maxprdfo'(?)
+global_names=false
+filesystemio_options='ASYNCH'/* Currently its with Set all**/
+disk_asynch_io=true
+db_name='MAXPRDFO'
+db_flashback_retention_target=60
+db_domain='world'
+db_cache_size=34359738368
+db_block_size=8192
+control_management_pack_access='DIAGNOSTIC+TUNING'
+control_file_record_keep_time=15
+control_files=(??) Mirroring
+audit_sys_operations=TRUE
+archive_lag_target=900/** Current values is 300**/
+ 
+ 
+***************
+Already available which is OK
+******************
+
+undo_tablespace='UNDO_T1'# Name of undo tablespace
+standby_file_management='AUTO'
+===========================================================================================================================================================
+
+select max(dbms_lob.getlength (SOURCE))/1024 as LOB_SIZE_KB from MAXIMO.AUTOSCRIPT;
+select 'drop user ' ||username|| ' cascade;' from dba_users where username not in ('APPQOSSYS','ANONYMOUS','AUDSYS','CTXSYS','DBSNMP','DIP','OUTLN','RDSADMIN','SGNADMIN','SYS','SYSRAC','SYSBACKUP','SYSDG','SYSKM','USERADMIN','XDB','XS$NULL','SYSTEM','GSMADMIN_INTERNAL','GSMCATUSER','GSMUSER','HWAUSER');
+
+select owner, object_type, count(*) from dba_objects where owner='MAXIMO' group by owner,object_type order by 3 desc;
+select owner, object_name, object_type, status from dba_objects where owner='MAXIMO' and status!='VALID' order by object_type;
+
+select index_name,index_type,status,domidx_status,domidx_opstatus from user_indexes where index_type = 'DOMAIN' and (domidx_status <> 'VALID' or domidx_opstatus <> 'VALID');
+
+
+===========================================================================================================================================================
+
+This we need to get from ON PREM MAXIMO_ODS server(MAXRPPRD - ssvua781)
+
+spool MAXIMO_ODS_DB_Output.log
+set head on;
+set veri on;
+set feed on;
+set echo on;
+set verify on;
+set term on;
+set long 99999;
+!hostname;date;
+
+select name from v$database;
+select object_type,count(*) from dba_objects where owner in ('MAXIMO') group by object_type;
+select object_type,count(*) from dba_objects where owner in ('MAXRPD') group by object_type;
+select owner, object_type,status, count(*) from dba_objects where owner='MAXIMO' group by owner,object_type,status order by 3 desc;
+select owner, object_type,status, count(*) from dba_objects where owner='MAXRPD' group by owner,object_type,status order by 3 desc;
+select OWNER,OBJECT_NAME from dba_recyclebin;
+select count(*),owner from dba_objects group by owner;
+select count(*) from dba_objects where status='INVALID';
+col OBJECT_NAME format a33
+set pages 1000
+select object_name,object_type,owner from dba_objects where status='INVALID';
+select * from dba_roles;
+SELECT * FROM dba_role_privs WHERE GRANTEE in ('SGNBI_INTERFACE','TEST_USER_ROLE','MAXIMO','MAXRPD','ENV_USER_ROLE','APP_SUPP_EXECUTE','APP_SUPP_READONLY','CONNECT','CTXAPP','QUALYS_ROLE','SUMMARY_READ');  
+select 'GRANT '  || PRIVILEGE || ' ON ' || owner||'.'||TABLE_name|| ' TO ' ||role||';' from role_tab_privs where ROLE in ('SGNBI_INTERFACE','TEST_USER_ROLE','MAXIMO','MAXRPD','ENV_USER_ROLE','APP_SUPP_EXECUTE','APP_SUPP_READONLY','CONNECT','CTXAPP','QUALYS_ROLE','SUMMARY_READ');
+select 'GRANT ' || GRANTED_ROLE||' TO ' ||GRANTEE||';' from dba_role_privs where GRANTED_ROLE in ('SGNBI_INTERFACE','TEST_USER_ROLE','MAXIMO','MAXRPD','ENV_USER_ROLE','APP_SUPP_EXECUTE','APP_SUPP_READONLY','CONNECT','CTXAPP','QUALYS_ROLE','SUMMARY_READ');
+select 'GRANT ' || GRANTED_ROLE||' TO ' ||GRANTEE||';' from dba_role_privs where GRANTEE in ('SGNBI_INTERFACE','TEST_USER_ROLE','MAXIMO','MAXRPD','ENV_USER_ROLE','APP_SUPP_EXECUTE','APP_SUPP_READONLY','CONNECT','CTXAPP','QUALYS_ROLE','SUMMARY_READ');
+select 'GRANT '  || PRIVILEGE || ' ON ' || owner||'.'||TABLE_name|| ' TO ' ||grantee||';' from DBA_TAB_PRIVS where grantee in ('SGNBI_INTERFACE','TEST_USER_ROLE','MAXIMO','MAXRPD','ENV_USER_ROLE','APP_SUPP_EXECUTE','APP_SUPP_READONLY','CONNECT','CTXAPP','QUALYS_ROLE','SUMMARY_READ');
+select 'GRANT '  || PRIVILEGE || ' ON ' || owner||'.'||TABLE_name|| ' TO ' ||grantee||';' from DBA_TAB_PRIVS where owner not in('SYS','DBSNMP','APPQOSSYS','CTXSYS','OUTLN','SYSTEM','WMSYS');
+select 'GRANT '  || PRIVILEGE || ' ON ' || owner||'.'||TABLE_name|| ' TO ' ||grantee||';' from DBA_TAB_PRIVS where owner like '%MAXIMO%'; 
+select 'GRANT '  || PRIVILEGE || ' ON ' || owner||'.'||TABLE_name|| ' TO ' ||grantee||';' from DBA_TAB_PRIVS where owner like '%MAXRPD%'; 
+select count(*) from recyclebin;
+select count(*) from dba_recyclebin;
+select owner, count(*) from dba_recyclebin group by owner;
+set long 99999;
+SELECT dbms_metadata.get_ddl('FUNCTION','SGN_PWD_LVL1_VERIFY_FUNCTION') "DDL" FROM dual;
+SELECT dbms_metadata.get_ddl('FUNCTION','SGN_PWD_LVL2_VERIFY_FUNCTION') "DDL" FROM dual;
+SELECT dbms_metadata.get_ddl('FUNCTION','SSE_PWD_LVL1_VERIFY_FUNCTION') "DDL" FROM dual;
+SELECT dbms_metadata.get_ddl('FUNCTION','SSE_PWD_LVL2_VERIFY_FUNCTION') "DDL" FROM dual;
+SELECT dbms_metadata.get_ddl('PROFILE','SGN_LVL1_NOLOCK') "DDL" FROM dual;
+SELECT dbms_metadata.get_ddl('PROFILE','SGN_LVL1_SECURITY') "DDL" FROM dual;
+SELECT dbms_metadata.get_ddl('PROFILE','SGN_LVL2_NOLOCK') "DDL" FROM dual;
+SELECT dbms_metadata.get_ddl('PROFILE','SGN_LVL2_SECURITY') "DDL" FROM dual;
+SELECT dbms_metadata.get_ddl('PROFILE','SSE_LVL1_NOLOCK') "DDL" FROM dual;
+SELECT dbms_metadata.get_ddl('PROFILE','SSE_LVL1_SECURITY') "DDL" FROM dual;
+SELECT dbms_metadata.get_ddl('PROFILE','SSE_LVL2_NOLOCK') "DDL" FROM dual;
+SELECT dbms_metadata.get_ddl('PROFILE','SSE_LVL2_SECURITY') "DDL" FROM dual; 
+select PROFILE,RESOURCE_NAME,LIMIT from dba_profiles where PROFILE='SGN_LVL1_SECURITY';
+select PROFILE,RESOURCE_NAME,LIMIT from dba_profiles where PROFILE='SGN_LVL2_SECURITY';
+select PROFILE,RESOURCE_NAME,LIMIT from dba_profiles where PROFILE='SGN_LVL2_NOLOCK';
+select PROFILE,RESOURCE_NAME,LIMIT from dba_profiles where PROFILE='SSE_LVL1_SECURITY';
+select PROFILE,RESOURCE_NAME,LIMIT from dba_profiles where PROFILE='SSE_LVL1_NOLOCK';
+select PROFILE,RESOURCE_NAME,LIMIT from dba_profiles where PROFILE='SSE_LVL2_NOLOCK';
+select PROFILE,RESOURCE_NAME,LIMIT from dba_profiles where PROFILE='SSE_LVL2_SECURITY';
+select PROFILE,RESOURCE_NAME,LIMIT from dba_profiles where PROFILE='SGN_LVL1_NOLOCK';
+select * from dba_tab_privs where grantee like '%TICKET_UPDATE%';
+select * from dba_tab_privs where grantee like '%GQMRO%';
+select * from dba_tab_privs where grantee like '%SGNBI_INTERFACE%';
+select * from v$parameter order by name;
+select username,account_status from dba_users order by username;
+select owner,object_name,object_type from dba_objects where owner='MAXIMO' order by 3 asc;
+select owner,object_name,object_type from dba_objects where owner='MAXRPD' order by 3 asc;
+select owner,object_name,object_type from dba_objects where owner='ICAP' and object_type like '%VIEW%' order by 3 asc;
+select owner,object_name,type from dba_recyclebin order by 3 asc;
+select * from dba_users order by username;
+select owner,count(*) from dba_triggers where owner in('MAXIMO','MAXRPD') group by owner;
+select owner, status as Trigger_Status, count(*) from dba_triggers where owner='MAXIMO' group by owner,status;
+select owner,trigger_name,status from dba_triggers where owner='MAXIMO' and status='DISABED';
+select owner,trigger_name,status from dba_triggers where owner='MAXIMO' and status='ENABLED';
+select owner,trigger_name,status from dba_triggers where owner in('MAXIMO','MAXRPD') and trigger_name like 'SGNBI_%' and status='ENABLED' order by owner,status; 
+spool off;
+------------------------------------
+
+oraag3nt
+
+===========================================================================================================================================================
+
+To get the table row count in all schemas::
+
+select owner, table_name, nvl(num_rows,-1) 
+from all_tables  where owner='QA_APM1'
+order by nvl(num_rows,-1) desc;
+
+set serveroutput on;
+DECLARE
+val NUMBER;
+BEGIN
+FOR tb IN (SELECT owner, table_name FROM dba_tables WHERE owner in ('SMSGATEWAY') order by owner,table_name) LOOP
+  EXECUTE IMMEDIATE 'SELECT count(1) FROM ' || tb.owner ||'.'|| tb.table_name INTO val;
+  DBMS_OUTPUT.PUT_LINE(tb.owner||'.'||tb.table_name || ' ==> ' || val );
+  END LOOP;
+END;
+/
+
+set serveroutput on;
+DECLARE
+val NUMBER;
+BEGIN
+FOR tb IN (SELECT owner, table_name FROM dba_tables WHERE owner in ('SPXSYS') order by owner,table_name) LOOP
+  EXECUTE IMMEDIATE 'SELECT count(1) FROM ' || tb.owner ||'.'|| tb.table_name INTO val;
+  DBMS_OUTPUT.PUT_LINE(tb.owner||'.'||tb.table_name || ' ==> ' || val );
+  END LOOP;
+END;
+/
+===========================================================================================================================================================
+
+Import command ::
+DECLARE
+hdnl NUMBER;
+BEGIN
+hdnl := DBMS_DATAPUMP.OPEN( operation => 'IMPORT', job_mode => 'TABLE', job_name=>null);
+DBMS_DATAPUMP.ADD_FILE( handle => hdnl, filename => 'IAUDITFW_VMAET_%U.dmp', directory => 'DATA_PUMP_DIR', filetype => dbms_datapump.ku$_file_type_dump_file);
+DBMS_DATAPUMP.ADD_FILE( handle => hdnl, filename => 'IAUDITFW_VMAET_LT1.log', directory => 'DATA_PUMP_DIR', filetype => dbms_datapump.ku$_file_type_log_file);
+DBMS_DATAPUMP.SET_PARALLEL(handle => hdnl,degree => 23 );
+dbms_datapump.Metadata_filter(handle => hdnl, name => 'SCHEMA_EXPR', value => 'IN (''IAUDITFW'')');
+dbms_datapump.Metadata_filter(handle => hdnl, name => 'NAME_EXPR', value => 'IN (''VOD_MS_AUDIT_EVENT'')', object_type => 'TABLE');
+dbms_datapump.Set_parameter(handle => hdnl, name => 'INCLUDE_METADATA', value => 0);
+dbms_datapump.metadata_transform (handle => hdnl, name => 'DISABLE_ARCHIVE_LOGGING',value => 1 ,object_type => 'TABLE');
+dbms_datapump.set_parameter(handle => hdnl, name => 'METRICS', VALUE => 1);
+DBMS_DATAPUMP.START_JOB(hdnl);
+END;
+/
+
+
+
+===========================================================================================================================================================
+
+
+Grants full level in on prem DB:
+
+SELECT 'GRANT '  ||privilege || ' TO ' ||  grantee || ';'   FROM DBA_SYS_PRIVS  WHERE GRANTEE not in ('SYS','SYSTEM')
+
+union all
+
+SELECT 'GRANT '  ||GRANTED_ROLE || ' TO ' ||  grantee || ';'  FROM DBA_ROLE_PRIVS   WHERE GRANTEE not in ('SYS','SYSTEM')
+
+union all
+
+select 'grant '||privilege||' on '||owner||'.'||table_name||' to '||grantee  ||case when grantable = 'YES' then ' with grant option' else null end  ||';' from dba_tab_privs where owner not in ('SYS','SYSTEM') and grantee in ( select role from dba_roles ) and table_name not in ( select directory_name from dba_directories )
+
+union all
+
+select 'grant '||privilege||' on directory '||table_name||' to '||grantee    ||case when grantable = 'YES' then ' with grant option' else null end  ||';' from dba_tab_privs where owner not in ('SYS','SYSTEM') and grantee in ( select role from dba_roles ) and table_name  in ( select directory_name from dba_directories )
+
+union all
+
+select 'grant '||privilege||' on '||owner||'.'||table_name||' to '||grantee  ||case when grantable = 'YES' then ' with grant option' else null end  ||';' from dba_tab_privs where owner not in ('SYS','SYSTEM') and grantee in ( select username from dba_users )
+
+AWS Account
+dinukn7@gmail.com
+Grantable@371
+
+===========================================================================================================================================================
+kuruba.niranjan.external@telefonica.com
+
+To update Tech M PASSWORD
+https://sts.techmahindra.com/adfs/portal/updatepassword/
+KN00700050@techmahindra.com
+Renault@123
+
+kuruba.niranjan-babu@external.telekom.de
+
+Telefonica 
+NQ10032983
+Temple!123 - Devlan
+4017 XXXX XXXX 2625
+Source123 - AWS
+===========================================================================================================================================================
+Rebuild Index Script
+-- Rebuild index
+Select 'alter index '||owner||'.'||index_name||' rebuild ONLINE;' from dba_indexes d where D.TABLE_NAME ='PROVIDE_TABLE_NAME' and D.OWNER='PROVIDE_OWNER';
+
+-- Rebuild Partition index
+Select 'alter index '||index_owner||'.'||index_name||' rebuild partition '||partition_name||' ONLINE;' from dba_ind_partitions where INDEX_NAME='PROVIDE_INDEX_NAME';
+
+
+-- Rebuild Sub Partition index
+Select 'alter index '||index_owner||'.'||index_name||' rebuild subpartition '||subpartition_name||' ONLINE;' from dba_ind_subpartitions where INDEX_NAME='PROVIDE_INDEX_NAME';
+
+===========================================================================================================================================================
+
+
+Version (AGENT_VERSION) -> 13.2.0.0.v3
+Port (AGENT_PORT) -> 3872 (default)
+OMS_HOST -> toem12cc.vodacom.corp (for non-prod) OR poem12cc-slb.vodacom.corp  (for prod)
+OMS_PORT -> 4900
+AGENT_REGISTRATION_PASSWORD -> oraag3nt
+ALLOW_TLS_ONLY-> false (default)
+MINIMUM_TLS_VERSION -> TLSv1
+TLS_CIPHER_SUITE -> No
+
+ALTER USER dbsnmp IDENTIFIED BY AWSwelcome_123 ACCOUNT UNLOCK;
+
+SELECT rdsadmin.rdsadmin_oem_agent_tasks.list_targets_oem_agent() as TASK_ID from DUAL; 
+SELECT text FROM table(rdsadmin.rds_file_util.read_text_file('BDUMP','dbtask-1605596411706-3805.log')); 
+
+SELECT rdsadmin.rdsadmin_oem_agent_tasks.get_status_oem_agent() as TASK_ID from DUAL;
+SELECT text FROM table(rdsadmin.rds_file_util.read_text_file('BDUMP','dbtask-1605596446926-3805.log'));
+
+
+
+===========================================================================================================================================================
+
+
+
+OLTP- R class
+OLAP -  M class
+
+===========================================================================================================================================================
+
+
+first - metadata_only dont exclude any indexes
+second - data_only exclude indexes
+once migration done have to gather stats or rebuild indexes.
+
+===========================================================================================================================================================
+
+https://tm.udemy.com/course/ultimate-hashicorp-terraform-certification-study-guide-2020/
+https://twingo.techmahindra.com/Twingohome.aspx
+https://myemail.techmahindra.com/
+https://storefront2fa.vodacom.co.za/logon/LogonPoint/index.html
+https://whitepages.sso.vodacom.co.za/
+https://login.sso.vodacom.co.za/nidp/app?target=https%3A%2F%2Flogin.sso.vodacom.co.za%2Fnidp%2Fsaml2%2Fidpsend%3FPID%3DSTSPcy9kgz%26target%3Dhttps%253A%252F%252Fconsole.aws.amazon.com&id=10020
+
+
+
+===========================================================================================================================================================
+
+
+exec utl_file.fremove('DATA_PUMP_DIR','/rdsdbdata/datapump/maximo_%U.dmp');
+SELECT text FROM table(rdsadmin.rds_file_util.read_text_file('DATA_PUMP_DIR','cogcmpre_expdp.log'));
+select * from table(RDSADMIN.RDS_FILE_UTIL.LISTDIR('DATA_PUMP_DIR')) order by mtime;
+
+select distinct tablespace_name from dba_tablespaces;
+select * from dba_profiles;
+select distinct profile from dba_profiles;
+select RESOURCE_NAME,LIMIT from dba_profiles where profile='VODA_NONEXPIRY';
+select username,default_tablespace,temporary_tablespace,profile from dba_users where username in ('DBA_AUTO','DMP_ADMIN','GDPR_RO','TDMPRD_ADMIN','VRP_ADMIN','VRP_LEGAL_USER');
+select username,default_tablespace,temporary_tablespace,profile from dba_users where username in ('DBA_AUTO','DMP_ADMIN','GDPR_RO','TDMPRD_ADMIN','VRP_ADMIN','VRP_LEGAL_USER');
+select owner, sum(bytes/1024/1024/1024) from dba_segments  group by owner;
+select dbms_metadata.get_ddl('USER','SBLEBU') from dual;
+select username,default_tablespace,temporary_tablespace,profile from dba_users where username in ('SBLEBU');
+select segment_name,segment_type,bytes/1024/1024 MB,owner from dba_segments where segment_type='TABLE' and owner='TDMPRD_ADMIN';
+
+select segment_name,segment_type,bytes/1024/1024 MB,owner from dba_segments where owner='TDMPRD_ADMIN';
+select segment_name,segment_type,bytes/1024/1024/1024 GB,owner from dba_segments where owner='SBLEBU';
+select owner,tablespace_name,sum(bytes)/1024/1024/1024 "IN GB" from dba_segments group by owner,tablespace_name; 
+select sum(bytes/1024/1024/1024) as GB from dba_segments;
+
+select * from dba_tablespaces;
+
+select df.tablespace_name "Tablespace",
+totalusedspace "Used MB",
+(df.totalspace - tu.totalusedspace) "Free MB",
+df.totalspace "Total MB",
+round(100 * ( (df.totalspace - tu.totalusedspace)/ df.totalspace))
+"Pct. Free"
+from
+(select tablespace_name,
+round(sum(bytes) / 1048576) TotalSpace
+from dba_data_files 
+group by tablespace_name) df,
+(select round(sum(bytes)/(1024*1024)) totalusedspace, tablespace_name
+from dba_segments 
+group by tablespace_name) tu
+where df.tablespace_name = tu.tablespace_name ;
+
+select d.tablespace_name "TS",
+   (select round(sum(s.bytes/(1024*1024)),2)
+      from dba_segments s
+      where (s.tablespace_name = d.tablespace_name)
+      group by s.tablespace_name) "Used",
+round(d.bytes/(1024*1024)) "FSize",
+round((select sum(s.bytes/(1024*1024))
+  from dba_segments s
+  where s.tablespace_name = d.tablespace_name
+  group by s.tablespace_name)*100/(d.bytes/(1024*1024)),2) "% Used",
+round(maxbytes/(1024*1024)) "MAX FSize",
+round((select sum(s.bytes/(1024*1024))
+  from dba_segments s
+  where (s.tablespace_name = d.tablespace_name) AND (d.AUTOEXTENSIBLE = 'YES')
+  group by s.tablespace_name)*100/(maxbytes/(1024*1024)),2) "% Used of MAX"  from dba_data_files d;
+
+SELECT TABLESPACE_NAME,TO_CHAR(SUM(NVL(BYTES,0))/1024/1024/1024, '99,999,990.99') AS "FREE SPACE(IN GB)" FROM DBA_FREE_SPACE GROUP BY TABLESPACE_NAME;
+
+select table_name,to_number(extractvalue(xmltype(dbms_xmlgen.getxml('select count(*) c from TDMPRD_ADMIN.'||table_name)) ,'/ROWSET/ROW/C')) count from dba_tables where owner='TDMPRD_ADMIN';
+
+   select * from dba_directories;   
+  select * from dba_external_locations;   
+select * from dba_external_locations where table_name='SYS.OPATCH_XML_INV'; 
+select * from dba_tab_privs where table_name in (select directory_name from dba_directories);
+
+select a.data_size+b.temp_size+c.redo_size "total_size"
+	from ( select sum(bytes)/1024/1024/1024 data_size
+	         from dba_data_files ) a,
+	     ( select nvl(sum(bytes)/1024/1024/1024,0) temp_size
+	         from dba_temp_files ) b,
+	     ( select sum(bytes)/1024/1024/1024 redo_size
+	         from sys.v_$log ) c;
+
+
+select owner, table_name, column_name from dba_tab_columns where data_type = 'BLOB' and owner = 'MAXIMO';
+
+select regexp_replace(
+dbms_metadata.get_ddl('SEQUENCE',sequence_name,sequence_owner),
+'^.*(CREATE SEQUENCE.*CYCLE).*$',
+'DROP SEQUENCE "'||sequence_owner||'"."'||sequence_name
+||'";'||chr(10)||'\1;') SEQDDL
+from dba_sequences
+where sequence_owner not in
+(select name
+from system.logstdby$skip_support
+where action=0)
+;
+
+select owner,sum(bytes)/1024/1024/1024 as "SIZE in GB" from dba_segments where owner='KMIS' and segment_type='INDEX' group by owner;
+
+select 'create DATABASE LINK '||NAME|| ' connect to '|| userid || ' identified by '|| password || ' using '||''''|| host ||''''||'; ' FROM sys.link$;
+SELECT 'SELECT DBMS_METADATA.GET_DDL(''TABLESPACE'','''||  TABLESPACE_NAME || ''') FROM DUAL;' FROM DBA_TABLESPACES;
+SELECT DBMS_METADATA.GET_DDL('TABLESPACE','ADMIN_TBS')  FROM DUAL;
+SELECT 'SELECT DBMS_METADATA.GET_DDL(''USER'','''||  USERNAME || ''') FROM DUAL;' FROM DBA_USERS;
+select dbms_metadata.get_ddl('USER','OPS$MDBPREB') from dual;
+SELECT DBMS_METADATA.GET_GRANTED_DDL('ROLE_GRANT','ADMIN') FROM DUAL;
+SELECT DBMS_METADATA.GET_GRANTED_DDL('SYSTEM_GRANT','ADMIN') FROM DUAL;
+SELECT DBMS_METADATA.GET_GRANTED_DDL('OBJECT_GRANT','ADMIN') FROM DUAL;
+SELECT DBMS_METADATA.GET_GRANTED_DDL('SYSTEM_GRANT','ADMIN') FROM DUAL;
+SELECT DBMS_METADATA.GET_GRANTED_DDL('OBJECT_GRANT','ADMIN') FROM DUAL;
+SELECT 'SELECT DBMS_METADATA.GET_DDL(''TABLE'','''||  TABLE_NAME|| ''') FROM DUAL;' FROM DBA_TABLES;
+SELECT DBMS_METADATA.GET_DDL('DB_LINK',a.db_link,a.owner) FROM all_db_links a;
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+select tablespace_name,bigfile from dba_tablespaces;
+SELECT 'SELECT DBMS_METADATA.GET_DDL(''TABLESPACE'','''||  TABLESPACE_NAME || ''') FROM DUAL;' FROM DBA_TABLESPACES;
+select username,default_tablespace,temporary_tablespace,profile from dba_users where username in ('DBA_AUTO','DMP_ADMIN','GDPR_RO','TDMPRD_ADMIN','VRP_ADMIN','VRP_LEGAL_USER');
+select USERNAME,PROFILE from dba_users where USERNAME IN('DBA_AUTO','DMP_ADMIN','GDPR_RO','TDMPRD_ADMIN','VRP_ADMIN','VRP_LEGAL_USER');
+
+SQL> set long 5000;
+SQL> select dbms_metadata.get_ddl('PROFILE','VODA_NONEXPIRY') from dual;
+
+
+set long 90000
+SELECT DBMS_METADATA.GET_DDL('FUNCTION','VODACOM_PWD') FROM dual;
+
+
+  
+===========================================================================================================================================================
+
+
+
+TechMahindra\KN00700050
+
+Vodacom@123
+
+KN00700050@techmahindra.com
+https://tim.techmahindra.com/tim/Index.aspx
+https://pacehr.techmahindra.com/
+
+https:// Twingo.techmahindra.com/twingohome.aspx
+
+
+===========================================================================================================================================================
+
+
+1. We have received the assesment checklist for C3DTST Database,but have not received for RNATST Database?Please send the check list with required schemas? - ()
+2. List of schemas to be confirmed for both the Databases[C3DTST & RNATST] - ()
+3. Are we planning to remove any stale Users/Data in RNATST Database? - ()
+4. Please confirm the version to carry out to Cloud with the patch details? - ()
+5. We got the confirmation to carry with the same DB Names to cloud enviroment.
+6. Please confirm the active DBLinks which we need to carry to cloud and please provide the passwords on ONE TO ONE which are all qualified? - ()
+7. Do we have any external tables? - ()
+8. Do we have any NACL[DBMS_NETWORK_ACL_UTILITY] to be consider to carry out to cloud? - ()
+9. Do we have any jobs which needs to have a remote based connection and please confirm the sort and behaviour jobs? - ()
+10.Do we have any specific jobs apart from the regular clean up jobs ? - ()
+11.Do we need to consider any dba directories to be created in the cloud enviroment? -()
+12. Do we need to capture the Delta change after importing the initial load backup ? - ()
+13. Please enable the archive log mode/with retetion of 2 days in C3DTST DB only if we require Delta change data? - ()
+14. Do we need to work parllely on both the databases or any priority do we need to go on first ? -()
+15. From the Assesmet checklist we received timeone to go with Africa/Johannesburg, please confirm? - ()
+16. VPC region ,has to be crosschecked and to be confirmed? - ()
+17. No need to configure backup for Test Databases,got confirmation.
+18. Please confirm with the timings to allot for Maintainence window? - ()
+
+
+OBIEEERPTD - Metadata
+OBIEEODIDEV - data and metadata
+BIQA - DATA and Metadata
+
+[profile ASICS QA]
+role_arn = arn:aws:iam::555677351449:role/AWSCloudFormationStackSetExecutionRole
+color = 0080c0
+
+
+
+1.Please confirm the version to carry out to Cloud with the patch details?
+2.Do we have any Mail Functionality NACL[DBMS_NETWORK_ACL_UTILITY] to be consider to carry out to cloud?
+3.Do we need to consider any dba directories to be created in the cloud enviroment?
+4.Please confirm list of schemas to be confirmed for both the Databases?
+5.Do we need to capture the Delta change after importing the initial load backup ?
+6.Please enable the archive log mode/with retetion of 2 days in both DB's only if we require Delta change data?
+7.Please confirm with the timings to allot for Maintainence window?
+8.Please confirm the active DBLinks which we need to carry to cloud and please provide the passwords on ONE TO ONE which are all qualified? 
+9.Do we have any jobs[CRON/Scheduler] which needs to be considered,please confirm the sort and behaviour of jobs?
+10.Do we have any NACL[DBMS_NETWORK_ACL_UTILITY] to be consider to carry out to cloud?
+11.Do we have any external tables?
+12.Do we need to configure backup for both Databases in cloud?
+13.Please confirm with the timings to allot for Maintainence window if any?
+14.Can we go with Africa/Harare Timezone for both databases, please confirm?
+15.Do we need to enable MULTI_AZ in both DB's?
+16.Are you using APEX?
+17.Can we keep the DBNAMES same as ONPREM/do you want to us to go with any specific name for both DB's?
+18.Do we have sufficient storage to take the initial backups?
+
+OBIEEERPTD 
+OBIEEODIDEV 
+BIQA 
+
+
+Hi Sam/Donavan,
+
+Thanks for joining the call.
+
+Below are key points which we discussed in the call.
+
+	- We are migrating three databases in to three different RDS instances.
+	- We are going the same migration approach how we have done for E-sol Dev[Taking Full Backup on the cutover day]
+	- We are keeping the DBNAMES as TDMQA -->QTDMS , VRPDP -->QVRP , DMPQA -->QDMP in the Cloud environment.
+	- TIMEZONE ->Going with Africa/Harare for all three databases.
+	- We are going with higher version 19c in all RDS instances.
+	- Qualified schemas which we need to be carried to the cloud.
+	
+Below are the queries which we need your inputs for the smooth migration:
+
+Please list down the cron jobs of each respective database[TDMQA,VRPDB,DMPQA] and explain the behaviour of those jobs?
+
+Please share the DBLINK passwords of respective database[TDMQA,VRPDB,DMPQA]?
+
+List down the dba directories to be created in the cloud enviroment for each respective database?
+
+Hi Lorey/Fareez,
+
+Thanks for joining the call.
+
+Below are key points which we discussed in the call.
+
+	- We are migrating QA database[QARC] alone to the cloud.	
+	- We are keeping the DBNAME as QARC -->ASICQA in the Cloud environment.
+	- TIMEZONE ->Going with Africa/Harare for all three databases.
+	- We are going with same version 12.2 as is in the cloud enviroment.
+	- Qualified schemas which we need to be carried to the cloud is ARC.
+	- No need to enable the Multi-AZ[HA]
+	- No Backups required for NON-PROD environment.
+	- DBLINK will be created later post migration,Which will be taken care by Vodacom Team.
+	
+Below are the queries which we need your inputs for the smooth migration:
+
+
+Please confirm whether do we need to have up to date DATA to capture the delta change replicated in the cloud environment?
+
+
+If yes,we need to have the database in archive log mode with retentin of 2 days?
+
+
+Thanks
+Niranjan	
+
+
+https://teams.microsoft.com/l/meetup-join/19%3ameeting_YWM0N2MwMTgtODlmMi00YTc1LWI5YjQtOTg2NjQxNDc1Yjkz%40thread.v2/0?context=%7b%22Tid%22%3a%22edf442f5-b994-4c86-a131-b42b03a16c95%22%2c%22Oid%22%3a%22df62e69d-e6ea-40ea-bee0-07e949a78be0%22%7d
+
+obiee
+https://teams.microsoft.com/dl/launcher/launcher.html?url=%2F_%23%2Fl%2Fmeetup-join%2F19%3Ameeting_NTc5ZjE4MDEtZjg4ZC00OWI1LTlhNTMtMTVkMmUwYmVkZWVi%40thread.v2%2F0%3Fcontext%3D%257b%2522Tid%2522%253a%252268283f3b-8487-4c86-adb3-a5228f18b893%2522%252c%2522Oid%2522%253a%252206bd9836-9535-44b4-8a5e-b9428c2c5efc%2522%257d%26anon%3Dtrue&type=meetup-join&deeplinkId=76f97dee-e725-4c3b-93ec-80ac5b6262f6&directDl=true&msLaunch=true&enableMobilePage=true&suppressPrompt=true
+
+
+
+
+===========================================================================================================================================================
+
+
+
+
+
+
+
+expdp ggadmin/'Temple$1'@OBIEERPTD dumpfile=rds_mig:SBLEBU_EXPDP_101220_%U.dmp logfile=rds_mig:SBLEBU_EXPDP_101220.log parallel=8 schemas=SBLEBU metrics=y EXCLUDE=STATISTICS compression=all cluster=n
+
+expdp ggadmin/'Temple$1'@OBIEERPTD dumpfile=rds_mig:SBLEBU_EXPDP_101220_%U.dmp logfile=ORA_DBMS_FCP_LOGDIR:SBLEBU_EXPDP.log parallel=8 schemas=SBLEBU metrics=y EXCLUDE=STATISTICS compression=all cluster=n
+
+
+t5862150
+
+
+
+
+
+
+===========================================================================================================================================================
+
+
+Tell me about urself
+What sort of migrations you have done so for?
+hetrogenous/homogenous?
+What are the pre checks and post checks which we need to consider for the succesful migrations?
+what is the best way to do migration from onprem to cloud?
+can you eloborate with steps?
+How Many S3 Buckets Can You Create In Aws By Default?
+Do we have any limitation to upload files in S3 bucket?
+Whats the max DB size can we migrate to RDS?
+How can we take consistent backup sng Datapump?
+i have 2 TB database,i got requiremnt like import the metadata alone.................
+whats the use of transform parameter ?
+What are things do we need to consider to setup the DMS?
+For full load what we need to consider and for replicate data changes what we need to consider?
+can we do a full load with cdc for one table when the task is setup for entire schema?
+when the data resides in ASM disk groups what things do we need to consider for the DMS Task?
+can we take the snapsot when the db is not up and running?
+how much time will it take to take first snapshot for 1 TB database(approx)
+second snapshot?
+what happens in back end when we are starting and stopping the database?
+what is read replica?
+what are the prerequisites to use read replica?
+can we create read replica in different regions?
+what is difference with EBS and EFS?
+how can you do import with out impdp?
+how to take backups to s3 bucket?
+Can we change the storage from iops to gp1?
+what is the role of option group and parameter group?
+do we really need to sync all the parameter values in parameter group?
+can we alter the timezone in DB?
+what happens when i tick the option enable validaton in DMS task?
+is it posible to track the growth and filesize of archives in the RDS?
+DMS task stop and start ?50 GB?Batch apply
+STS service?
+LOB modes?
+OGG?
+How to open standby database read write mode and again how to rollback, What are options we have to use it.
+Answer: Using flashback and restore point option we can open and rollback the standby database. 
+what sort of difficluties and challenges you have faced in configuration setup and in the Datasync?
+GSM?
+metrics &logtime?
+How comfortable are you with SQLSERVER and POSTGRESQL?
+please tell me the flow of migration to do the same?
+I have a 50 GB of .bak file how can i do the shipment from onprem to cloud?
+how can we setup the email notifications?
+is it possible to get notification when the DB instance status modified?
+why do we use Dynamo DB,what will be your recommendations to go for it?
+Can we do the custimization while sending email notications for Dynamo DB?
+for oracle?
+Can we get awr report od Oracle RDS?if yes how can we
+what is the use of security group?
+diff between SG and NACL?
+when iam importing the 2 TB of dump files in RDS what should be consider to not to fail the job?
+Till yesterday a query is giving output in 1 min. today it is taking 5 min. how you  will troubleshoot this problem?
+What is the one critical solution you have suggested to any of your client to save their business?
+Kuruba Niranjan Babu,S/O K.Nagappa,3rd house-21,RPV Sarovar villas,gummayagari palli,Gorantla-hindupur road,515231,Anantapur dist,Andhra pradesh
+
+----------------------------------------------------------------------------------------------------------------------------------------
+
+
+Version (AGENT_VERSION) -> 13.2.0.0.v3
+Port (AGENT_PORT) -> 3872 (default)
+OMS_HOST -> toem12cc.vodacom.corp (for non-prod) OR poem12cc-slb.vodacom.corp  (for prod)
+OMS_PORT -> 4900
+AGENT_REGISTRATION_PASSWORD -> oraag3nt
+GENT_REGISTRATION_PASSWORD -> 4Wsr3g!st3r (Production OEM only)
+ALLOW_TLS_ONLY-> false (default)
+MINIMUM_TLS_VERSION -> TLSv1
+TLS_CIPHER_SUITE -> No
+4Wsr3g!st3r 
+ALTER USER dbsnmp IDENTIFIED BY AWSwelcome_123 ACCOUNT UNLOCK;
+
+SELECT rdsadmin.rdsadmin_oem_agent_tasks.list_targets_oem_agent() as TASK_ID from DUAL; 
+SELECT text FROM table(rdsadmin.rds_file_util.read_text_file('BDUMP','dbtask-1605596411706-3805.log')); 
+
+SELECT rdsadmin.rdsadmin_oem_agent_tasks.get_status_oem_agent() as TASK_ID from DUAL;
+SELECT text FROM table(rdsadmin.rds_file_util.read_text_file('BDUMP','dbtask-1605596446926-3805.log'));
+
+SELECT rdsadmin.rdsadmin_oem_agent_tasks.ping_oms_oem_agent() as TASK_ID from DUAL; 
+
+select utl_inaddr.get_host_address('poem12cc-slb.vodacom.corp') from dual
+
+ADMIN - is to perform application realted needs in the DATABASE
+RDS_ADMIN - its a pacakge where its used to do operations on the RDS instances level
+SYS - its used for to operate sysdba operations like upgragation,patching and restrict the DB.
+RDS_ADMIN : It is used to do the maintenance and feature enhancements in the RDS instance level by AWS Backend Team as a shared responsibility model.
+
+SYS : It is used to perform SYSDBA operations in the Database level.
+
+----------------------------------------------------------------------------------------------------------------------------------------
+begin
+    rdsadmin.rdsadmin_util.grant_sys_object(
+        p_obj_name  => 'V_$SESSION',
+        p_grantee   => 'USER1',
+        p_privilege => 'SELECT');
+end;
+/
+    
+SELECT rdsadmin.rdsadmin_s3_tasks.upload_to_s3(
+p_bucket_name => 'spatial-prod',
+p_prefix => 'all_spprd_meta.sql',
+p_s3_prefix => '',
+p_directory_name => 'DATA_PUMP_DIR')
+AS TASK_ID FROM DUAL;
+
+SELECT rdsadmin.rdsadmin_s3_tasks.download_from_s3(
+p_bucket_name => 'ifrs-prod',
+p_directory_name => 'IFS_STAGING',
+p_s3_prefix => '')
+AS TASK_ID FROM DUAL;
+/
+
+SELECT rdsadmin.rdsadmin_s3_tasks.download_from_s3(
+p_bucket_name => 'ifrs-prod',
+p_directory_name => 'IFS_STAGING',
+p_s3_prefix => '')
+AS TASK_ID FROM DUAL;
+/
+
+SELECT rdsadmin.rdsadmin_s3_tasks.download_from_s3(
+p_bucket_name => 'spatial-prod',
+p_directory_name => 'FMS_DATA',
+p_s3_prefix => 'Spatial/LCS')
+AS TASK_ID FROM DUAL;
+/
+
+check CPU AIX
+
+lparstat -i | grep CPU
+
+unlock vodacom account :
+
+https://login.sso.vodacom.co.za/nidp/app?target=https%3A%2F%2Flogin.sso.vodacom.co.za%2Fnidp%2Fsaml2%2Fidpsend%3Fid%3Daws&id=10020
+
+https://storefront2fa.vodacom.co.za/logon/LogonPoint/index.html
+
+Vodacom password : Scotia@1
+
+to check the asm disks in a disk group:
+lsdsk -k -G DG_DATA
+
+size of mount points:
+du -h /u01 | grep ^[0-9\.]*G
+
+Partition commands:
+SELECT * from (
+SELECT PARTITION_NAME,
+extractvalue
+( dbms_xmlgen.getxmltype
+( 'select high_value
+from DBA_TAB_PARTITIONS where table_name = ''' || t.table_name || ''' and PARTITION_NAME = ''' || t.PARTITION_NAME || ''''),
+'//text()' ) as high_value
+FROM DBA_TAB_PARTITIONS t
+WHERE TABLE_OWNER='ERIF')
+WHERE to_char(add_months(sysdate,-1),'SYYYYMMDD') < high_value;
+select * from dba_users;
+select owner, table_name, partitioning_type, subpartitioning_type, partition_count, 
+def_subpartition_count as default_subpart_count
+from dba_part_tables where owner='ERIF'
+order by owner, table_name;
+select * from DBA_TAB_PARTITIONS where TABLE_OWNER='ERIF';
+
+select table_owner, table_name, partition_name, subpartition_name, high_value, tablespace_name, num_rows, last_analyzed
+from dba_tab_subpartitions where TABLE_OWNER='ERIF' 
+order by table_owner, table_name, subpartition_position;
+
+select a.owner , a.table_name, b.partition_name,a.partitioning_type  ,b.high_value, a.subpartitioning_type , a.partition_count , 
+a.def_subpartition_count 
+from dba_part_tables a, DBA_TAB_PARTITIONS b where a.owner='ERIF' and a.table_name=b.table_name
+order by a.owner, a.table_name;
+
+select sum(space*8)/1024 space_in_MB from dba_recyclebin;
+
+7304918771 - kaushik das
+
+Personalnummer:     80152702
+CIAMUserID:              kniranja
+istns_bp 
+Nachname: Niranjan Babu
+Vorname: Kuruba
+Vorname: Kuruba
+techmahindra.kn00700050
+Anmeldename: EMEA1\A200156202
+Password : Highland@123
+8510
+BE1JS597
+E-Mailadresse: Kuruba.Niranjan-Babu@external.telekom.de
+Your Azure account name: kuruba.niranjan-babu_external.telekom.de@azcloud.telekom.net
+Link to the Azure Portal: https://portal.azure.com
+our pwd: Ej7lMAuqrS7 
+
+EMEA1\A200156202
+10.91.120.156
+
+[Yesterday 7:44 PM] Vinoth Thuyamani
+Anmeldename: EMEA1\A200156194
+
+[Yesterday 7:44 PM] Vinoth Thuyamani
+Inba@9962960
+
+
+rds-prod.hp-ppm.aws.telekom.de
+
+rds-dev.lima-nonprod.aws.telekom.de
+
+archive log RDS:
+
+SELECT sequence#, 
+         Substr(NAME, 1, 96) AS Location, 
+         creator, 
+         To_char(first_time, 'DD-MON HH24:MI'), 
+         To_char(completion_time, 'DD-MON HH24:MI') 
+  FROM   v$archived_log 
+  WHERE  first_time > sysdate - 1 
+  ORDER  BY 1;
+  
+  how to apply patch for timezone in ec2 :
+
+prereqs:
+stop the database and continue
+
+[oracle@ip-10-170-66-107 31335037]$ $ORACLE_HOME/OPatch/opatch apply
+Oracle Interim Patch Installer version 12.2.0.1.17
+Copyright (c) 2023, Oracle Corporation.  All rights reserved.
+
+exec dbms_scheduler.purge_log;
+select count(*) from SYS.WRI$_OPTSTAT_HISTGRM_HISTORY;
+select count(*) from SYS.WRI$_OPTSTAT_HISTHEAD_HISTORY;
+select systimestamp - dbms_stats.get_stats_history_availability from dual;
+exec dbms_stats.alter_stats_history_retention(0);
+exec DBMS_STATS.PURGE_STATS(systimestamp);
+select count(*) from SYS.WRI$_OPTSTAT_HISTGRM_HISTORY;
+select count(*) from SYS.WRI$_OPTSTAT_HISTHEAD_HISTORY;
+exec dbms_stats.alter_stats_history_retention(31);
+select systimestamp - dbms_stats.get_stats_history_availability from dual;
+
+ 
+
+
+ start the database;
+
+@$ORACLE_HOME/rdbms/admin/utltz_upg_check.sql;
+@$ORACLE_HOME/rdbms/admin/utltz_upg_apply.sql;
+
+ 
+
+SELECT version FROM v$timezone_file;
+
+
+To check the count of rows:
+
+set serverout on size 1000000
+set verify off
+declare
+sql_stmt varchar2(1024);
+row_count number;
+v_table_name varchar2(40);
+cursor get_tab is
+select table_name
+from dba_tables
+where owner=upper('OBUSER')  AND IOT_TYPE  is null  and IOT_NAME is null order by table_name;
+begin
+for get_tab_rec in get_tab
+loop
+v_table_name := get_tab_rec.table_name;
+sql_stmt := 'select count(*) from OBUSER."'||get_tab_rec.table_name||'"';
+EXECUTE IMMEDIATE sql_stmt INTO row_count;
+dbms_output.put_line(' OBUSER.'||rpad(get_tab_rec.table_name,50)||' '|| ' ==> '||' '||TO_CHAR(row_count)||' ');
+END loop;
+EXCEPTION
+when others then
+dbms_output.put_line('Error counting rows for table OBUSER.'  ||v_table_name);
+end;
+/
+
+To set the oracle user no expire :
+
+chage -l oracle
+chage -I -1 -m 0 -M 99999 -E -1 oracle
+chage -l oracle
+
+storage steps :
+
+
+pvcreate /dev/nvme2n1
+
+vgcreate db_vol_db /dev/nvme2n1
+
+lvcreate -l 100%FREE -n db_lv1_db db_vol_db
+
+mkfs.xfs  /dev/mapper/db_vol_db-db_lv1_db
+
+mkdir /data
+
+
+echo "/dev/mapper/db_vol_db-db_lv1_db /data  xfs     defaults        0 0" >> /etc/fstab 
+
+mount -av
+
+To check the TEMP Size :
+
+select
+   srt.tablespace,
+   srt.segfile#,
+   srt.segblk#,
+   srt.blocks,
+   a.sid,
+   a.serial#,
+   a.username,
+   a.osuser,
+   a.status
+from
+   v$session    a,
+   v$sort_usage srt
+where
+   a.saddr = srt.session_addr
+order by
+   srt.tablespace, srt.segfile#, srt.segblk#,
+   srt.blocks;
+
+ to check TEMP free size :
+ 
+ select sum(free_blocks)
+from gv$sort_segment
+where tablespace_name = 'TEMP';
+
+screen commands :
+
