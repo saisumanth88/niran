@@ -1,0 +1,40 @@
+begin
+			rdsadmin.rdsadmin_util.grant_sys_object('DBMS_SERVICE','ADMIN');
+		end;
+			/	
+begin
+			dbms_service.create_service('pORACLUA','pORACLUA');
+		end;
+				/
+				
+				
+
+begin
+			dbms_service.start_service('pORACLUA');
+		end;
+			/
+			
+			
+create or replace procedure admin.start_my_services is
+		begin
+			dbms_service.start_service('pORACLUA');
+		end;
+			/			
+			
+		
+			
+create or replace trigger <username>.startup_trigger
+		after startup on database
+		begin
+			start_my_services;
+		end;
+			/			
+			
+
+			
+			select sys_context('userenv','service_name') from dual;
+			
+			SELECT name,
+       network_name
+FROM   v$active_services
+ORDER BY 1;
